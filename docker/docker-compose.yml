@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: cookspot-app
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - ../src:/var/www
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: cookspot-nginx
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - ../src:/var/www
+      - ./nginx:/etc/nginx/conf.d
+  db:
+    image: mysql:8.0
+    container_name: cookspot-db
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Mdb3pzTbS
+    ports:
+      - 3306:3306
