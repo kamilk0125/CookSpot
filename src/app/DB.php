@@ -4,13 +4,14 @@ declare(strict_types = 1);
 
 namespace App;
 
+use App\Interfaces\DBInterface;
 use PDO;
 
-class DB
+class DB implements DBInterface
 {
     private PDO $pdo;
 
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         $defaultOptions = [
             PDO::ATTR_EMULATE_PREPARES   => false,
@@ -30,8 +31,8 @@ class DB
         }
     }
 
-    public function __call(string $name, array $arguments)
+    public function __call(string $methodName, array $args)
     {
-        return call_user_func_array([$this->pdo, $name], $arguments);
+        return call_user_func_array([$this->pdo, $methodName], $args);
     }
 }

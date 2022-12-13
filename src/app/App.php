@@ -4,36 +4,27 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Exceptions\RouteNotFoundException;
+use App\Exceptions\Router\RouteNotFoundException;
+use App\Interfaces\DBInterface;
 
 class App
 {
-    private static DB $db;
+    private Container $container;
 
-    public function __construct(protected array $config)
+    public function __construct()
     {
-        static::$db = new DB($config['db'] ?? []);
+        $this->container = new Container();
+        $this->container->addClassConfig(DBInterface::class, DB::class, true);
+        
     }
 
-    public static function db(): DB
+    public function run(Request $request)
     {
-        return static::$db;
+        echo (new Router($this->container))->resolve($request);
     }
 
-    public function run(string $route)
-    {
-        try 
-        {
-            $controllerName = ($route === '/') ? 'Home' : explode('/',$route)[1];
-            $request = str_replace($controllerName, '', $route);
-
-            $router = new Router();
-            $router->resolve([('App\\Controllers\\' . ucfirst($controllerName) . 'Controller'), 'init'], [$request]);
-        } 
-        catch (RouteNotFoundException) 
-        {
-                //404 view here
-        }
+    private function redirect(string $target){
+        echo "<script>location.href='{$target}';</script>";
     }
 
 

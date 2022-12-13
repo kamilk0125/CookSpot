@@ -3,14 +3,16 @@
 declare(strict_types=1);
 
 namespace App\Controllers;
-use App\Controllers\ControllerInterface;
+use App\Interfaces\ControllerInterface;
+use App\Request;
+use App\Views\HomeView;
 
 class HomeController implements ControllerInterface
 {
-    public function init(array $params)
+    public function init(Request $request)
     {
-        echo 'Home' . '<br>';
-        var_dump($params);
+        var_dump($request->getAttribute('controllerRequest'));
+        return (new HomeView)->display();
     }
 
 
