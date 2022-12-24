@@ -1,0 +1,139 @@
+html{
+    height: 100%;
+    min-width: 600px;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+    background-image: linear-gradient(#D7E1EC,#FFFFFF);
+    /* background-image: linear-gradient(#F8EF42, #0FD64F); */
+    /* background-color: rgb(201, 199, 199); */
+}
+
+div.header{
+    /* background-image: linear-gradient(180deg, rgba(34,219,0,1) 0%, rgba(21,112,0,1) 97%, rgb(0, 0, 0) 100%); */
+    background-color:#0FD64F ;
+    text-align: center;
+    margin-top: 0%;
+    width: 100%;
+    height: 100px;
+    padding: 0px;
+
+}
+
+
+div.login{
+    /* background-image: linear-gradient(#BBDBBE, #DEEBDD); */
+    /* background-image: linear-gradient(#55D284,#F2CF07); */
+    background-color: #f3f3f3;
+    text-align: center;
+    margin: auto;
+    width: 500px;
+    height: fit-content;
+    padding: 0px;
+    border-radius: 5%;
+    margin-top: 3%;
+    overflow: auto;
+    max-height: 740px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #abaaaa;
+
+}
+
+div.footer{
+    background-color: transparent;
+    text-align: center;
+    margin-bottom: 0%;
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    position: fixed;
+    bottom: 0;
+    
+
+}
+
+button.form{
+    border-radius: 50px;
+    background-color: #0090f6;
+    font-size: 32px;
+    color: white;
+    margin: 5%;
+    border-color: transparent;
+    padding: 20px;
+}
+
+div.toggleSwitch{
+    background-color: #0090f6;
+    border-radius: 50px;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:auto;
+    margin-top: 3%;
+}
+
+button.form.formSelector{
+    margin: 1%;
+    font-size: 26px;
+    width: 50%;
+}
+
+button.form.selectedOption{
+    background-color: white;
+    color: black;
+}
+
+.form{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+input.form{
+    width: 338px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 22px;
+    margin-right: 2px;
+    /* margin-bottom: 30px; */
+    /* border-width: thick; */
+    border-width: 1px;
+    border-color: #abaaaa;
+}
+
+input.form:focus{
+    outline: none !important;
+    border-color: #0667ac;
+    box-shadow: 0 0 10px #719ECE;
+    border-width: 4px;
+}
+
+input.form.invalid{
+    border-color: red;
+    border-width: 4px;
+}
+
+input.form.valid{
+    border-color: rgb(1, 168, 1);
+    border-width: 4px;
+}
+
+label.form.error{
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 5px;
+    color: red;
+}
+
+.invisible{
+    display: none;
+}
+
+button.disabled{
+    background-image: none;
+    background-color: #a1a1a1;
+}
+

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Exceptions\Router\RouteNotFoundException;
-use App\Interfaces\DBInterface;
-
 class App
 {
     private Container $container;
@@ -14,18 +11,19 @@ class App
     public function __construct()
     {
         $this->container = new Container();
-        $this->container->addClassConfig(DBInterface::class, DB::class, true);
-        
     }
 
     public function run(Request $request)
     {
-        echo (new Router($this->container))->resolve($request);
+        if(AuthHelper::authorize($request)){
+            echo (new Router($this->container))->resolve($request);
+        }
+        else{
+            echo "<script>location.href='/login';</script>";
+        }
     }
 
-    private function redirect(string $target){
-        echo "<script>location.href='{$target}';</script>";
-    }
+
 
 
 }

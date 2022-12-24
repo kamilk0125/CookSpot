@@ -8,5 +8,5 @@ use App\Request;
 
 interface ControllerInterface{
     
-    public function init(Request $request);
+    public function processRequest(Request $request);
 }

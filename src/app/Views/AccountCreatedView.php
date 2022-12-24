@@ -6,16 +6,16 @@ namespace App\Views;
 
 use App\Views\ViewInterface;
 
-class LoginView extends View implements ViewInterface 
+class AccountCreatedView extends View implements ViewInterface 
 {
     public function display():string
     {
-        $this->pageName = 'Login';
+        $this->pageName = 'Account Created';
 
         ob_start();
         
         include 'Components/Header.php';
-        include 'Components/Login.php';
+        include 'Components/AccountCreated.php';
         include 'Components/Footer.php';
         
         return (string)ob_get_clean();

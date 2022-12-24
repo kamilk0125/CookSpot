@@ -9,9 +9,8 @@ use App\Views\HomeView;
 
 class HomeController implements ControllerInterface
 {
-    public function init(Request $request)
+    public function processRequest(Request $request)
     {
-        var_dump($request->getAttribute('controllerRequest'));
         return (new HomeView)->display();
     }
 

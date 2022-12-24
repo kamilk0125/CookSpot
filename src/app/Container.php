@@ -15,9 +15,9 @@ class Container implements ContainerInterface
     public function get(string $id, array $args=[])
     {
         $className = $id;
-        if($this->has($id)){
+        if($this->hasClassConfig($id)){
             $className = $this->classConfigs[$id]['implementation'];
-            if($this->classConfigs[$id]['singleInstance'] && array_key_exists($id, $this->instances)){
+            if($this->classConfigs[$id]['singleInstance'] && $this->has($id)){
                 return $this->instances[$id]; 
             }
         }
@@ -59,6 +59,11 @@ class Container implements ContainerInterface
         return array_key_exists($id, $this->instances);
     }
 
+    public function hasClassConfig(string $id): bool
+    {
+        return array_key_exists($id, $this->classConfigs);
+    }
+
     public function addClassConfig(string $id, string $implementation, bool $singleInstance = false){
         if(!array_key_exists($id,$this->classConfigs)){
             $this->classConfigs[$id]['implementation'] = $implementation;
@@ -74,6 +79,7 @@ class Container implements ContainerInterface
         $this->instances[$id] = $instance;
         
     }
+    
     private function getDependencies(array $parameters, string $id, string $className, array $args):array
     {
         return array_map(

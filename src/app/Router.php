@@ -34,14 +34,14 @@ class Router
         $controllerRequest = str_replace($controllerName, '', $route);
         $request->setAttribute('controllerRequest', $controllerRequest);
 
-        $action = [('App\\Controllers\\' . ucfirst($controllerName) . 'Controller'), 'init'];
+        $action = [('App\\Controllers\\' . ucfirst($controllerName) . 'Controller'), 'processRequest'];
 
         if(is_array($action))
         {
             [$class, $method] = $action;
             if(method_exists($class, $method))
             {
-                $class = $this->container->get($class);
+                $class = $this->container->get($class, [$class => ['container' => $this->container]]);
                 return call_user_func_array([$class, $method], [$request]);
             }
             else

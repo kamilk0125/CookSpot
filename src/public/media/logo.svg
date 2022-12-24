@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="280"
+   height="100"
+   viewBox="0 0 74.083513 26.458324"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#001d00"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="true"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="221px"
+     inkscape:object-paths="false"
+     inkscape:zoom="2.0913616"
+     inkscape:cx="174.52745"
+     inkscape:cy="80.330441"
+     inkscape:window-width="1920"
+     inkscape:window-height="1012"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs2">
+    <rect
+       x="57.259094"
+       y="141.00311"
+       width="697.48505"
+       height="237.5883"
+       id="rect7227" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-1.6660885,-1.0408504)">
+    <text
+       xml:space="preserve"
+       transform="matrix(0.24804688,0,0,0.24804688,-6.5302594,-27.404228)"
+       id="text7225"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;white-space:pre;shape-inside:url(#rect7227);fill:#ffffff;fill-opacity:1;stroke:none"><tspan
+         x="57.259766"
+         y="200.68341"
+         id="tspan23"><tspan
+           style="font-style:italic;font-weight:300;-inkscape-font-specification:'Ubuntu Light Italic'"
+           id="tspan21">CookSpot</tspan></tspan></text>
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.0593028"
+       d="M 8.7278326,12.158383 C 7.9348043,11.30048 7.2670109,10.576339 7.2438434,10.54918 7.2206814,10.52202 7.0718309,10.59222 6.9130759,10.70515 5.8793254,11.440572 4.8125937,11.762494 4.2954912,11.49509 3.8861079,11.28339 3.7225329,10.531051 3.8604917,9.4943571 4.1422729,7.3769093 4.9779759,6.5605021 6.2619675,7.1483343 c 0.2509313,0.114875 0.372125,0.1420562 0.4493,0.10075 0.098638,-0.052787 0.0923,-0.092187 -0.095387,-0.5918434 C 6.2882055,5.7848688 6.1571059,5.1622941 6.1533422,4.460725 6.1495922,3.7560469 6.2208552,3.4855627 6.4916555,3.1771365 6.739928,2.8943685 7.0557314,2.7468308 7.5439373,2.6855299 8.7855006,2.5296335 9.8871436,3.0431506 10.352754,3.9948266 c 0.181145,0.3702502 0.332124,0.8836519 0.3332,1.1330538 4.98e-4,0.1338962 0.02704,0.1630825 0.147832,0.1630825 0.112562,0 0.155262,-0.0383 0.181766,-0.1630825 0.236295,-1.1124245 0.806164,-1.9406566 1.497318,-2.1761557 0.389733,-0.1327957 1.099258,-0.11857 1.592273,0.031925 0.526144,0.1606078 1.349795,0.5934609 1.701807,0.8943531 0.612916,0.5239053 0.754286,1.1244186 0.425452,1.8072751 -0.340746,0.7075942 -1.620175,1.7964376 -2.952354,2.512566 l -0.460698,0.2476546 0.431047,0.4781938 c 0.237077,0.2630059 0.624943,0.6926988 0.861924,0.9548708 0.34169,0.3780089 0.41534,0.4912219 0.355816,0.5469379 -0.164336,0.153827 -4.155526,3.237859 -4.224529,3.264337 -0.04154,0.01594 -0.705465,-0.654855 -1.5157791,-1.53146 z"
+       id="path184272" />
+  </g>
+</svg>
