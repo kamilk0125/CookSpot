@@ -9,5 +9,5 @@
 </head>
 <body>
       <div class="header">
-            <img src = "media/logo.svg" alt = "Logo">
+            <img src = "resource?type=img&path=general/logo.svg" alt = "Logo">
       </div>

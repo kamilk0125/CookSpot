@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models\Login;
 
 class User
 {
@@ -15,6 +15,11 @@ class User
         private bool $isActive = false)
     {
         
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
 }

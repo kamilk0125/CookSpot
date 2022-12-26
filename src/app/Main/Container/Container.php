@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Main\Container;
 use Psr\Container\ContainerInterface;
 use App\Exceptions\Container\NotFoundException;
 use App\Exceptions\Container\ContainerException;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Main\Routing;
 
 use App\Exceptions\Request\RequestException;
 use App\Interfaces\RequestInterface;

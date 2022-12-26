@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Main;
+
+use App\Main\Container\Container;
+use App\Main\Routing\AuthHelper;
+use App\Main\Routing\Request;
+use App\Main\Routing\Router;
 
 class App
 {

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models\Database;
 
 use App\Interfaces\DBInterface;
+use App\Main\Container\Container;
 
 class SQLQuery
 {

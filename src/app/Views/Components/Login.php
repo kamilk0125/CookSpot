@@ -5,7 +5,7 @@
             </div>
             <br>
             <form class = "<?php echo isset($_POST['register']) ? 'invisible' : '' ?>" action="login" id = "loginForm" method="POST">
-                  <label class = "form error" for = "id"><?php echo $_POST['loginForm']['ErrorLabel'] ?? '';?></label>
+                  <label class = "form error" for = "id"><?php echo $_POST['loginForm']['errorLabel'] ?? '';?></label>
                   <br>
                   <input class = "form" type="text" name = "id" placeholder="username or email" value="<?php echo $_POST['id'] ?? '';?>">
                   <br>
@@ -18,7 +18,7 @@
                   <button type = "submit" name = 'login' class = "form">Log In</button>
             </form>
             <form class = "<?php echo isset($_POST['register']) ? '' : 'invisible' ?>" action="login" id = "registerForm" method="POST">
-                  <label class = "form error" for = "id"><?php echo $_POST['registerForm']['ErrorLabel'] ?? '';?></label>
+                  <label class = "form error" for = "id"><?php echo $_POST['registerForm']['errorLabel'] ?? '';?></label>
                   <br>
                   <input class = "form" type="text" name = "username" id = "username" placeholder="username" value="<?php echo $_POST['username'] ?? '';?>">
                   <br>

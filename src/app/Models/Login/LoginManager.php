@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Models\Login;
+
+use App\Main\Container\Container;
+use App\Models\Database\SQLQuery;
 
 class LoginManager
 {
@@ -27,14 +30,16 @@ class LoginManager
     {
         $id = (preg_match(self::USERNAME_REGEX, $id) || preg_match(self::EMAIL_REGEX, $id)) ? $id : '';
         $password = preg_match(self::PASSWORD_REGEX, $password) ? $password : '';
-        $CurrentUser = null;
+        $currentUser = null;
         $errorMsg = '';
         
-        if($id !== '' || $password !== ''){
+        
+        if($id !== '' && $password !== ''){
+            
             $userInfo = $this->getUserInfo($id);
             if($userInfo !== false){
                 if(password_verify($password, $userInfo['authHash'])){
-                    $CurrentUser = new User(
+                    $currentUser = new User(
                         $userInfo['username'],
                         $userInfo['displayName'],
                         $userInfo['email'],
@@ -43,16 +48,19 @@ class LoginManager
                         true
                     );
                 }
+                $errorMsg = self::ERRORS['authFailed'];   
+
             }
             else{
-                $errorMsg = self::ERRORS['authFailed'];
+                $errorMsg = self::ERRORS['authFailed'];   
             }
         }
         else{
+            
             $errorMsg = self::ERRORS['authFailed'];
         }
-
-        return [$CurrentUser, $errorMsg];
+        
+        return [$currentUser, $errorMsg];
     }
 
     public function register(string $username, string $displayName, string $email, string $password, string $passwordConfirmation){

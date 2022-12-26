@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Main\Routing;
 use App\Exceptions\Router\RouteNotFoundException;
-use App\Controllers\LoginController;
+use App\Main\Container\Container;
 
 class Router
 {
@@ -30,8 +30,8 @@ class Router
 
     private function resolveController(string $route, Request $request)
     {
-        $controllerName = ($route === '/') ? 'Home' : explode('/',$route)[1];
-        $controllerRequest = str_replace($controllerName, '', $route);
+        $controllerName = ($route === '/') ? 'Home' : explode('?',explode('/',$route)[1])[0];
+        $controllerRequest = explode('/',$route)[2] ?? '';
         $request->setAttribute('controllerRequest', $controllerRequest);
 
         $action = [('App\\Controllers\\' . ucfirst($controllerName) . 'Controller'), 'processRequest'];
