@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
 html{
     height: 100%;
     min-width: 600px;
+
 }
 
 body{
@@ -10,7 +13,16 @@ body{
     background-image: linear-gradient(#D7E1EC,#FFFFFF);
     /* background-image: linear-gradient(#F8EF42, #0FD64F); */
     /* background-color: rgb(201, 199, 199); */
+    overflow-x: hidden;
+    /* position: relative; */
+    font-family: 'Ubuntu', sans-serif;
 }
+
+#pageContent{
+    position:relative;
+    min-height: 77.5%
+}
+
 
 div.header{
     /* background-image: linear-gradient(180deg, rgba(34,219,0,1) 0%, rgba(21,112,0,1) 97%, rgb(0, 0, 0) 100%); */
@@ -44,15 +56,23 @@ div.login{
 }
 
 div.footer{
-    background-color: transparent;
-    text-align: center;
+    /* background-color: transparent; */
+    /* text-align: center; */
     margin-bottom: 0%;
+    margin-top: 0%;
     width: 100%;
     height: 50px;
+
+
+
+    background-color: #f3f3f3;
+    text-align: center;
+    /* height: fit-content; */
     padding: 0px;
-    position: fixed;
-    bottom: 0;
-    
+    /* overflow: auto; */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #abaaaa;
 
 }
 
@@ -98,8 +118,6 @@ input.form{
     border-radius: 10px;
     font-size: 22px;
     margin-right: 2px;
-    /* margin-bottom: 30px; */
-    /* border-width: thick; */
     border-width: 1px;
     border-color: #abaaaa;
 }
@@ -137,3 +155,75 @@ button.disabled{
     background-color: #a1a1a1;
 }
 
+#profilePicture{
+    outline: 5px solid #0f80d1;
+    outline-offset: 1px;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    margin: 50px;
+}
+
+div.profileInfo
+{
+    margin-top: 0%;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* background-image: linear-gradient(#3EADCF, #ABE9CD); */
+    background-color: white;
+}
+
+#profileDisplayName
+{
+    padding:20px;
+    font-size: 42px;
+    color: black;
+    border-radius: 50px;
+    margin: 0;
+}
+
+.topNav {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+  }
+  
+
+  .topNav button {
+    color: black;
+    text-align: center;
+    width: 50%;
+    height: 50px;
+    font-size: 26px;
+    background-color: white;
+    /* border-style: none; */
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    border-bottom-width: 6px;
+  }
+
+  /* .topNav button:hover {
+    background-color: #ddd;
+    color: black;
+  } */
+
+  .topNav button.active {
+    color: #04AA6D;
+    border-bottom-color: #04AA6D;
+  }
+
+  div.itemContainer
+  {
+    width: 100%;
+    min-height: 430px;
+    background-color: #f3f3f3;
+    height: fit-content;
+    padding: 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #abaaaa;
+  }

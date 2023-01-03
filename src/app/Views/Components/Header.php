@@ -11,3 +11,4 @@
       <div class="header">
             <img src = "resource?type=img&path=general/logo.svg" alt = "Logo">
       </div>
+      <div id="pageContent">
