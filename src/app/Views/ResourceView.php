@@ -4,25 +4,27 @@ declare(strict_types=1);
 
 namespace App\Views;
 
+use App\Interfaces\ViewInterface;
 use App\Models\Resource\Resource;
-use App\Views\ViewInterface;
 
-class ResourceView extends View implements ViewInterface 
+
+class ResourceView extends View implements ViewInterface
 {
     public function __construct(private Resource $resource)
     {
-        
+        $this->pageName = 'Resource';
+        $this->headers = $resource->headers;
     }
     public function display():string
     {
-        $this->pageName = 'Resource';
-
-        foreach($this->resource->headers as $header){
+        foreach($this->headers as $header){
             header($header);
         }
 
         ob_start();
+
         include 'Components/ResourceItem.php';
+        
         return (string)ob_get_clean();
     }
 }

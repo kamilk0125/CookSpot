@@ -9,24 +9,60 @@ use App\Interfaces\RequestInterface;
 
 class Request implements RequestInterface
 {
-    public readonly array $get;
-    public readonly array $post;
-    public readonly array $cookie;
-    public readonly array $session;
-    public readonly array $server;
-    public readonly array $files;
-    public readonly array $env;
+    private array $superglobals;
     private array $attributes;
 
     public function __construct(){
-        $this->get = $_GET;
-        $this->post = $_POST;
-        $this->cookie = $_COOKIE;
-        $this->session = $_SESSION;
-        $this->server = $_SERVER;
-        $this->files = $_FILES;
-        $this->env = $_ENV;
+        $this->superglobals = [
+            'GET'=>&$_GET,
+            'POST'=>&$_POST,
+            'COOKIE'=>&$_COOKIE,
+            'SESSION'=>&$_SESSION,
+            'SERVER'=>&$_SERVER,
+            'FILES'=>&$_FILES,
+            'ENV'=>&$_ENV
+        ];
+
     }
+
+    public function getSuperglobal(string $name, string ...$keys){
+
+        if(key_exists($name, $this->superglobals)){
+            $superglobal = $this->superglobals[$name];
+            
+            $element = $superglobal;
+            foreach($keys as $key){
+                if(key_exists($key, $element)){
+                    $element = $element[$key];
+                }
+                else{
+                    return null;
+                }
+            }
+            return $element;
+        }
+
+        return null;
+
+    }
+
+    public function setSuperglobal(string $name, ...$args){
+        if(count($args)){
+            $keys = array_slice($args,0,-1);
+            $value = end($args);
+            if(key_exists($name, $this->superglobals)){
+                $superglobal = &$this->superglobals[$name];
+                $element = &$superglobal;
+                foreach($keys as $key){
+                    $element = &$element[$key];
+                }
+                $element = $value;
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public function setAttribute(string $name, $value){
         $this->attributes[$name] = $value;
@@ -46,5 +82,6 @@ class Request implements RequestInterface
             throw new RequestException("Attribute $name does not exist");
         }
     }
+
 
 }

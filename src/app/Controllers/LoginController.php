@@ -20,39 +20,44 @@ class LoginController implements ControllerInterface
 
     public function processRequest(Request $request)
     {
-        $currentUser = null;
-        if(isset($request->post['register'])){           
+        $currentUser = $request->getSuperglobal('POST', 'currentUser');
+        $registerForm =  $request->getSuperglobal('POST', 'registerForm');
+        $loginForm = $request->getSuperglobal('POST', 'loginForm');
+        if(!is_null($registerForm)){         
             $errorMsg = (new LoginManager($this->container))
                 ->register(
-                    $request->post['username'],
-                    $request->post['displayName'],
-                    $request->post['email'],
-                    $request->post['password'],
-                    $request->post['confirmPassword']
+                    $registerForm['username'],
+                    $registerForm['displayName'],
+                    $registerForm['email'],
+                    $registerForm['password'],
+                    $registerForm['confirmPassword']
             );
             
-            $_POST['registerForm']['errorLabel'] = $errorMsg;
-            return (new AccountCreatedView)->display();
+            $registerForm['error'] = $errorMsg;
+            
+            if($errorMsg==='')
+                return (new AccountCreatedView);
 
         }
-        else if(isset($request->post['login'])){        
+        else if(!is_null($loginForm)){  
             [$currentUser, $errorMsg] =  (new LoginManager($this->container))
             ->LogIn(
-                $request->post['id'],
-                $request->post['password']
+                $loginForm['id'],
+                $loginForm['password']
             );
-            $_POST['loginForm']['errorLabel'] = $errorMsg;
+            
+            $loginForm['error'] = $errorMsg;
         }
         else{
 
         }
 
         if(!is_null($currentUser)){
-            $_SESSION['currentUser'] = $currentUser;
+            $request->setSuperglobal('SESSION','currentUser',$currentUser);
             return "<script>location.href='/';</script>";
         }
         
-        return (new LoginView)->display();
+        return (new LoginView($loginForm, $registerForm));
         
 
     }

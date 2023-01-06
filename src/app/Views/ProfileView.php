@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace App\Views;
 
+use App\Interfaces\ViewInterface;
 use App\Models\Profile\Profile;
-use App\Views\ViewInterface;
 
-class ProfileView extends View implements ViewInterface 
+
+class ProfileView extends View implements ViewInterface
 {
     public function __construct(private Profile $profile)
     {
-
+        $this->pageName = $this->profile->displayName;
     }
 
     public function display():string
     {
-        $this->pageName = $this->profile->displayName;
-
         ob_start();
         
         include 'Components/Header.php';

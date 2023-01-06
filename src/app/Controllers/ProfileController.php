@@ -13,7 +13,10 @@ class ProfileController implements ControllerInterface
     public function processRequest(Request $request)
     {
         $profile = new Profile($_SESSION['currentUser']);
-        return (new ProfileView($profile))->display();
+        
+        
+
+        return (new ProfileView($profile));
     }
     
 

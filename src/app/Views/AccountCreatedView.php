@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Views;
 
-use App\Views\ViewInterface;
+use App\Interfaces\ViewInterface;
 
-class AccountCreatedView extends View implements ViewInterface 
+
+class AccountCreatedView extends View implements ViewInterface
 {
-    public function display():string
+    public function __construct()
     {
         $this->pageName = 'Account Created';
-
+    }
+    public function display():string
+    {
         ob_start();
         
         include 'Components/Header.php';

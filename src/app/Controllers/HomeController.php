@@ -11,7 +11,7 @@ class HomeController implements ControllerInterface
 {
     public function processRequest(Request $request)
     {
-        return "<script>location.href='/profile';</script>";
+        echo "<script>location.href='/profile';</script>";
         // return (new HomeView)->display();
     }
 

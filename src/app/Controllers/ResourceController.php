@@ -12,11 +12,12 @@ class ResourceController implements ControllerInterface
 {
     public function processRequest(Request $request)
     {
-        $resource = null;
-        if(isset($request->get['type']) && isset($request->get['path'])){
-            $resource = (new ResourceManager())->getResource($request->get['type'], $request->get['path']);
+        $type = $request->getSuperglobal('GET', 'type');
+        $path = $request->getSuperglobal('GET', 'path');
+        if(!is_null($path)){
+            $resource = (new ResourceManager())->getResource($type, $path);
             if(!is_null($resource)){
-                return (new ResourceView($resource))->display();
+                return (new ResourceView($resource));
             }
         }
     }

@@ -15,7 +15,7 @@ class Router
 
     public function resolve(Request $request)
     {
-        $route = $request->server['REQUEST_URI'];
+        $route = $request->getSuperglobal('SERVER', 'REQUEST_URI');
 
         try 
         {

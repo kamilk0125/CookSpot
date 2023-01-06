@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Profile;
 
 use App\Models\Login\User;
-use App\Models\Profile\Recipe\RecipesManager;
+use App\Models\Profile\Recipes\RecipesManager;
 use App\Models\Resource\ResourceManager;
 
 class Profile
