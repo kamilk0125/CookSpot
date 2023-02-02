@@ -18,8 +18,8 @@ class DataHandler{
     public static function castObjArray(array $objectArray, $targetObj):array
     {
         $array = [];
-        foreach($objectArray as $object){
-             $array[]=self::castToObj($object, $targetObj);
+        foreach($objectArray as $key => $object){
+             $array[$key]=self::castToObj($object, $targetObj);
         }
         return $array;
     }

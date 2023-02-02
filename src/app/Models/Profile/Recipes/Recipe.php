@@ -7,12 +7,15 @@ namespace App\Models\Profile\Recipes;
 class Recipe
 {
     public function __construct(
-        public string $name='', 
+        public string $id = '0',
+        public string $name='New Recipe', 
         public array $ingredients=[], 
         public array $instructions=[], 
-        public string $preparationTime='',
-        public string $imagePath='general/defaultRecipeImage.png')
+        public string $preparationTime='-',
+        public string $description='description',
+        public string $picturePath='general/defaultRecipePicture.png')
     {
         
     }
+
 }

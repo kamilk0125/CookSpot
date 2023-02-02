@@ -10,6 +10,8 @@ use App\Models\Profile\Profile;
 
 class ProfileView extends View implements ViewInterface
 {
+    private string $cssFile = 'profile.css';
+
     public function __construct(private Profile $profile)
     {
         $this->pageName = $this->profile->displayName;

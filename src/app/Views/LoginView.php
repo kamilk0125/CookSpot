@@ -9,6 +9,7 @@ use App\Interfaces\ViewInterface;
 class LoginView extends View implements ViewInterface
 {
     private string $activeForm;
+    private string $cssFile = 'login.css';
     public function __construct(private ?array $loginForm, private ?array $registerForm)
     {
         $this->pageName = 'Login';

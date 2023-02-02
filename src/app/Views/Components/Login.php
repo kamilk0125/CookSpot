@@ -1,7 +1,7 @@
       <div class="login">
             <div class = "toggleSwitch">
-                  <button class="form formSelector <?php echo ($this->activeForm==='login') ? 'selectedOption' : ''; ?>" type="button" id="loginFormBtn">Log In</button>
-                  <button class="form formSelector <?php echo ($this->activeForm==='register') ? 'selectedOption' : ''; ?>" type="button" id="registerFormBtn">Register</button>
+                  <button class="rounded formSelector <?php echo ($this->activeForm==='login') ? 'selectedOption' : ''; ?>" type="button" id="loginFormBtn">Log In</button>
+                  <button class="rounded formSelector <?php echo ($this->activeForm==='register') ? 'selectedOption' : ''; ?>" type="button" id="registerFormBtn">Register</button>
             </div>
             <br>
             <form class = "<?php echo ($this->activeForm==='login') ? '' : 'invisible'; ?>" action="login" id = "loginForm" method="POST">
@@ -15,7 +15,7 @@
                   <br>
                   <label class = "form" for = "password"></label>
                   <br>
-                  <button type = "submit" name = "loginForm[submit]" class = "form">Log In</button>
+                  <button type = "submit" name = "loginForm[submit]" class = "rounded">Log In</button>
             </form>
             <form class = "<?php echo ($this->activeForm==='register') ? '' : 'invisible'; ?>" action="login" id = "registerForm" method="POST">
                   <label class = "form error" for = "id"><?php echo $this->registerForm['error'] ?? '';?></label>
@@ -40,7 +40,7 @@
                   <br>
                   <label class = "form error" for = "confirmPassword" id = "confirmPasswordLabel"></label>
                   <br>
-                  <button type = "submit" name = "registerForm[submit]" class = "form disabled" disabled>Register</button>
+                  <button type = "submit" name = "registerForm[submit]" class = "rounded disabled" disabled>Register</button>
             </form>
       </div>
       <script src = "js/login.js"></script>

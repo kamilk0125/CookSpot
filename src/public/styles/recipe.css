@@ -1,0 +1,120 @@
+#imagePreview{
+    width: 250px;
+    height: 250px;
+}
+
+#Info{
+    align-items: center;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+}
+#instructions{
+    text-align: center;
+    border: none;
+}
+
+#instructionsList{
+    align-items:flex-start;
+    height: fit-content;
+    text-align: center;
+    border: none;
+}
+
+#leftSide{
+    grid-column: 1;
+    height: 100%;
+}
+
+#ingredients{
+    height: 100%;
+    min-width: 392px;
+    grid-column:  2;
+    grid-row:1;
+    text-align: center;
+}
+
+#recipeContent{
+    min-height: calc(100vh - 152px);
+    background-color: white;
+    display: grid;
+    grid-template-columns: 0.7fr 0.3fr;
+    justify-items: stretch;
+    /* overflow-x: auto; */
+    overflow-y: visible;
+}
+#instructions > div.listTile{
+    width: 99%;
+    text-align: left;
+}
+
+#ingredientsList > div.listTile > textarea{
+    text-align: center;
+}
+
+#Info > div > textarea, #preparationTime > textarea{
+    display: block;
+    color: black;
+    border: none;
+    outline: none;
+}
+
+#preparationTime > textarea{
+    height: fit-content;
+    font: inherit;
+    font-size: 26px;
+    font-weight: bold;
+    transform: translateY(2px);
+    background-color: transparent;
+    width: 125px;
+}
+
+#preparationTime > h2{
+    font-size: 26px;
+    margin: 0;
+    margin-right: 20px;
+}
+
+#preparationTime{
+    font-size: 16px;
+    text-align: center; 
+    align-items: center;
+    background-color: transparent;
+    border-radius: 20px; 
+    padding: 10px;
+    height: fit-content;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+#topInfoBar{
+    align-items: center;
+}
+
+#Info > div > textarea:hover:not(:disabled), #preparationTime > textarea:hover:not(:disabled){
+    box-shadow: 0 0 10px #1b497a;
+    border-color: #0090f6;
+    border-width: 3px;
+}
+
+#recipeName
+{
+    font-size: 42px;
+    margin: 0;
+    font-weight: bold;
+    max-height: 150px;
+}
+
+#recipeDescription
+{
+    font-style:italic; 
+    font-size: 26px;
+    margin-top: 10px;
+    max-height: 95px;
+}
+
+textarea:disabled{
+    background-color: transparent;
+}

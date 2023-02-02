@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Models\Resource;
 
+use App\Addons\FileSystem\FileManager;
+
 class ResourceManager 
 {
     private array $allowedPaths;
     private const STORAGE_DIR = '../storage/';
+    public const COMMON_STORAGE_DIR = 'general/';
 
     public function __construct()
     {
-        $this->allowedPaths[] = 'general/';
+        $this->allowedPaths[] = self::COMMON_STORAGE_DIR;
         if(isset($_SESSION['currentUser'])){
             $this->allowedPaths[] = $_SESSION['currentUser']->getStoragePath();
         }
@@ -31,16 +34,34 @@ class ResourceManager
         }
         return $resource;
     }
-    public function saveResource(string $path, $content):bool
+
+    public function saveResource(string $path, $content, string $type='text'):bool
     {
         $accessGranted = $this->validateAccess(dirname($path));
         if($accessGranted){
-            $result = file_put_contents(self::STORAGE_DIR . $path, $content);
+            switch($type){
+                case 'text': 
+                    $result = file_put_contents(self::STORAGE_DIR . $path, $content);
+                    break;
+                case 'upload':
+                    $result = FileManager::moveUploadedFile($content, self::STORAGE_DIR . $path);
+                    break;
+            }
+            
             if($result!==false)
                 return true;
         }
         return false;
     }
+
+    public function removeResource(string $path){
+        $accessGranted = $this->validateAccess(dirname($path));
+        if($accessGranted){
+            return FileManager::removeFile(self::STORAGE_DIR . $path);
+        }
+        return false;
+    }
+    
 
     private function validateAccess(string $path):bool
     {
