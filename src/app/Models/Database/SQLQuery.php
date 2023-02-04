@@ -23,5 +23,10 @@ class SQLQuery
         $stmt = $this->dbInstance->prepare($query);
         $stmt->execute($args);
         return $stmt;
-    }  
+    }
+    
+    public function __call(string $methodName, array $args)
+    {
+        return call_user_func_array([$this->dbInstance, $methodName], $args);
+    }
 }

@@ -6,6 +6,11 @@ namespace App\Models\Login;
 
 use App\Main\Container\Container;
 use App\Models\Database\SQLQuery;
+use App\Models\Mailing\Mailer;
+use App\Models\Resource\ResourceManager;
+use App\Views\EmailView;
+use DateTime;
+use Exception;
 
 class LoginManager
 {
@@ -18,7 +23,8 @@ class LoginManager
         'invalidInput' => 'Entered data does not meet the requirements',
         'usernameTaken' => 'This username is already taken',
         'emailTaken' => 'This email is already used for existing account',
-        'authFailed' => 'Incorrect username/email or password'
+        'authFailed' => 'Incorrect username/email or password',
+        'serverError' => 'Server error'
     ];
 
     public function __construct(private Container $container)
@@ -33,31 +39,35 @@ class LoginManager
         $currentUser = null;
         $errorMsg = '';
         
-        
-        if($id !== '' && $password !== ''){
+        try{
+            if($id !== '' && $password !== ''){
             
-            $userInfo = $this->getUserInfo($id);
-            if($userInfo !== false){
-                if(password_verify($password, $userInfo['authHash'])){
-                    $currentUser = new User(
-                        $userInfo['username'],
-                        $userInfo['displayName'],
-                        $userInfo['email'],
-                        $userInfo['id'],
-                        0,
-                        true
-                    );
+                $userInfo = $this->getUserInfo($id);
+                if($userInfo !== false){
+                    if(password_verify($password, $userInfo['authHash'])){
+                        $currentUser = new User(
+                            $userInfo['username'],
+                            $userInfo['displayName'],
+                            $userInfo['email'],
+                            $userInfo['id'],
+                            0,
+                            true
+                        );
+                    }
+                    $errorMsg = self::ERRORS['authFailed'];   
+    
                 }
-                $errorMsg = self::ERRORS['authFailed'];   
-
+                else{
+                    $errorMsg = self::ERRORS['authFailed'];   
+                }
             }
             else{
-                $errorMsg = self::ERRORS['authFailed'];   
+                
+                $errorMsg = self::ERRORS['authFailed'];
             }
         }
-        else{
-            
-            $errorMsg = self::ERRORS['authFailed'];
+        catch(Exception $e){
+            $errorMsg = self::ERRORS['serverError'];
         }
         
         return [$currentUser, $errorMsg];
@@ -66,39 +76,96 @@ class LoginManager
     public function register(string $username, string $displayName, string $email, string $password, string $passwordConfirmation){
         $errorMsg = '';
 
-        if(
-            preg_match(self::USERNAME_REGEX, $username) &&
-            preg_match(self::PASSWORD_REGEX, $password) &&
-            preg_match(self::EMAIL_REGEX, $email) &&
-            preg_match(self::DISPLAYNAME_REGEX, $displayName) &&
-            $password === $passwordConfirmation
-        ){  
-            $usernameTaken = ($this->getUserInfo($username) === false) ? false : true; 
-            $emailTaken = ($this->getUserInfo($email) === false) ? false : true; 
+        try{
+            if(
+                preg_match(self::USERNAME_REGEX, $username) &&
+                preg_match(self::PASSWORD_REGEX, $password) &&
+                preg_match(self::EMAIL_REGEX, $email) &&
+                preg_match(self::DISPLAYNAME_REGEX, $displayName) &&
+                $password === $passwordConfirmation
+            ){  
+                $usernameTaken = $this->userExists($username); 
+                $emailTaken = $this->userExists($email); 
+    
+                if(!$usernameTaken && !$emailTaken){
+                    $activationHash = urlencode(base64_encode(random_bytes(20)));
+                    $mailer = new Mailer();
+                    $emailMessage =  $mailer->generateMessageFromTemplate('AccountActivationEmail.php', ['activationHash' => $activationHash]);
+                    $embededImages = [['path' => (new ResourceManager())->getResource('img', 'general/logo.png')->path, 'cid' => 'logo']];
+                    $result = (new Mailer())->sendEmail([$email], 'Account Activation', $emailMessage, true, $embededImages);
+                    if($result){
+                        $query = new SQLQuery($this->container);
+                        $query->executeQuery(
+                            'INSERT INTO inactiveAccounts (username, displayName, email, authHash, activationHash) 
+                            VALUES (:username, :displayName, :email, :authHash, :activationHash)',
+                            [
+                                'username' => $username, 
+                                'displayName' => $displayName, 
+                                'email' => $email, 
+                                'authHash' => password_hash($password, PASSWORD_DEFAULT),
+                                'activationHash' => $activationHash
+                            ]
+                        );
+                    }
+                    else{
+                        $errorMsg = self::ERRORS['serverError'];
+                    }
+                    
+                }
+                else{
+                    $errorMsg = $usernameTaken ? self::ERRORS['usernameTaken'] : self::ERRORS['emailTaken'];  
+                }
+            }
+            else{
+                $errorMsg = self::ERRORS['invalidInput'];  
+            }
+        }
+        catch(Exception $e){
+            $errorMsg = self::ERRORS['serverError'];
+        }
+        
+        return $errorMsg;
 
-            if(!$usernameTaken && !$emailTaken){
-                $query = new SQLQuery($this->container);
+    }
+
+    public function activateAccount(string $activationHash){
+        $query = new SQLQuery($this->container);
+
+        try{
+            $userInfo = $this->getInactiveUserInfo(urlencode($activationHash));
+
+            if($userInfo!== false){
+                $id = $userInfo['email'];
+        
+                $query->beginTransaction();            
                 $query->executeQuery(
                     'INSERT INTO usersLoginInfo (username, displayName, email, authHash) 
                     VALUES (:username, :displayName, :email, :authHash)',
                     [
-                        'username' => $username, 
-                        'displayName' => $displayName, 
-                        'email' => $email, 
-                        'authHash' => password_hash($password, PASSWORD_DEFAULT)
+                        'username' => $userInfo['username'], 
+                        'displayName' => $userInfo['displayName'], 
+                        'email' => $userInfo['email'], 
+                        'authHash' => $userInfo['authHash']
                     ]
                 );
-            }
-            else{
-                $errorMsg = $usernameTaken ? self::ERRORS['usernameTaken'] : self::ERRORS['emailTaken'];  
+                
+                $query->executeQuery(
+                    'DELETE FROM inactiveAccounts WHERE email = :email',
+                    ['email' => $id]
+                );
+
+    
+                $query->commit();
+                return true;
             }
         }
-        else{
-            $errorMsg = self::ERRORS['invalidInput'];  
+        catch(Exception $e){
+            if($query->inTransaction()){
+                $query->rollback();
+            }
         }
 
-        return $errorMsg;
-
+        return false;
     }
 
     private function getUserInfo(string $id)
@@ -111,4 +178,53 @@ class LoginManager
 
         return $queryResult;
     }
+
+    private function userExists(string $id):bool
+    {
+        $userInfo = $this->getUserInfo($id);
+        if($userInfo!==false){
+            return true;
+        }
+        $userInfo = $this->getInactiveUserInfo($id);
+        if($userInfo!==false){
+            return true;
+        }
+        return false;
+        
+    }
+
+    private function getInactiveUserInfo(string $id)
+    {
+        $query = new SQLQuery($this->container);
+        $queryResult = $query->executeQuery(
+            'SELECT * from inactiveAccounts WHERE email = :email OR username = :username OR activationHash = :activationHash',
+            ['email' => $id, 'username' => $id, 'activationHash' => $id]
+        )->fetch();
+
+        if($queryResult!==false){
+            if(!$this->validateExpirationDate($queryResult)){
+                return false;
+            }
+        }
+
+        return $queryResult;
+    }
+
+    private function validateExpirationDate($userInfo){
+        $dateTimeNow = new DateTime();
+        $dateTimeCreatedAt = new DateTime($userInfo['createdAt']);
+        $timeDiff = $dateTimeNow->diff($dateTimeCreatedAt);
+        if($timeDiff->d > 0){
+            $query = new SQLQuery($this->container);
+            $query->executeQuery(
+                'DELETE FROM inactiveAccounts WHERE email = :email',
+                ['email' => $userInfo['email']]
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+
 }

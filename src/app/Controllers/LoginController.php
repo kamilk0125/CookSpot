@@ -8,6 +8,7 @@ use App\Main\Container\Container;
 use App\Interfaces\ControllerInterface;
 use App\Models\Login\LoginManager;
 use App\Main\Routing\Request;
+use App\Views\AccountActivatedView;
 use App\Views\AccountCreatedView;
 use App\Views\LoginView;
 
@@ -23,6 +24,8 @@ class LoginController implements ControllerInterface
         $currentUser = $request->getSuperglobal('POST', 'currentUser');
         $registerForm =  $request->getSuperglobal('POST', 'registerForm');
         $loginForm = $request->getSuperglobal('POST', 'loginForm');
+        $activationHash = $request->getSuperglobal('GET', 'activate');
+
         if(!is_null($registerForm)){         
             $errorMsg = (new LoginManager($this->container))
                 ->register(
@@ -57,8 +60,13 @@ class LoginController implements ControllerInterface
             return "<script>location.href='/';</script>";
         }
         
+        if(!is_null($activationHash)){
+            $activated = (new LoginManager($this->container))
+            ->activateAccount($activationHash);
+            return (new AccountActivatedView($activated));
+
+        }
         return (new LoginView($loginForm, $registerForm));
-        
 
     }
 
