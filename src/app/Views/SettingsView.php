@@ -8,13 +8,13 @@ use App\Interfaces\ViewInterface;
 use App\Models\Profile\Profile;
 
 
-class ProfileView extends View implements ViewInterface
+class SettingsView extends View implements ViewInterface
 {
-    private string $cssFile = 'profile.css';
+    private string $cssFile = 'settings.css';
 
-    public function __construct(private Profile $profile, private string $errorMsg = '')
+    public function __construct(private Profile $profile, private string $errorMsg, private array $formData = [])
     {
-        $this->pageName = $this->profile->displayName;
+        $this->pageName = 'Settings';
     }
 
     public function display():string
@@ -22,7 +22,7 @@ class ProfileView extends View implements ViewInterface
         ob_start();
         
         include 'Components/Header.php';
-        include 'Components/Profile.php';
+        include 'Components/Settings.php';
         include 'Components/Footer.php';
         
         return (string)ob_get_clean();

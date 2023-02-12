@@ -10,10 +10,10 @@ class LoginView extends View implements ViewInterface
 {
     private string $activeForm;
     private string $cssFile = 'login.css';
-    public function __construct(private ?array $loginForm, private ?array $registerForm)
+    public function __construct(private string $errorMsg, private array $formData = [])
     {
         $this->pageName = 'Login';
-        $this->activeForm = is_null($registerForm)? 'login' : 'register';
+        $this->activeForm = key_exists('registerForm', $formData)? 'register' : 'login';
     }
 
     public function display():string

@@ -82,8 +82,8 @@ function expListTile(e) {
 }
 
 function openUploadPopup(e) {
-    let uploadPopup = document.querySelector('#uploadPopup');
-    let backgroundOverlay = document.querySelector('#backgroundOverlay');
+    let uploadPopup = document.querySelector('div.uploadPopup');
+    let backgroundOverlay = document.querySelector('div.backgroundOverlay');
 
     uploadPopup.classList.remove('invisible');
     backgroundOverlay.classList.remove('invisible');

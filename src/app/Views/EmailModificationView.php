@@ -7,18 +7,18 @@ namespace App\Views;
 use App\Interfaces\ViewInterface;
 
 
-class AccountActivatedView extends View implements ViewInterface
+class EmailModificationView extends View implements ViewInterface
 {
-    public function __construct(private bool $activated)
+    public function __construct()
     {
-        $this->pageName = 'Account Activation';
+        $this->pageName = 'Email modification';
     }
     public function display():string
     {
         ob_start();
         
         include 'Components/Header.php';
-        include 'Components/AccountActivated.php';
+        include 'Components/EmailModification.php';
         include 'Components/Footer.php';
         
         return (string)ob_get_clean();

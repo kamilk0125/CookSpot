@@ -13,7 +13,7 @@
         </div>
         <div id="Info">
             <div class="picture editable">
-              <img id="recipePicture" class="roundedPicture greenOutline" src="resource?type=img&path=<?php echo $this->recipe->picturePath ?>" alt="Recipe Picture">
+              <img id="recipePicture" class="uploadPicture roundedPicture greenOutline" src="resource?type=img&path=<?php echo $this->recipe->picturePath ?>" alt="Recipe Picture">
               <button type="button" class="addPictureBtn squared editElement <?php echo $this->newRecipe ? '' : 'invisible'; ?>">+</button>
             </div>      
             <div>

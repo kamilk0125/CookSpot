@@ -10,6 +10,6 @@
 </head>
 <body>
       <div class="header">
-            <img src = "resource?type=img&path=general/logo.svg" alt = "Logo">
+            <a href="/"><img src = "resource?type=img&path=general/logo.svg" alt = "Logo"></a>
       </div>
       <div id="pageContent">

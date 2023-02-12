@@ -16,7 +16,7 @@ class ResourceManager
     {
         $this->allowedPaths[] = self::COMMON_STORAGE_DIR;
         if(isset($_SESSION['currentUser'])){
-            $this->allowedPaths[] = $_SESSION['currentUser']->getStoragePath();
+            $this->allowedPaths[] = $_SESSION['currentUser']->getUserData()['storage'];
         }
         
     }
@@ -28,6 +28,7 @@ class ResourceManager
             if($accessGranted){
                 switch($type){
                     case 'img': $resource = (new ImgResource(self::STORAGE_DIR . $path)); break;
+                    case 'json': $resource = (new JsonResource(self::STORAGE_DIR . $path)); break;
                     default: $resource = (new Resource(self::STORAGE_DIR . $path));
                 }
             }
@@ -46,6 +47,9 @@ class ResourceManager
                 case 'upload':
                     $result = FileManager::moveUploadedFile($content, self::STORAGE_DIR . $path);
                     break;
+                case 'json':
+                    $result = FileManager::saveAsJson($content, self::STORAGE_DIR . $path);
+                    break;
             }
             
             if($result!==false)
@@ -61,15 +65,18 @@ class ResourceManager
         }
         return false;
     }
-    
 
+    public function createDir(string $path):bool
+    {
+        return mkdir(self::STORAGE_DIR . $path, 0755, true);
+    }
+    
     private function validateAccess(string $path):bool
     {
         $accessGranted =false;
-        foreach($this->allowedPaths as $validPath){
+        foreach($this->allowedPaths as $validPath){          
             $allowedPath = realpath(self::STORAGE_DIR . $validPath);
             $requestedPath = realpath(self::STORAGE_DIR . $path);
-
             $accessGranted = str_starts_with($requestedPath, $allowedPath);
             if($accessGranted) break;
         }
@@ -77,4 +84,6 @@ class ResourceManager
         return $accessGranted;
 
     }
+
+
 }

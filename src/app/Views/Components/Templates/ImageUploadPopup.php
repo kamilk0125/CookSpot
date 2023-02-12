@@ -1,10 +1,10 @@
-<div id="uploadPopup" class="uploadPopup invisible">
+<div class="uploadPopup invisible">
     <div class="popupHeader">
       <div>Upload file</div>
       <button type="button">✗</button>
     </div>
     <div class="popupBody">
-      <img id="imagePreview" class="roundedPicture greenOutline" src="resource?type=img&path=<?php echo $imagePreviewSrc ?? '' ?>" alt="Recipe Picture">
+      <img class="imagePreview roundedPicture greenOutline" src="resource?type=img&path=<?php echo $imagePreviewSrc ?? '' ?>" alt="Recipe Picture">
       <div>
         <div class="fileSelector">
             <label class="rounded" for="fileUploadInput">Choose file...</label>
@@ -17,4 +17,4 @@
       </div>
     </div>
 </div>
-<div id="backgroundOverlay" class="backgroundOverlay invisible"></div>
+<div class="backgroundOverlay invisible"></div>

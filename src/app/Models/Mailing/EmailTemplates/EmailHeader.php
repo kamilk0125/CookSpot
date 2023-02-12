@@ -12,7 +12,7 @@
             margin-top: 0%;
             margin: 0%;
             width: 100%;
-            padding: 0px;
+            padding: 15px;
         }
     </style>
     <meta charset="UTF-8">

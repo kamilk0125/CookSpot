@@ -1,8 +1,11 @@
+<label class = "form error <?php echo ($this->errorMsg === '') ? 'invisible' : '' ?>"><?php echo $this->errorMsg ?></label>
 <div id="profileInfo" class = "flexHorizontal">
-    <img id="profilePicture" class="roundedPicture" src="resource?type=img&path=<?php echo $this->profile->getProfilePicturePath() ?>" alt="Profile Picture">
+    <div class="picture editable">
+      <img id="profilePicture" class="roundedPicture" src="resource?type=img&path=<?php echo $this->profile->profilePicturePath ?>" alt="Profile Picture">
+      <a href="profile?view=settings"><button class="addPictureBtn squared editElement">⚙</button></a>
+    </div>
     <div>
       <h1 id="profileDisplayName"><?php echo $this->profile->displayName ?></h1>
-      <p id="profileDescription"><?php echo $this->profile->description ?></p>
     </div>
 </div>
 <div class="topNav">

@@ -1,0 +1,19 @@
+#Settings{
+    text-align: center;
+    background-color: white;
+}
+
+#userInfo{
+    display: inline-block;
+    text-align:right;
+    width: 700px;
+}
+
+#userInfo > label.form.error{
+    text-align: center;
+    display: block;
+}
+
+#userInfo > div.LabeledInput{
+    margin-right: 180px;
+}

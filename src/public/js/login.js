@@ -1,9 +1,9 @@
 
-const registerForm = document.forms['registerForm'];
-const registerInputFields = registerForm.querySelectorAll('input');
+const loginInfoForm = document.querySelector('form.loginInfoForm')
+const InputFields = loginInfoForm.querySelectorAll('input.validationInput');
 const formSelectBtns = document.querySelectorAll('button.formSelector');
 
-registerInputFields.forEach(field => {field.addEventListener('input', validateInput)});
+InputFields.forEach(field => {field.addEventListener('input', validateInput)});
 formSelectBtns.forEach(button => {button.addEventListener('click', selectForm)});
 
 const patterns = {
@@ -22,27 +22,28 @@ const errors = {
 }
 
 function onLoad(){
-    registerInputFields.forEach(field => {if(field.value !='') field.dispatchEvent(new Event('input'));});
+    InputFields.forEach(field => {if(field.value !='') field.dispatchEvent(new Event('input'));});
 }
 
 function validateInput(e){
     let validInput;
-    const submitBtn = registerForm.querySelector('button[type="submit"]');
-    const label = registerForm.querySelector('#'+e.target.id+'Label');
-    const passwordField = registerForm.querySelector('#password');
-    const confirmPasswordField = registerForm.querySelector('#confirmPassword');
+    const submitBtn = loginInfoForm.querySelector('button[type="submit"]');
+    const label = loginInfoForm.querySelector('#'+e.target.id+'Label');
+    const passwordField = loginInfoForm.querySelector('#password');
+    const confirmPasswordField = loginInfoForm.querySelector('#confirmPassword');
     
-        if(!registerForm.classList.contains('invisible')){
+        if(!loginInfoForm.classList.contains('invisible')){
             if(e.target.id == 'confirmPassword'){
                 validInput = (passwordField.value == e.target.value) && !passwordField.classList.contains('invalid');
             }
             else{
                 validInput = patterns[e.target.id].test(e.target.value);
-                if(e.target.id == 'password')
+                if(e.target.id == 'password'){
                     if(validInput)
                         confirmPasswordField.dispatchEvent(new Event('input'));
                     else
-                        confirmPasswordField.classList.add('invalid');
+                        confirmPasswordField.classList.add('invalid')
+                }
             }
             
             
@@ -50,7 +51,7 @@ function validateInput(e){
                 e.target.classList.remove('invalid');
                 e.target.classList.add('valid');
                 label.textContent='';
-                submitBtn.disabled = !validateForm(registerForm);
+                submitBtn.disabled = !validateForm(loginInfoForm);
                 submitBtn.disabled ? submitBtn.classList.add('disabled') : submitBtn.classList.remove('disabled');
                 
             }
@@ -59,15 +60,15 @@ function validateInput(e){
                 if(e.target.value != ''){
                     e.target.classList.add('invalid');
                     label.textContent = errors[e.target.id];
-                }         
+                }
+                submitBtn.disabled = true;   
                 submitBtn.classList.add('disabled');
             }
     }
 }
 
 function validateForm(form){
-    let formFields = form.querySelectorAll('input');
-    let submitBtn = form.querySelector('button[type="submit"]');
+    let formFields = form.querySelectorAll('input.validationInput');
     let validForm = true;
     
     formFields.forEach(field => {

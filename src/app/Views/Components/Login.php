@@ -5,9 +5,9 @@
             </div>
             <br>
             <form class = "<?php echo ($this->activeForm==='login') ? '' : 'invisible'; ?>" action="login" id = "loginForm" method="POST">
-                  <label class = "form error" for = "id"><?php echo $this->loginForm['error'] ?? '';?></label>
+                  <label class = "form error" for = "id"><?php echo $this->errorMsg ?? '';?></label>
                   <br>
-                  <input class = "form" type="text" name = "loginForm[id]" placeholder="username or email" value="<?php echo $this->loginForm['id'] ?? '';?>">
+                  <input class = "form" type="text" name = "loginForm[id]" placeholder="username or email" value="<?php echo $this->formData['loginForm']['id'] ?? '';?>">
                   <br>
                   <label class = "form" for = "id"></label>
                   <br>
@@ -16,27 +16,29 @@
                   <label class = "form" for = "password"></label>
                   <br>
                   <button type = "submit" name = "loginForm[submit]" class = "rounded">Log In</button>
+                  <br><br>
+                  <a href="login?view=passwordReset">Forgot your password?</a>
             </form>
-            <form class = "<?php echo ($this->activeForm==='register') ? '' : 'invisible'; ?>" action="login" id = "registerForm" method="POST">
-                  <label class = "form error" for = "id"><?php echo $this->registerForm['error'] ?? '';?></label>
+            <form class = "loginInfoForm <?php echo ($this->activeForm==='register') ? '' : 'invisible'; ?>" action="login" id = "registerForm" method="POST">
+                  <label class = "form error" for = "id"><?php echo $this->errorMsg ?? '';?></label>
                   <br>
-                  <input class = "form" type="text" name = "registerForm[username]" id = "username" placeholder="username" value="<?php echo $this->registerForm['username'] ?? '';?>">
+                  <input class = "form validationInput" type="text" name = "registerForm[username]" id = "username" placeholder="username" value="<?php echo $this->formData['registerForm']['username'] ?? '';?>">
                   <br>
                   <label class = "form error" for = "username" id = "usernameLabel"></label>
                   <br>
-                  <input class = "form " type="text" name = "registerForm[email]" id = "email" placeholder="email" value="<?php echo $this->registerForm['email'] ?? '';?>">
+                  <input class = "form validationInput" type="text" name = "registerForm[email]" id = "email" placeholder="email" value="<?php echo $this->formData['registerForm']['email'] ?? '';?>">
                   <br>
                   <label class = "form error" for = "email" id = "emailLabel"></label>
                   <br>
-                  <input class = "form" type="text" name = "registerForm[displayName]" id = "displayName" placeholder="display name" value="<?php echo $this->registerForm['displayName'] ?? '';?>">
+                  <input class = "form validationInput" type="text" name = "registerForm[displayName]" id = "displayName" placeholder="display name" value="<?php echo $this->formData['registerForm']['displayName'] ?? '';?>">
                   <br>
                   <label class = "form error" for = "displayName" id = "displayNameLabel"></label>
                   <br>
-                  <input class = "form" type="password" name = "registerForm[password]" id = "password" placeholder="password">
+                  <input class = "form validationInput" type="password" name = "registerForm[password]" id = "password" placeholder="password">
                   <br>
                   <label class = "form error" for = "password" id = "passwordLabel"></label>
                   <br>
-                  <input class = "form" type="password" name = "registerForm[confirmPassword]" id = "confirmPassword" placeholder="confirm password">
+                  <input class = "form validationInput" type="password" name = "registerForm[confirmPassword]" id = "confirmPassword" placeholder="confirm password">
                   <br>
                   <label class = "form error" for = "confirmPassword" id = "confirmPasswordLabel"></label>
                   <br>

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Addons\FileSystem;
 
 class FileManager{
+    public const PICTURE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif'];
+
     public static function moveUploadedFile(array $fileInfo, string $destination):bool
     {
         if($fileInfo['error'] === UPLOAD_ERR_OK)
@@ -54,8 +56,18 @@ class FileManager{
 
     public static function removeFile($filePath){
         $result = unlink($filePath);
-        // var_dump($result);
-        // var_dump($filePath);
         return $result;
+    }
+
+    public static function saveAsJson($content, string $destination):bool
+    {
+        $jsonContent = json_encode($content, JSON_UNESCAPED_UNICODE);
+        if($content !== false){
+            $result = file_put_contents($destination, $jsonContent);
+            if($result !==false)
+                return true;
+        }
+
+        return false;
     }
 }

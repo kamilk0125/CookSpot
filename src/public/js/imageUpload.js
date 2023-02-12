@@ -1,8 +1,8 @@
 const maxFileSizeMB = 10;
 const fileInput = document.querySelector('div.uploadPopup > div.popupBody > div > div.fileSelector > input[type="file"]');
 const fileLabel = document.querySelector('div.fileSelector > p');
-const actualImage = document.getElementById('recipePicture');
-const imagePreview = document.getElementById('imagePreview');
+const actualImage = document.querySelector('img.uploadPicture');
+const imagePreview = document.querySelector('div.uploadPopup > div.popupBody > img.imagePreview');
 const uploadDiscardBtn = document.querySelector('div.uploadPopup > div.popupHeader > button');
 const uploadBtn = document.querySelector('div.popupBody > div > button');
 fileInput.addEventListener('change', imageUpload);

@@ -136,6 +136,10 @@ input.form, textarea.form{
     border-color: #abaaaa;
 }
 
+label.form{
+    font-size: 22px;
+}
+
 input.form:focus{
     outline: none !important;
     border-color: #0667ac;
@@ -165,8 +169,8 @@ label.form.error{
 }
 
 button.disabled{
-    background-image: none;
-    background-color: #a1a1a1;
+    background-image: none !important;
+    background-color: #a1a1a1 !important;
 }
 
 .topNav {
@@ -418,10 +422,12 @@ div.deleteButton{
 
 div.picture.editable{
     position: relative;
+    width: 280px;
+    display: inline-block;
 }
 
 
-div.picture.editable > button.addPictureBtn{
+div.picture.editable > button.addPictureBtn, div.picture.editable > a > button.addPictureBtn{
     position: absolute;
     width: 70px;
     bottom:10%;
@@ -463,20 +469,31 @@ div.uploadPopup > div.popupBody{
     padding: 20px;
 }
 
+div.uploadPopup > div.popupBody > img.imagePreview{
+    width: 250px;
+    height: 250px;
+}
+
+
 div.fileSelector{
     display: inline-block;
     background-color: rgb(255, 255, 255);
     border: solid #7c7c7c 1px;
     font-size: 20px;
-    padding: 0 20px 0 0;
+    /* padding: 0 20px 0 0; */
     border-radius: 50px;
     margin-top: 30px;
     margin-bottom: 40px;
+    max-width: 100%;
 }
 
 div.fileSelector > p{
     display: inline-block;
     margin: 0;
+    max-width: 80%;
+    overflow:hidden;
+    transform: translateY(5px);
+    padding-right: 20px;
 }
 
 div.fileSelector > button{

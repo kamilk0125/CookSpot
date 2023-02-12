@@ -20,7 +20,7 @@ class App
 
     public function run(Request $request)
     {
-        if(AuthHelper::authorize($request)){
+        if(AuthHelper::authorize($request, $this->container)){
             echo (new Router($this->container))->resolve($request);
         }
         else{
