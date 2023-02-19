@@ -1,0 +1,70 @@
+#layout{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    min-height: 784px;
+}
+
+#leftSide{
+    height: inherit;
+}
+
+#newFriends{
+    border: none;
+}
+
+#profileBtn{
+    position: absolute;
+}
+
+#invitations{
+    height: inherit;
+}
+
+#invitationsList{
+    overflow: hidden;
+}
+
+#invitationsList > form > div.listTile{
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+#invitationsList > form > div.listTile > div{
+    align-items: center;
+}
+
+#invitationsList > form > div.listTile > div > img{
+    width: 70px;
+    height: 70px;
+    margin: 16px;
+}
+
+#friends{
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    
+}
+
+#friendsList{
+    border: none;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+#friendsList > a.Tile{
+    height: 300px;
+    width: 250px;
+    background-color: transparent;
+    background-image: none;
+    border-radius: 50px;
+}
+
+#friendsList > a.Tile > p, #friendsList > a.Tile > div.circleDetail{
+    display: none;
+}
+
+
+

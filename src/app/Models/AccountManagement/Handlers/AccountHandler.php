@@ -17,6 +17,7 @@ class AccountHandler{
         'usernameTaken' => 'This username is already taken',
         'emailTaken' => 'This email is already used for existing account',
         'accountNotFound' => 'Account with this email address does not exist',
+        'passwordResetRequestSent' => 'Password reset request already sent',
         'serverError' => 'Server error'
     ];
 
@@ -77,7 +78,7 @@ class AccountHandler{
     {
         try{
             $query = new SQLQuery($this->container);
-            $userInfo = $query->getTableRow('usersLoginInfo', ['username' => $id, 'email' => $id]);
+            $userInfo = $query->getTableRow('usersInfo', ['username' => $id, 'email' => $id]);
             if($userInfo!==false){
                 return true;
             }
@@ -98,7 +99,11 @@ class AccountHandler{
         $expirationDate = (new DateTime())->modify('+1 day');
         $query = new SQLQuery($this->container);
         try{
-            $userData = $query->getTableRow('usersLoginInfo', ['email' => $formData['email']]);
+            $userData = $query->getTableRow('usersInfo', ['email' => $formData['email']]);
+            $passwordResetRequest = $query->getTableRow('passwordResetRequests', ['userId' => $userData['id']]);
+            if($passwordResetRequest === false)
+                return self::ERRORS['passwordResetRequestSent'];
+                
             if($userData !== false){
                 $verificationHash = base64_encode(random_bytes(20));
                 $urlHash = urlencode($verificationHash);
@@ -130,6 +135,6 @@ class AccountHandler{
     }
 
     public function getAccountInfo(int $userId){
-        return (new SQLQuery($this->container))->getTableRow('usersLoginInfo', ['id' => $userId]);
+        return (new SQLQuery($this->container))->getTableRow('usersInfo', ['id' => $userId]);
     }
 }

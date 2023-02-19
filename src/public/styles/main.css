@@ -7,7 +7,6 @@ html{
 }
 
 body{
-    height: 100%;
     width: 100%;
     margin: 0%;
     background-image: linear-gradient(#D7E1EC,#FFFFFF);
@@ -16,6 +15,10 @@ body{
     overflow-x: hidden;
     /* position: relative; */
     font-family: 'Ubuntu', sans-serif;
+}
+
+*{
+    font-family: inherit;
 }
 
 #pageContent{
@@ -42,6 +45,49 @@ div.header{
     height: 100px;
     padding: 0px;
 
+}
+
+div.header.loggedIn{
+    text-align: left;
+}
+
+div.header.loggedIn > #logo{
+    margin-left: 50px;
+}
+
+
+#searchBar{
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+    max-width: 600px;
+    min-width: 200px;
+    white-space: nowrap;
+}
+
+
+#searchBar > input{
+    font-size: 26px;
+    padding: 10px;
+    margin: 0;
+    max-width: 400px;
+    width: 100%;
+    outline-color:#0667ac;
+}
+
+#searchBar > button{
+    margin-left: 0;
+    border-radius: 0;
+    transform: translate(-5px,-0.5px);
+}
+
+#logoutBtn{
+    position: absolute;
+    right: 20px;
+    top: 20px;
 }
 
 div.footer{
@@ -103,6 +149,7 @@ button.squared.red:hover:not(.disabled){
 button.squared:hover:not(.disabled), button.rounded:hover:not(.disabled), label.rounded:hover:not(.disabled){
     background-color: #073f68;
 }
+
 
 div.toggleSwitch{
     background-color: #0090f6;
@@ -269,7 +316,8 @@ div.listTile{
 }
 
 div.Tile, a.Tile{
-    background-color: rgb(192, 192, 192);
+    background-color: #8b8b8ba2;
+    background-image: linear-gradient(#CFD6E6,#E7EFF9);
     height: 410px;
     width: 300px;
     overflow: hidden;
@@ -329,7 +377,7 @@ div.circleDetail{
     border-color: #abaaaa;
 }
 
-div.Tile, a.Tile > div.circleDetail{
+div.Tile > div.circleDetail, a.Tile > div.circleDetail{
     position: absolute;
     right: 0;
     margin-right: 10px;

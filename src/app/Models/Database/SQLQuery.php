@@ -26,7 +26,7 @@ class SQLQuery
         return $stmt;
     }
 
-    public function getTableRow(string $table, array $selectors){
+    public function getTableRow(string $table, array $selectors, bool $multipleRows = false){
         $loopIndex = 0;
         $selectorsString = '';
         foreach($selectors as $column => $value)
@@ -37,10 +37,16 @@ class SQLQuery
             $selectorsString = $selectorsString . $column . ' = :' . $column;   
             $loopIndex++; 
         }
+        if(empty($selectors))
+            $selectorsString = '1=1';
+
         $queryString = 'SELECT * from ' . $table . ' WHERE ' . $selectorsString;
         
-        $queryResult = $this->executeQuery($queryString, $selectors)->fetch();
-        if($queryResult!==false){
+        if($multipleRows)
+            $queryResult = $this->executeQuery($queryString, $selectors)->fetchAll();
+        else
+            $queryResult = $this->executeQuery($queryString, $selectors)->fetch();
+        if($queryResult!==false && !$multipleRows){
             if(!$this->validateRowExpirationDate($table, $queryResult)){
                 return false;
             }
@@ -88,6 +94,8 @@ class SQLQuery
             $selectorsString = $selectorsString . $column . ' = :' . $column;   
             $loopIndex++; 
         }
+        if(empty($selectors))
+            $selectorsString = '1=1';
 
         $queryString = 'UPDATE ' . $table . ' SET ' . $valuesString . ' WHERE ' . $selectorsString;  
         

@@ -42,7 +42,7 @@ class SettingsHandler{
                     unset($settings['email']);
                 }
                 if(!empty($settings))
-                    (new SQLQuery($this->container))->updateTableRow('usersLoginInfo', ['id' => $accountInfo['id']], $settings);
+                    (new SQLQuery($this->container))->updateTableRow('usersInfo', ['id' => $accountInfo['id']], $settings);
             }
 
         }
@@ -112,7 +112,7 @@ class SettingsHandler{
                     if($passwordResetInfo !== false){
                         if($passwordResetInfo['verificationHash'] === $formData['verificationHash']){
                             $query->beginTransaction();    
-                            $query->updateTableRow('usersLoginInfo', ['id' => $userData['id']], ['authHash' => password_hash($formData['password'], PASSWORD_DEFAULT)]);
+                            $query->updateTableRow('usersInfo', ['id' => $userData['id']], ['authHash' => password_hash($formData['password'], PASSWORD_DEFAULT)]);
                             $query->deleteTableRow('passwordResetRequests', ['userId' => $userData['id']]);
                             $query->commit();
                         }
@@ -132,7 +132,7 @@ class SettingsHandler{
                 }
             }
             else if(password_verify($formData['currentPassword'], $userData['authHash'])){
-                $query->updateTableRow('usersLoginInfo', ['id' => $userData['id']], ['authHash' => password_hash($formData['password'], PASSWORD_DEFAULT)]);
+                $query->updateTableRow('usersInfo', ['id' => $userData['id']], ['authHash' => password_hash($formData['password'], PASSWORD_DEFAULT)]);
             }
             else{
                 $errorMsg = self::ERRORS['invalidPassword'];

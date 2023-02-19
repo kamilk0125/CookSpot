@@ -1,0 +1,39 @@
+#mainDiv{
+    text-align: center;
+    background-image: linear-gradient(#D7E1EC,#FFFFFF);
+}
+
+#centerDiv{
+    width: 810px;
+    /* margin-bottom: 20px; */
+    display: inline-block;
+    overflow: hidden;
+}
+
+#results{
+    min-height: 730px;
+    margin: 0;
+    padding: 0 0 20px 0;
+}
+
+#resultsHeader{
+    margin-bottom: 50px;
+    border: none;
+}
+
+#results > form > div.listTile{
+    align-items: center;
+    justify-content: space-between;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+#results > form > div.listTile > div{
+    align-items: center;
+}
+
+#results > form > div.listTile > div > img{
+    width: 70px;
+    height: 70px;
+    margin: 16px;
+}

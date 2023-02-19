@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Controllers;
 use App\Interfaces\ControllerInterface;
 use App\Main\Routing\Request;
-use App\Views\ResourceView;
 use App\Models\Resource\ResourceManager;
+use App\Views\Resource\ResourceView;
 
 class ResourceController implements ControllerInterface
 {

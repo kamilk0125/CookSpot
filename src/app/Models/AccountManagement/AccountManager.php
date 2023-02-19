@@ -10,11 +10,6 @@ use App\Models\AccountManagement\Handlers\AccountHandler;
 use App\Models\AccountManagement\Handlers\ConfirmationHandler;
 use App\Models\AccountManagement\Handlers\LoginHandler;
 use App\Models\AccountManagement\Handlers\SettingsHandler;
-use App\Models\Database\SQLQuery;
-use App\Models\Mailing\Mailer;
-use App\Models\Resource\ResourceManager;
-use DateTime;
-use Exception;
 
 class AccountManager
 {

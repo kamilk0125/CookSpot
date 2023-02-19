@@ -6,13 +6,12 @@ namespace App\Controllers;
 use App\Interfaces\ControllerInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
-use App\Models\AccountManagement\AccountManager;
-use App\Models\Profile\Profile;
+use App\Models\Profile\ProfileManager;
 use App\Models\Profile\Recipes\Recipe;
-use App\Views\EmailModificationView;
-use App\Views\ProfileView;
-use App\Views\RecipeView;
-use App\Views\SettingsView;
+use App\Views\Profile\EmailModificationView;
+use App\Views\Profile\ProfileView;
+use App\Views\Profile\RecipeView;
+use App\Views\Profile\SettingsView;
 
 class ProfileController implements ControllerInterface
 {
@@ -25,13 +24,13 @@ class ProfileController implements ControllerInterface
     {
         $currentUser = $request->getSuperglobal('SESSION', 'currentUser');
         $view = $request->getSuperglobal('GET', 'view');
-        $profile = new Profile($this->container, $currentUser);
+        $profileManager = new ProfileManager($this->container, $currentUser);
         $formData = $request->getSuperglobal('POST');
         $formFiles = $request->getSuperglobal('FILES');
         $errorMsg = '';
 
         if(!empty($formData)){
-            [$profile, $errorMsg] = $this->processForm($profile, $formData, $formFiles);
+            [$profileManager, $errorMsg] = $this->processForm($profileManager, $formData, $formFiles);
         }
 
         switch($view){
@@ -40,8 +39,8 @@ class ProfileController implements ControllerInterface
                 break;
             case 'recipe' :
                 $recipeId =  $request->getSuperglobal('GET', 'id');
-                if(array_key_exists($recipeId, $profile->myRecipes)){
-                    return (new RecipeView($profile->myRecipes[$recipeId], false, false));
+                if(array_key_exists($recipeId, $profileManager->recipes)){
+                    return (new RecipeView($profileManager->recipes[$recipeId], false, false));
                     break;
                 }
                 return "<script>location.href='/profile';</script>";
@@ -49,20 +48,20 @@ class ProfileController implements ControllerInterface
             case 'settings' :
                 if($errorMsg === '' && key_exists('settingsForm', $formData)){
                     if(key_exists('email', $formData['settingsForm'])){
-                        if($formData['settingsForm']['email'] !== $profile->getUserData()['email'])
+                        if($formData['settingsForm']['email'] !== $profileManager->getUserData()['email'])
                             return new EmailModificationView;
                     }
                     return "<script>location.href='/profile';</script>";
                 }
-                return (new SettingsView($profile, $errorMsg, $formData));
+                return (new SettingsView($profileManager, $errorMsg, $formData));
                 break;
-            default : return (new ProfileView($profile, $errorMsg));
+            default : return (new ProfileView($profileManager, $errorMsg));
         }
 
         
     }
 
-    private function processForm(Profile $profile, array $form, array $files){
+    private function processForm(ProfileManager $profileManager, array $form, array $files){
         $errorMsg = '';
 
         if(array_key_exists('recipeForm', $form)){
@@ -70,13 +69,13 @@ class ProfileController implements ControllerInterface
             $recipePictureInfo = $files['recipePicture'];
 
             if($recipeFormData['submit'] === 'newRecipe'){
-                $errorMsg = $profile->addNewRecipe($recipeFormData, $recipePictureInfo);
+                $errorMsg = $profileManager->addNewRecipe($recipeFormData, $recipePictureInfo);
             }
-            else if(array_key_exists($recipeFormData['submit'], $profile->myRecipes)){
-                $errorMsg = $profile->modifyRecipe($recipeFormData, $recipePictureInfo);
+            else if(array_key_exists($recipeFormData['submit'], $profileManager->recipes)){
+                $errorMsg = $profileManager->modifyRecipe($recipeFormData, $recipePictureInfo);
             }
             else if($recipeFormData['submit'] === 'delete'){
-                if(!$profile->removeRecipe($recipeFormData['id'])){
+                if(!$profileManager->removeRecipe($recipeFormData['id'])){
                     $errorMsg = 'Server Error';
                 }
             }
@@ -84,10 +83,10 @@ class ProfileController implements ControllerInterface
         else if(array_key_exists('settingsForm', $form)){
             $settingsFormData = $form['settingsForm'];
             $profilePictureInfo = $files['profilePicture'];
-            $errorMsg = $profile->modifySettings($settingsFormData, $profilePictureInfo);
+            $errorMsg = $profileManager->modifySettings($settingsFormData, $profilePictureInfo);
         }
 
-        return [$profile, $errorMsg];
+        return [$profileManager, $errorMsg];
     }
     
 

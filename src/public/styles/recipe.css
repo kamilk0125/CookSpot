@@ -1,6 +1,5 @@
-#imagePreview{
-    width: 250px;
-    height: 250px;
+img.imagePreview{
+    outline-color: #24d95e;
 }
 
 #Info{

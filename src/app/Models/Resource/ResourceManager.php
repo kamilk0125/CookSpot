@@ -11,12 +11,13 @@ class ResourceManager
     private array $allowedPaths;
     private const STORAGE_DIR = '../storage/';
     public const COMMON_STORAGE_DIR = 'general/';
+    public const PUBLIC_STORAGE_DIR = 'public/';
 
     public function __construct()
     {
-        $this->allowedPaths[] = self::COMMON_STORAGE_DIR;
+        $this->allowedPaths = [self::COMMON_STORAGE_DIR, self::PUBLIC_STORAGE_DIR];
         if(isset($_SESSION['currentUser'])){
-            $this->allowedPaths[] = $_SESSION['currentUser']->getUserData()['storage'];
+            $this->allowedPaths[] = $_SESSION['currentUser']->getUserData()['storagePath'];
         }
         
     }
@@ -28,7 +29,6 @@ class ResourceManager
             if($accessGranted){
                 switch($type){
                     case 'img': $resource = (new ImgResource(self::STORAGE_DIR . $path)); break;
-                    case 'json': $resource = (new JsonResource(self::STORAGE_DIR . $path)); break;
                     default: $resource = (new Resource(self::STORAGE_DIR . $path));
                 }
             }

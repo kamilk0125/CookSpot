@@ -36,4 +36,13 @@
     margin-right: 80px;
 }
 
+#friendsBtn{
+    margin-left: 100px;
+    margin-right: auto;
+}
+#recipeList > a.Tile > img{
+    outline-color: #24d95e;
+}
+
+
 

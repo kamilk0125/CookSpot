@@ -9,14 +9,14 @@ use App\Interfaces\ControllerInterface;
 use App\Models\AccountManagement\AccountManager;
 use App\Main\Routing\Request;
 use App\Models\AccountManagement\User;
-use App\Views\AccountActivatedView;
-use App\Views\AccountCreatedView;
-use App\Views\EmailVerificationView;
-use App\Views\LoginView;
-use App\Views\PasswordChangedView;
-use App\Views\PasswordModificationView;
-use App\Views\PasswordResetRequestView;
-use App\Views\PasswordResetView;
+use App\Views\AccountManagement\AccountActivatedView;
+use App\Views\AccountManagement\AccountCreatedView;
+use App\Views\AccountManagement\EmailVerificationView;
+use App\Views\AccountManagement\LoginView;
+use App\Views\AccountManagement\PasswordChangedView;
+use App\Views\AccountManagement\PasswordModificationView;
+use App\Views\AccountManagement\PasswordResetRequestView;
+use App\Views\AccountManagement\PasswordResetView;
 
 class LoginController implements ControllerInterface
 {
@@ -76,6 +76,9 @@ class LoginController implements ControllerInterface
                 else
                     return "<script>location.href='/';</script>";
                 break;
+            case 'logout':
+                unset($_SESSION['currentUser']);
+                $currentUser = null;
             default:
                 if(!is_null($currentUser))
                     return "<script>location.href='/';</script>";

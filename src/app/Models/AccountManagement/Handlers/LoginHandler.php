@@ -28,10 +28,11 @@ class LoginHandler{
         
         try{
             $valid = false;
-            $userInfo = (new SQLQuery($this->container))->getTableRow('usersLoginInfo', ['username' => $id, 'email' => $id]);
+            $userInfo = (new SQLQuery($this->container))->getTableRow('usersInfo', ['username' => $id, 'email' => $id]);
             if($userInfo !== false){
                 if(password_verify($password, $userInfo['authHash'])){
-                    $currentUser = new User($userInfo['username'], $userInfo['displayName'], $userInfo['email'], $userInfo['id'], 0, true);
+                    $currentUser = new User($userInfo['id']);
+                    $currentUser->updateUserSettings($userInfo);
                     $valid = true;
                 }
             }

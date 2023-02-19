@@ -8,22 +8,20 @@ use App\Models\Resource\ResourceManager;
 
 class User
 {
-    private string $storage;
     private const DIRECTORIES = [
         'profile/images/recipes/'
     ];
 
     public function __construct(
+        private int $id,
         private string $username = '',
         private string $displayName = '',
         private string $email = '',
-        private int $id = 0, 
-        private int $authLevel = 0, 
-        private bool $isActive = false
-        )
+        private string $picturePath = '',
+        private string $storagePath = ''
+    )
     {
-        $this->storage = 'users/user' . $this->id . '/';
-
+        $this->storagePath = 'users/user' . $this->id . '/';
     }
 
     public function getUserData(){
@@ -32,9 +30,8 @@ class User
             'username' => $this->username,
             'displayName' => $this->displayName,
             'email' => $this->email,
-            'storage' => $this->storage,
-            'authLevel' => $this->authLevel,
-            'isActive' => $this->isActive   
+            'storagePath' => $this->storagePath,
+            'picturePath' => $this->picturePath   
         ];
     }
 
@@ -48,7 +45,7 @@ class User
 
     public function createStorageDir(){
         foreach(self::DIRECTORIES as $dir){
-            (new ResourceManager())->createDir($this->storage . $dir);
+            (new ResourceManager())->createDir($this->storagePath . $dir);
         }
     }
 

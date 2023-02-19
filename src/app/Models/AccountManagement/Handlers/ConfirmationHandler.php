@@ -7,6 +7,7 @@ namespace App\Models\AccountManagement\Handlers;
 use App\Main\Container\Container;
 use App\Models\AccountManagement\User;
 use App\Models\Database\SQLQuery;
+use App\Models\Resource\ResourceManager;
 use Exception;
 
 class ConfirmationHandler{
@@ -24,7 +25,7 @@ class ConfirmationHandler{
             if($userInfo!== false){
                 if($userInfo['verificationHash'] === $verificationHash){
                     $query->beginTransaction();
-                    $query->updateTableRow('usersLoginInfo', ['id' => $userId], ['email' => $userInfo['newEmail']]);
+                    $query->updateTableRow('usersInfo', ['id' => $userId], ['email' => $userInfo['newEmail']]);
                     $query->deleteTableRow('emailVerifications', ['userId' => $userId]);
                     $query->commit();
                     return true;
@@ -47,8 +48,9 @@ class ConfirmationHandler{
             if($userInfo!== false){
                 if($userInfo['activationHash'] === $activationHash){
                     unset($userInfo['id'], $userInfo['activationHash'], $userInfo['expirationDate']);
+                    $userInfo['picturePath'] = ResourceManager::COMMON_STORAGE_DIR . 'defaultProfilePicture.png';
                     $query->beginTransaction();
-                    $query->insertTableRow('usersLoginInfo', $userInfo);
+                    $query->insertTableRow('usersInfo', $userInfo);
                     $userId = intval($query->lastInsertId());
                     (new User(id: $userId))->createStorageDir();
                     $query->deleteTableRow('inactiveAccounts', ['email' => $userInfo['email']]);
