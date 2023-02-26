@@ -220,6 +220,10 @@ button.disabled{
     background-color: #a1a1a1 !important;
 }
 
+a.disabled{
+    pointer-events: none;
+}
+
 .topNav {
     display: flex;
     flex-direction: row;

@@ -11,12 +11,42 @@ use App\Views\Common\View;
 class ProfileView extends View implements ViewInterface
 {
     private string $cssFile = 'profile.css';
-    private array $userInfo;
+    private array $profileData;
+    private array $friendsForm;
 
-    public function __construct(private ProfileManager $profileManager, private string $errorMsg = '')
+    public function __construct(array $modelData)
     {
-        $this->userInfo = $this->profileManager->getUserData();
-        $this->pageName = $this->userInfo['displayName'];
+        $this->profileData = $modelData['profileData'];
+        $this->pageName = $this->profileData['profileInfo']['displayName'];
+
+        if($this->profileData['publicProfile']){
+            $this->friendsForm['btnType'] = 'submit';
+            $relation = $this->profileData['relation'];
+            switch($relation['status']){
+                case 'friend':
+                    $this->friendsForm['btnText'] = '✓ Friends';
+                    $this->friendsForm['btnClass'] = 'disabled';
+                    break;
+                case 'invitationReceived':
+                    $this->friendsForm['action'] = 'answerInvitation';
+                    $this->friendsForm['btnText'] = 'Accept Invitation';
+                    $this->friendsForm['btnName'] = 'args[response]';
+                    $this->friendsForm['btnValue'] = '1';
+                    $this->friendsForm['args'] = ['args[invitationId]' => $relation['invitationId']];
+                    break;
+                case 'invitationSent':
+                    $this->friendsForm['btnText'] = '✓ Invitation Sent';
+                    $this->friendsForm['btnClass']  = 'disabled';
+                    break;
+                default:
+                    $this->friendsForm['action'] = 'newInvitation';
+                    $this->friendsForm['btnText'] = 'Add to friends';
+                    $this->friendsForm['btnName'] = 'args[friendId]';
+                    $this->friendsForm['btnValue'] = $this->profileData['profileInfo']['id'];
+            }
+        }
+        else
+            $this->friendsForm['btnText'] = 'Friends';
     }
 
     public function display():string

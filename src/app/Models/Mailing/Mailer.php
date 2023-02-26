@@ -55,18 +55,4 @@ class Mailer{
         }
     }
 
-    public function generateMessageFromTemplate(string $template, array $args=[]){
-        // $logoFilePath = (new ResourceManager())->getResource('img', 'general/logo.png')->path;
-        // var_dump($logoFilePath);
-        // $this->mail->addAttachment('logo.png', 'logo.png');
-        // $this->mail->addEmbeddedImage('logo.png', 'logo');
-
-        ob_start();
-        include 'EmailTemplates/EmailHeader.php';
-        include 'EmailTemplates/' . $template;
-        include 'EmailTemplates/EmailFooter.php';
-        
-        return (string)ob_get_clean();
-
-    }
 }

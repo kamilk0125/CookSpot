@@ -1,5 +1,6 @@
 <form action="<?php echo $formTarget ?? '';?>" method="POST">
-    <input class="invisible" type="text" name="action" value="<?php echo $formHandler ?? '';?>">
+    <input class="invisible" type="text" name="handler" value="<?php echo $formHandler ?? '';?>">
+    <input class="invisible" type="text" name="action" value="<?php echo $formAction ?? '';?>">
     <?php 
         foreach($formArgs ?? [] as $argName => $value){
             echo "<input class='invisible' type='text' name='{$argName}' value='{$value}'>";
@@ -8,7 +9,7 @@
     <div class="listTile flexHorizontal">
         <div class="flexHorizontal">    
             <img class="roundedPicture" src="<?php echo $imageSrc ?? ''; ?>" alt="">
-            <h2><?php echo $headerText ?? ''; ?></h2>
+            <a href="<?php echo $redirectLink ?? ''; ?>"><h2><?php echo $headerText ?? ''; ?></h2></a>
         </div>
         <div>
             <button 

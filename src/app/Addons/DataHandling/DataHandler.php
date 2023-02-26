@@ -27,9 +27,15 @@ class DataHandler{
         return $array;
     }
 
-    public static function mapMethodNamedArgs(object $object, string $method, array $args){
+    public static function hasAttribute(object $object, string $method, string $attribute){
+        $reflectionMethod = new ReflectionMethod($object, $method);
+        return !empty($reflectionMethod->getAttributes($attribute));
+    }
+
+    public static function mapMethodArgs(object $object, string $method, array $args){
+        $reflectionMethod = new ReflectionMethod($object, $method);
         $mappedArgs = [];
-        $parameters = (new ReflectionMethod($object, $method))->getParameters();
+        $parameters = $reflectionMethod->getParameters();
         foreach($parameters as $parameter){
             if(key_exists($parameter->name, $args)){
                 $arg = $args[$parameter->name];
@@ -40,8 +46,11 @@ class DataHandler{
                 }
                 $mappedArgs[] = $arg;
             }  
+            else if($parameter->isDefaultValueAvailable()){
+                $mappedArgs[] = $parameter->getDefaultValue();
+            }
             else
-                $mappedArgs[] = $parameter->isDefaultValueAvailable() ?  $parameter->getDefaultValue() : null;
+                $mappedArgs = null;
         }
 
         return $mappedArgs;

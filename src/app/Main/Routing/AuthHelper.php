@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Main\Routing;
 
 use App\Main\Container\Container;
-use App\Models\AccountManagement\Handlers\AccountHandler;
+use App\Models\Login\Handlers\AccountHandler;
 
 class AuthHelper
 {
@@ -25,7 +25,7 @@ class AuthHelper
     public static function updateUserInfo(Request $request, Container $container){
         $currentUser = $request->getSuperglobal('SESSION', 'currentUser');
         if(!is_null($currentUser)){
-            $userData = (new AccountHandler($container))->getAccountInfo($currentUser->getUserData()['id']);
+            $userData = (new AccountHandler($container))->getAccountInfo($currentUser->getUserData('id'));
             if($userData!==false)
                 $currentUser->updateUserSettings($userData);
             else

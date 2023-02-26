@@ -47,7 +47,7 @@ class Request implements RequestInterface
     }
 
     public function setSuperglobal(string $name, ...$args){
-        if(count($args)){
+        if(count($args)>0){
             $keys = array_slice($args,0,-1);
             $value = end($args);
             if(key_exists($name, $this->superglobals)){

@@ -34,7 +34,7 @@ function addTile(e){
             elementNr = document.querySelectorAll('#ingredientsList > div.listTile').length;
             deleteBtn = listTile.querySelector('div.deleteButton > button');
             header = listTile.querySelector('div.listTile > textarea');
-            header.setAttribute('name', 'recipeForm[ingredients]['+elementNr+']');
+            header.setAttribute('name', 'args[recipeInfo][ingredients]['+elementNr+']');
             header.innerText = 'Ingredient '+(elementNr+1);
             ingredientsList.appendChild(listTile);
             appendedListTile = ingredientsList.querySelectorAll('div.listTile')[elementNr];
@@ -48,9 +48,9 @@ function addTile(e){
             let expBtn = listTileExp.querySelector('div.listTile > div > button.expandButton');
             let description = listTileExp.querySelector('div.listTile.listTileDetails > textarea');
             expBtn.addEventListener('click', expListTile);
-            header.setAttribute('name', 'recipeForm[instructions]['+elementNr+'][header]');
+            header.setAttribute('name', 'args[recipeInfo][instructions]['+elementNr+'][header]');
             header.innerText = 'Step '+(elementNr+1);
-            description.setAttribute('name', 'recipeForm[instructions]['+elementNr+'][description]');
+            description.setAttribute('name', 'args[recipeInfo][instructions]['+elementNr+'][description]');
             description.innerText = '';
             instructionsList.appendChild(listTileExp);
             appendedListTile = instructionsList.querySelectorAll('div.listTileExp')[elementNr];
@@ -174,14 +174,14 @@ function discardChanges(e){
 function deleteTile(e){
     tile = e.target.parentNode.parentNode;
     removeElement(tile); 
-    renumberFormElements(ingredientsList, 'div.listTile > textarea', 'recipeForm[ingredients][$elementNr]');
+    renumberFormElements(ingredientsList, 'div.listTile > textarea', 'args[recipeInfo][ingredients][$elementNr]');
 }
 
 function deleteTileExp(e){
     tile = e.target.parentNode.parentNode.parentNode;
     removeElement(tile); 
-    renumberFormElements(instructionsList, 'div.listTile.listTileHeader > textarea', 'recipeForm[instructions][$elementNr][header]');
-    renumberFormElements(instructionsList, 'div.listTile.listTileDetails > textarea', 'recipeForm[instructions][$elementNr][description]');
+    renumberFormElements(instructionsList, 'div.listTile.listTileHeader > textarea', 'args[recipeInfo][instructions][$elementNr][header]');
+    renumberFormElements(instructionsList, 'div.listTile.listTileDetails > textarea', 'args[recipeInfo][instructions][$elementNr][description]');
 }
 
 

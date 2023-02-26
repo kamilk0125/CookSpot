@@ -5,15 +5,25 @@ declare(strict_types=1);
 namespace App\Views\Profile;
 
 use App\Interfaces\ViewInterface;
-use App\Models\Profile\Recipes\Recipe;
+use App\Models\Profile\Objects\Recipe;
 use App\Views\Common\View;
 
 class RecipeView extends View implements ViewInterface
 {
     private string $cssFile = 'recipe.css';
+    private Recipe $recipe;
+    private bool $newRecipe;
+    private bool $readOnly;
+    private array $formData;
+    private string $errorMsg;
 
-    public function __construct(private Recipe $recipe, private bool $newRecipe = true, private bool $readOnly = true)
+    public function __construct(array $modelData)
     {
+        $this->recipe = $modelData['recipeData']['recipeContent'];
+        $this->newRecipe = $modelData['recipeData']['newRecipe'] ?? false;
+        $this->formData = $modelData['formData'] ?? [];
+        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
+        $this->readOnly = $modelData['recipeData']['readOnly'] ?? false;
         $this->pageName = $this->recipe->name;
     }
 

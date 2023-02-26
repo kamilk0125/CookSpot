@@ -11,9 +11,13 @@ use App\Views\Common\View;
 class SearchView extends View implements ViewInterface
 {
     private string $cssFile = 'search.css';
+    private array $searchResults;
+    private string $searchKeyword;
 
-    public function __construct(private SearchManager $searchManager, private array $formData)
+    public function __construct(array $modelData)
     {
+        $this->searchResults = $modelData['resultsList'];
+        $this->searchKeyword = $modelData['keyword'] ?? '';
         $this->pageName = 'Search';
     }
 

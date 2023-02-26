@@ -6,17 +6,14 @@ namespace App\Controllers;
 
 use App\Main\Container\Container;
 use App\Interfaces\ControllerInterface;
-use App\Models\AccountManagement\AccountManager;
 use App\Main\Routing\Request;
-use App\Models\AccountManagement\User;
-use App\Views\AccountManagement\AccountActivatedView;
-use App\Views\AccountManagement\AccountCreatedView;
-use App\Views\AccountManagement\EmailVerificationView;
-use App\Views\AccountManagement\LoginView;
-use App\Views\AccountManagement\PasswordChangedView;
-use App\Views\AccountManagement\PasswordModificationView;
-use App\Views\AccountManagement\PasswordResetRequestView;
-use App\Views\AccountManagement\PasswordResetView;
+use App\Models\Login\LoginModel;
+use App\Views\Login\AccountCreatedView;
+use App\Views\Login\LoginView;
+use App\Views\Login\PasswordChangedView;
+use App\Views\Login\PasswordModificationView;
+use App\Views\Login\PasswordResetRequestView;
+use App\Views\Login\PasswordResetView;
 
 class LoginController implements ControllerInterface
 {
@@ -27,92 +24,43 @@ class LoginController implements ControllerInterface
 
     public function processRequest(Request $request)
     {
-        $currentUser = $request->getSuperglobal('SESSION', 'currentUser');
-        $view = $request->getSuperglobal('GET', 'view');
-        $formData = $request->getSuperglobal('POST');
-        $errorMsg = '';
+        $requestedView = $request->getSuperglobal('GET', 'view');
 
-        if(!empty($formData)){
-            [$currentUser, $errorMsg] = $this->processForm($currentUser, $formData);
+        $modelData = (new LoginModel($this->container))->processRequest($request);
 
-            if($errorMsg === ''){
-                if(!is_null($currentUser)){
-                    $request->setSuperglobal('SESSION','currentUser',$currentUser);
-                }
-                if(key_exists('registerForm', $formData)){
-                    return new AccountCreatedView;
-                }
-                if(key_exists('passwordResetForm', $formData)){
-                    return new PasswordResetRequestView;
-                }
-                if(key_exists('passwordForm', $formData)){
-                    return new PasswordChangedView;
-                }
-                return "<script>location.href='/';</script>";
-            }
-        }
+        return $this->evaluateView($requestedView, $modelData);
+    }
+    
+    private function evaluateView(?string $requestedView, array $modelData){
+        if(isset($modelData['currentUser']))
+            return $this->redirect('');
+        if(isset($modelData['invalidRequest']))
+            return $this->redirect('login');
 
-        switch($view){
-            case 'activate':
-                $activated = (new AccountManager($this->container))->emailConfirmation($request, 'activate');
-                return (new AccountActivatedView($activated));
+        switch(true){
+            case isset($modelData['formResult']['accountCreated']):
+                return new AccountCreatedView;
                 break;
-            case 'verify':
-                $verified = (new AccountManager($this->container))->emailConfirmation($request, 'verify');
-                return new EmailVerificationView($verified);
+            case isset($modelData['formResult']['passwordChanged']):
+                return new PasswordChangedView;
                 break;
-            case 'passwordReset':
-                $valid = (new AccountManager($this->container))->emailConfirmation($request, 'passwordReset');
-                $userId = $request->getSuperglobal('GET', 'id');
-                $verificationHash = $request->getSuperglobal('GET', 'hash');
-                if(!is_null($userId))
-                    return new PasswordModificationView($valid, $errorMsg, $userId, $formData, true, $verificationHash);
-                else
-                    return new PasswordResetView($errorMsg, $formData);
+            case isset($modelData['formResult']['passwordResetRequested']):
+                return new PasswordResetRequestView;
                 break;
-            case 'changePassword':
-                if(!is_null($currentUser))
-                    return new PasswordModificationView(true, $errorMsg, $currentUser->getUserData()['id'], $formData);
-                else
-                    return "<script>location.href='/';</script>";
+            case $requestedView === 'passwordReset':
+                return new PasswordResetView($modelData);
                 break;
-            case 'logout':
-                unset($_SESSION['currentUser']);
-                $currentUser = null;
-            default:
-                if(!is_null($currentUser))
-                    return "<script>location.href='/';</script>";
-                else
-                    return (new LoginView($errorMsg, $formData));
-        }
-
-        if(!is_null($currentUser)){
-            return "<script>location.href='/';</script>";
+            case ($requestedView === 'passwordReset' || $requestedView === 'changePassword') && isset($modelData['requestType']):
+                return new PasswordModificationView($modelData);
+                break;
+            default: 
+                return new LoginView($modelData);
         }
     }
 
-    private function processForm(?User $currentUser, array $form){
-        if(key_exists('registerForm', $form)){  
-            $registerFormData = $form['registerForm'];       
-            $errorMsg = (new AccountManager($this->container))->registerAccount($registerFormData);    
-        }
-        else if(key_exists('loginForm', $form)){
-            $loginFormData = $form['loginForm'];  
-            [$currentUser, $errorMsg] =  (new AccountManager($this->container))->LogIn($loginFormData);
-        }
-        else if(key_exists('passwordForm', $form)){
-            $passwordFormData = $form['passwordForm'];       
-            $errorMsg = (new AccountManager($this->container))->modifyPassword($passwordFormData);
-        }
-        else if(key_exists('passwordResetForm', $form)){
-            $passwordResetFormData = $form['passwordResetForm'];       
-            $errorMsg = (new AccountManager($this->container))->resetPassword($passwordResetFormData);
-        }
-
-        return [$currentUser, $errorMsg];
-    
+    private function redirect(string $location){
+        return "<script>location.href='/{$location}';</script>";
     }
 
-    
 
 }

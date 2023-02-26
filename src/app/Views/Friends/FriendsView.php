@@ -11,9 +11,13 @@ use App\Views\Common\View;
 class FriendsView extends View implements ViewInterface
 {
     private string $cssFile = 'friends.css';
+    private array $friendsList;
+    private array $receivedInvitations;
 
-    public function __construct(private FriendsManager $friendsManager)
+    public function __construct(array $modelData)
     {
+        $this->friendsList = $modelData['friendsData']['friendsList'];
+        $this->receivedInvitations = $modelData['friendsData']['receivedInvitations'];
         $this->pageName = 'Friends';
     }
 

@@ -4,20 +4,21 @@
             <div id="resultsHeader" class="itemContainer">
                 <h2>Search Results</h2>
             </div>    
-            <h2 class="<?php echo (empty($this->searchManager->searchResults) && !empty($this->formData)) ? '' : 'invisible';?>">No Results</h2>
+            <h2 class="<?php echo (empty($this->searchResults) && (strlen($this->searchKeyword) > 0)) ? '' : 'invisible';?>">No Results</h2>
                 <?php
-                    foreach($this->searchManager->searchResults as $result){
-                        $redirectLink = '';
+                    foreach($this->searchResults as $result){
+                        $redirectLink = "profile?view=user&id={$result['id']}";
                         $imageSrc = 'resource?type=img&path=' . $result['picturePath'];
                         $headerText = $result['displayName'];
-                        switch($result['relationStatus']){
+                        $formHandler = 'friendsHandler';
+                        switch($result['relation']['status']){
                             case 'friend':
                                 $leftBtnText = '✓ Friends';
                                 $leftBtnDisabled = true;
                                 $leftBtnClass = 'disabled';
                                 break;
                             case 'invitationReceived':
-                                $formHandler = 'answerInvitation';
+                                $formAction = 'answerInvitation';
                                 $leftBtnText = 'Accept Invitation';
                                 $leftBtnName = 'args[response]';
                                 $leftBtnValue = 'true';
@@ -29,7 +30,7 @@
                                 $leftBtnClass = 'disabled';
                                 break;
                             default:
-                                $formHandler = 'newInvitation';
+                                $formAction = 'newInvitation';
                                 $leftBtnText = 'Add to friends';
                                 $leftBtnName = 'args[friendId]';
                                 $leftBtnValue = $result['id'];

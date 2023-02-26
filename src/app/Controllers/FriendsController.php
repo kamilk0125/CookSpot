@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Addons\DataHandling\DataHandler;
 use App\Interfaces\ControllerInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
-use App\Models\Friends\FriendsManager;
+use App\Models\Friends\FriendsModel;
 use App\Views\Friends\FriendsView;
 
 class FriendsController implements ControllerInterface
@@ -20,41 +19,23 @@ class FriendsController implements ControllerInterface
 
     public function processRequest(Request $request)
     {
-        $currentUser = $request->getSuperglobal('SESSION', 'currentUser');
-        $view = $request->getSuperglobal('GET', 'view');
-        $friendsManager = new FriendsManager($this->container, $currentUser);
-        $formData = $request->getSuperglobal('POST');
-        $errorMsg = '';
+        $requestedView = $request->getSuperglobal('GET', 'view');
 
-        if(!empty($formData)){
-            [$friendsManager, $errorMsg] = $this->processForm($friendsManager, $formData);
-        }
+        $modelData = (new FriendsModel($this->container))->processRequest($request);
 
-        switch($view){
-
-            default : return (new FriendsView($friendsManager));
-        }
-
-        
-    }
-
-    private function processForm(FriendsManager $friendsManager, array $form){
-        $errorMsg = '';
-        $action = $form['action'];
-
-        if(method_exists($friendsManager, $action)){
-            if(key_exists('args', $form))
-            $args = DataHandler::mapMethodNamedArgs($friendsManager, $action, $form['args']);
-            else
-                $args = [];
-
-            $errorMsg = $friendsManager->{$action}(...$args);
-        }
-
-
-        return [$friendsManager, $errorMsg];
+        return $this->evaluateView($requestedView, $modelData);
     }
     
+    private function evaluateView(?string $requestedView, array $modelData){
+        if(isset($modelData['invalidRequest']))
+            return $this->redirect('friends');
+        
+        return new FriendsView($modelData);
+    }
+
+    private function redirect(string $location){
+        return "<script>location.href='/{$location}';</script>";
+    }
 
 
 }

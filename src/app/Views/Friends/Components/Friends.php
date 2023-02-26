@@ -4,8 +4,8 @@
             <div id="friendsHeader" class="ContainerHeader"><h2>Friends</h2></div>
             <div id="friendsList" class="itemContainer">
                 <?php
-                    foreach($this->friendsManager->friendsList as $friend){
-                        $redirectLink = '';
+                    foreach($this->friendsList as $friend){
+                        $redirectLink = "profile?view=user&id={$friend['id']}";
                         $imageSrc = 'resource?type=img&path=' . $friend['picturePath'];
                         $headerText = $friend['displayName'];
                         include(__DIR__ . '/../../Common/Components/Templates/Tile.php');
@@ -18,10 +18,11 @@
         <div class="ContainerHeader"><h2>Invitations</h2></div>
         <div id="invitationsList" class = "listContainer">
                 <?php
-                foreach($this->friendsManager->receivedInvitations as $invitation){
-                    $redirectLink = '';
+                foreach($this->receivedInvitations as $invitation){
+                    $redirectLink = "profile?view=user&id={$invitation['senderId']}";
                     $formTarget = 'friends';
-                    $formHandler = 'answerInvitation';
+                    $formHandler = 'friendsHandler';
+                    $formAction = 'answerInvitation';
                     $formArgs = ['args[invitationId]' => $invitation['invitationId']];
                     $imageSrc = 'resource?type=img&path=' . $invitation['picturePath'];
                     $headerText = $invitation['displayName'];

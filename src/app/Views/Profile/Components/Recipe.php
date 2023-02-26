@@ -1,28 +1,33 @@
-<form id="recipeForm" action="profile" method="POST" enctype="multipart/form-data">
+<form id="deleteForm" action="profile" method="POST">
+  <input class="invisible" name="handler" type="text" value="recipesHandler">
+  <input class="invisible" name="args[recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
+</form>
+<form id="recipeForm" action="<?php echo "profile?view=recipe&id={$this->recipe->id}";?>" method="POST" enctype="multipart/form-data">
+  <input class="invisible" name="handler" type="text" value="recipesHandler">
+  <input class="invisible" name="args[recipeInfo][recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
   <div id="recipeContent" class="editMode">
     <div id="leftSide" class="itemContainer">
-      <div class="itemContainer">
+      <div>
         <div id="topInfoBar" class="flexHorizontal">
           <a href="profile"><button type="button" class="squared">« Profile</button></a>
-          <button class="squared red invisible <?php echo $this->newRecipe ? '' : 'editElement'; ?>" type="submit" name="recipeForm[submit]" value="delete">✘ Delete Recipe</button>
+          <button form="deleteForm" class="squared red invisible <?php echo $this->newRecipe ? '' : 'editElement'; ?>" type="submit" name="action" value="removeRecipe">✘ Delete Recipe</button>
           <div id="preparationTime" class="flexHorizontal">
             <h2>⌛ Preparation time: </h2>
-            <textarea class="editElement" name="recipeForm[preparationTime]" cols="10" rows="1" maxlength="10" spellcheck="false" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->preparationTime ?></textarea>
+            <textarea class="editElement" name="args[recipeInfo][preparationTime]" cols="10" rows="1" maxlength="10" spellcheck="false" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->preparationTime ?></textarea>
           </div>
-          <input class="invisible" name="recipeForm[id]" type="text" value="<?php echo  $this->recipe->id ?>">
         </div>
-        <div id="Info">
+        <div id="Info" class="itemContainer">
             <div class="picture editable">
               <img id="recipePicture" class="uploadPicture roundedPicture greenOutline" src="resource?type=img&path=<?php echo $this->recipe->picturePath ?>" alt="Recipe Picture">
               <button type="button" class="addPictureBtn squared editElement <?php echo $this->newRecipe ? '' : 'invisible'; ?>">+</button>
             </div>      
             <div>
-              <textarea class="editElement" name="recipeForm[name]" id="recipeName" cols="20" rows="1" maxlength="80" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->name ?></textarea>
-              <textarea class="editElement" name="recipeForm[description]" id="recipeDescription" cols="35" rows="1" maxlength="300" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->description ?></textarea>
+              <textarea class="editElement" name="args[recipeInfo][name]" id="recipeName" cols="20" rows="1" maxlength="80" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->name ?></textarea>
+              <textarea class="editElement" name="args[recipeInfo][description]" id="recipeDescription" cols="35" rows="1" maxlength="300" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->description ?></textarea>
             </div>
             <div id="controlBtns">
               <button id="editRecipeBtn" type="button" class="squared <?php echo ($this->newRecipe || $this->readOnly) ? 'invisible' : ''; ?>">✎ Edit</button>
-              <button id="saveRecipeBtn" type="submit" name = "recipeForm[submit]" class="squared green editElement <?php echo $this->newRecipe ? '' : 'invisible'; ?>" value="<?php echo $this->newRecipe ? 'newRecipe' : $this->recipe->id; ?>">✓ Save</button>
+              <button id="saveRecipeBtn" type="submit" name = "action" class="squared green editElement <?php echo $this->newRecipe ? '' : 'invisible'; ?>" value="<?php echo $this->newRecipe ? 'addNewRecipe' : 'modifyRecipe'; ?>">✓ Save</button>
               <button id="discardRecipeBtn" type="button" class="squared red editElement <?php echo $this->newRecipe ? 'redirectBtn' : 'invisible'; ?>">✗ Cancel</button>
             </div>
         </div>
@@ -35,9 +40,9 @@
           <div id="instructionsList" class = "listContainer">
             <?php 
                 foreach($this->recipe->instructions as $key=>$instruction){
-                    $headerName = 'recipeForm[instructions]['.$key.'][header]';
+                    $headerName = 'args[recipeInfo][instructions]['.$key.'][header]';
                     $headerText =  $instruction['header'];
-                    $descriptionName = 'recipeForm[instructions]['.$key.'][description]';
+                    $descriptionName = 'args[recipeInfo][instructions]['.$key.'][description]';
                     $descriptionText = $instruction['description'];
                     include __DIR__ . '/../../Common/Components/Templates/ListTileExp.php';
                 }
@@ -53,7 +58,7 @@
           <div id="ingredientsList" class="listContainer">
             <?php 
                 foreach($this->recipe->ingredients as $key=>$ingredient){
-                    $headerName = 'recipeForm[ingredients]['.$key.']';
+                    $headerName = 'args[recipeInfo][ingredients]['.$key.']';
                     $headerText =  $ingredient;
                     include __DIR__ . '/../../Common/Components/Templates/ListTile.php';
                 }
@@ -64,7 +69,7 @@
   </div>
   <?php 
       $imagePreviewSrc = 'resource?type=img&path=' . $this->recipe->picturePath;
-      $fileInputName = 'recipePicture';
+      $fileInputName = 'recipePictureInfo';
       include(__DIR__ . '/../../Common/Components/Templates/ImageUploadPopup.php');
   ?>
 

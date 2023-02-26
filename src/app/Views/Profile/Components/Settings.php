@@ -1,7 +1,8 @@
 <form id="settingsForm" class="loginInfoForm" action="profile?view=settings" method="POST" enctype="multipart/form-data">
+    <input type="text" name="handler" value="profileInfoHandler" class="invisible">
     <div id="Settings">
         <div class="picture editable">
-            <img id="profilePicture" class="roundedPicture uploadPicture" src="resource?type=img&path=<?php echo $this->userInfo['picturePath'] ?>" alt="Profile Picture">
+            <img id="profilePicture" class="roundedPicture uploadPicture" src="resource?type=img&path=<?php echo $this->profileData['profileInfo']['picturePath'] ?>" alt="Profile Picture">
             <button type="button" class="addPictureBtn squared editElement">+</button>
         </div>
         <br>      
@@ -10,14 +11,14 @@
             <br>
             <div class="LabeledInput">
             <label class="form">Display Name:&emsp;</label>
-            <input class = "form validationInput" type="text" name = "settingsForm[displayName]" id = "displayName" placeholder="display name" value="<?php echo $this->formData['settingsForm']['displayName'] ?? $this->userInfo['displayName'];?>">
+            <input class = "form validationInput" type="text" name = "args[displayName]" id = "displayName" placeholder="display name" value="<?php echo $this->formData['args']['displayName'] ?? $this->profileData['profileInfo']['displayName'];?>">
             </div>
             
             <label class = "form error" for = "displayName" id = "displayNameLabel"></label>
             <br>
             <div class="LabeledInput">
             <label class="form">Email:&emsp;</label>
-            <input class = "form validationInput" type="text" name = "settingsForm[email]" id = "email" placeholder="email" value="<?php echo $this->formData['settingsForm']['email'] ?? $this->userInfo['email'];?>">
+            <input class = "form validationInput" type="text" name = "args[email]" id = "email" placeholder="email" value="<?php echo $this->formData['args']['email'] ?? $this->profileData['profileInfo']['email'];?>">
             </div>
 
             <label class = "form error" for = "email" id = "emailLabel"></label>
@@ -30,13 +31,13 @@
         <br>
         <br>
         <div id="controlBtns">
-            <button id="saveBtn" type="submit" name = "settingsForm[submit]" class="squared green editElement">✓ Save</button>
+            <button id="saveBtn" type="submit" name = "action" value="modifySettings" class="squared green editElement">✓ Save</button>
             <a href="/profile"><button id="discardBtn" type="button" class="squared red editElement">✗ Cancel</button></a>
         </div>
     </div>
     <?php 
-        $imagePreviewSrc = 'resource?type=img&path=' . $this->userInfo['picturePath'];
-        $fileInputName = 'profilePicture';
+        $imagePreviewSrc = 'resource?type=img&path=' . $this->profileData['profileInfo']['picturePath'];
+        $fileInputName = 'profilePictureInfo';
         include(__DIR__ . '/../../Common/Components/Templates/ImageUploadPopup.php');
     ?>
 </form>

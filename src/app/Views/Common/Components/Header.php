@@ -13,7 +13,7 @@
             <a id="logo" href="/"><img src = "resource?type=img&path=general/logo.svg" alt = "Logo"></a>
             <form id="searchForm" action="search" method="GET" class="">
                   <div id="searchBar" class="<?php echo isset($_SESSION['currentUser']) ? '' : 'invisible';?>">
-                        <input type="text" placeholder="Friend Name" name="keyword" value="<?php echo $_GET['keyword'] ?? '';?>">
+                        <input type="text" placeholder="search for..." name="keyword" value="<?php echo $_GET['keyword'] ?? '';?>">
                         <button type="submit" class="squared">Search</button> 
                   </div>
             </form>
