@@ -26,6 +26,11 @@ class ProfileController implements ControllerInterface
 
         $modelData = (new ProfileModel($this->container))->processRequest($request);
 
+        // echo '<pre>';
+        // var_dump($modelData);
+        // echo '</pre>';
+        // die();
+
         return $this->evaluateView($requestedView, $modelData);
     }
     

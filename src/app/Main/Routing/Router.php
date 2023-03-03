@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Main\Routing;
 use App\Exceptions\Router\RouteNotFoundException;
 use App\Main\Container\Container;
+use App\Views\Common\NotFoundView;
 
 class Router
 {
@@ -23,7 +24,7 @@ class Router
         } 
         catch (RouteNotFoundException) 
         {
-            echo '404 not Found';    //404 view here
+            return new NotFoundView;
         }
 
     }

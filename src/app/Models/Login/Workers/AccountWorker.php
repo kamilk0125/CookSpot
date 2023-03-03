@@ -17,7 +17,7 @@ class AccountWorker{
 
     public function registerAccount(string $username, string $displayName, string $email, string $password, string $confirmPassword){
         $accountData['activationHash'] = base64_encode(random_bytes(20));
-        $accountData['id'] = $this->addNewAccount($username, $displayName, $email, $password, $confirmPassword, $accountData['activationHash']);
+        $accountData['id'] = $this->addNewAccount($username, $displayName, $email, $password, $accountData['activationHash']);
 
         return $accountData;
     }
@@ -37,7 +37,7 @@ class AccountWorker{
             'expirationDate' => $expirationDate->format('Y-m-d H:i:s')
         ]);
 
-        return $query->lastInsertId();
+        return intval($query->lastInsertId());
     }
 
     public function accountExists(string $id):bool

@@ -7,9 +7,12 @@ const listTileExpBtns = document.querySelectorAll('.listTile.expandButton');
 const deleteTileBtns = ingredientsList.querySelectorAll('div.deleteButton > button');
 const deleteTileExpBtns = instructionsList.querySelectorAll('div.deleteButton > button');
 const editRecipeBtn = document.querySelector('#editRecipeBtn');
+const saveBtn = document.querySelector('#saveRecipeBtn');
 const discardBtn = document.querySelector('#discardRecipeBtn');
 const addPictureBtn = document.querySelector('button.addPictureBtn');
 const recipePicture = document.querySelector('#recipePicture');
+const recipeName = document.querySelector('#recipeName');
+const recipeDescription = document.querySelector('#recipeDescription');
 let uploadedFile;
 
 addButtons.forEach(button => {button.addEventListener('click', addTile)});
@@ -19,8 +22,10 @@ deleteTileExpBtns.forEach(button => button.addEventListener('click', deleteTileE
 editRecipeBtn.addEventListener('click', e => {toggleEditMode(document, true);});
 discardBtn.addEventListener('click', discardChanges);
 addPictureBtn.addEventListener('click', openUploadPopup);
+recipeName.addEventListener('input', validateForm);
+recipeDescription.addEventListener('input', validateForm);
 autosizeTextareas(document.getElementsByTagName("textarea"));
-
+validateForm();
 
 function addTile(e){
     let deleteBtn;
@@ -35,6 +40,7 @@ function addTile(e){
             deleteBtn = listTile.querySelector('div.deleteButton > button');
             header = listTile.querySelector('div.listTile > textarea');
             header.setAttribute('name', 'args[recipeInfo][ingredients]['+elementNr+']');
+            header.addEventListener('input', validateForm);
             header.innerText = 'Ingredient '+(elementNr+1);
             ingredientsList.appendChild(listTile);
             appendedListTile = ingredientsList.querySelectorAll('div.listTile')[elementNr];
@@ -45,6 +51,7 @@ function addTile(e){
             elementNr = document.querySelectorAll('#instructionsList > div.listTileExp').length;
             deleteBtn = listTileExp.querySelector('div.deleteButton > button');
             header = listTileExp.querySelector('div.listTile.listTileHeader > textarea');
+            header.addEventListener('input', validateForm);
             let expBtn = listTileExp.querySelector('div.listTile > div > button.expandButton');
             let description = listTileExp.querySelector('div.listTile.listTileDetails > textarea');
             expBtn.addEventListener('click', expListTile);
@@ -59,6 +66,7 @@ function addTile(e){
     }
     autosizeTextareas(appendedListTile.querySelectorAll('textarea'));
     toggleEditMode(appendedListTile, true);
+    validateForm();
     
 }
 
@@ -175,6 +183,7 @@ function deleteTile(e){
     tile = e.target.parentNode.parentNode;
     removeElement(tile); 
     renumberFormElements(ingredientsList, 'div.listTile > textarea', 'args[recipeInfo][ingredients][$elementNr]');
+    validateForm();
 }
 
 function deleteTileExp(e){
@@ -182,6 +191,45 @@ function deleteTileExp(e){
     removeElement(tile); 
     renumberFormElements(instructionsList, 'div.listTile.listTileHeader > textarea', 'args[recipeInfo][instructions][$elementNr][header]');
     renumberFormElements(instructionsList, 'div.listTile.listTileDetails > textarea', 'args[recipeInfo][instructions][$elementNr][description]');
+    validateForm();
+}
+
+function validateForm(){
+    console.log(recipeName);
+    recipeNameValue = recipeName.value;
+    recipeDescriptionValue = recipeDescription.value;
+    instructions = document.querySelectorAll('#instructionsList > div.listTileExp');
+    ingredients = document.querySelectorAll('#ingredientsList > div.listTile')
+    instructionsCount = instructions.length;
+    ingredientsCount = instructions.length;
+
+    validInstructions = true;
+    instructions.forEach(instruction => {
+        headerText = instruction.querySelector('div.listTile.listTileHeader > textarea').value;
+        if(headerText.length === 0)
+            validInstructions = false;
+    });
+    validIngredients = true;
+    ingredients.forEach(ingredient => {
+        headerText = ingredient.querySelector('div.listTile > textarea').value;
+        if(headerText.length === 0)
+        validIngredients = false;
+    });
+
+    if(
+        validInstructions && validIngredients &&
+        recipeNameValue.length > 0 && recipeNameValue.length < 80 &&
+        recipeDescriptionValue.length < 300 &&
+        instructionsCount > 0 && ingredientsCount > 0
+    ){
+        saveBtn.classList.remove('disabled');
+        saveBtn.disabled = false;
+    }
+    else{
+        saveBtn.classList.add('disabled');
+        saveBtn.disabled = true;
+    }
+
 }
 
 

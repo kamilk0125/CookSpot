@@ -13,6 +13,7 @@ class ProfileView extends View implements ViewInterface
     private string $cssFile = 'profile.css';
     private array $profileData;
     private array $friendsForm;
+    private string $relationStatus;
 
     public function __construct(array $modelData)
     {
@@ -22,7 +23,8 @@ class ProfileView extends View implements ViewInterface
         if($this->profileData['publicProfile']){
             $this->friendsForm['btnType'] = 'submit';
             $relation = $this->profileData['relation'];
-            switch($relation['status']){
+            $this->relationStatus = $this->profileData['relation']['status'];
+            switch($this->relationStatus){
                 case 'friend':
                     $this->friendsForm['btnText'] = '✓ Friends';
                     $this->friendsForm['btnClass'] = 'disabled';
@@ -45,8 +47,10 @@ class ProfileView extends View implements ViewInterface
                     $this->friendsForm['btnValue'] = $this->profileData['profileInfo']['id'];
             }
         }
-        else
-            $this->friendsForm['btnText'] = 'Friends';
+        else{
+            $this->relationStatus = '';
+            $this->friendsForm['btnClass'] = 'invisible';
+        }
     }
 
     public function display():string

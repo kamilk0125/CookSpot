@@ -10,7 +10,7 @@ use App\Models\Resource\Workers\ValidationWorker;
 
 class ResourceHandler 
 {
-    private const STORAGE_DIR = '../storage/';
+    public const STORAGE_DIR = '../storage/';
     public const COMMON_STORAGE_DIR = 'general/';
     public const PUBLIC_STORAGE_DIR = 'public/';
 

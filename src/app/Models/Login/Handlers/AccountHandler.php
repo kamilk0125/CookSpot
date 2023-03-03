@@ -40,7 +40,7 @@ class AccountHandler{
                 $accountData = $this->accountWorker->registerAccount($username, $displayName, $email, $password, $confirmPassword);
                 $urlHash = urlencode($accountData['activationHash']);
 
-                $emailSent = (new MailBuilder)->sendTemplateEmail('AccountActivationEmail.php', 'Account Activation', [$accountData['email']], ['activationHash' => $urlHash, 'id' => $accountData['id']]);
+                $emailSent = (new MailBuilder)->sendTemplateEmail('AccountActivationEmail.php', 'Account Activation', [$email], ['activationHash' => $urlHash, 'id' => $accountData['id']]);
 
                 if(!$emailSent){
                     $this->accountWorker->removeInactiveAccount($accountData['id']);
@@ -66,20 +66,21 @@ class AccountHandler{
             $userData = $this->accountWorker->getAccountInfo(id: $email);
             if($userData !== false){
                 $passwordResetRequest = $this->verificationWorker->getPasswordResetRequest($userData['id']);
-                if($passwordResetRequest === false)
-                    return self::ERRORS['passwordResetRequestSent'];
-                
-                $verificationHash = $this->verificationWorker->createPasswordResetRequest($userData['id']);
-                $urlHash = urlencode($verificationHash);
-    
-                $emailSent = (new MailBuilder)->sendTemplateEmail('PasswordResetEmail.php', 'Password Reset', [$userData['email']], ['verificationHash' => $urlHash, 'id' => $userData['id']]);
-                
-                if(!$emailSent){
-                    $this->verificationWorker->removePasswordResetRequest($userData['id']);
-                    $result['errorMsg'] = self::ERRORS['serverError'];
+                if($passwordResetRequest === false){             
+                    $verificationHash = $this->verificationWorker->createPasswordResetRequest($userData['id']);
+                    $urlHash = urlencode($verificationHash);
+        
+                    $emailSent = (new MailBuilder)->sendTemplateEmail('PasswordResetEmail.php', 'Password Reset', [$email], ['verificationHash' => $urlHash, 'id' => $userData['id']]);
+                    
+                    if(!$emailSent){
+                        $this->verificationWorker->removePasswordResetRequest($userData['id']);
+                        $result['errorMsg'] = self::ERRORS['serverError'];
+                    }
+                    else
+                        $result['passwordResetRequested'] = true;
                 }
                 else
-                    $result['passwordResetRequested'] = true;
+                    $result['errorMsg'] = self::ERRORS['passwordResetRequestSent'];
             }
             else{
                 $result['errorMsg'] = self::ERRORS['accountNotFound'];

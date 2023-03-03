@@ -15,7 +15,7 @@ class RecipeWorker
     {
         
     }
-    public function createRecipe(string $recipeId, array $recipeInfo, array $recipePictureInfo, string $recipePicturesStoragePath){
+    public function createRecipe(int $recipeId, array $recipeInfo, array $recipePictureInfo, string $recipePicturesStoragePath){
         $name = $recipeInfo['name'] ?? '';
         $ingredients = $recipeInfo['ingredients'] ?? [];
         $instructions = $recipeInfo['instructions'] ?? [];
@@ -59,7 +59,7 @@ class RecipeWorker
     private function validateRecipe(string $name, array $ingredients, array $instructions, string $description):bool
     {   
         if(!(
-            strlen($name)>0 && strlen($name)<50 &&
+            strlen($name)>0 && strlen($name)<80 &&
             strlen($description)<300 &&
             count($ingredients)>0 && count($ingredients)<100 &&
             count($instructions)>0 && count($instructions)<100

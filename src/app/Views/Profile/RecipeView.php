@@ -16,6 +16,7 @@ class RecipeView extends View implements ViewInterface
     private bool $readOnly;
     private array $formData;
     private string $errorMsg;
+    private string $pictureSrc;
 
     public function __construct(array $modelData)
     {
@@ -24,6 +25,8 @@ class RecipeView extends View implements ViewInterface
         $this->formData = $modelData['formData'] ?? [];
         $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
         $this->readOnly = $modelData['recipeData']['readOnly'] ?? false;
+        $sharedPictureId = $modelData['recipeData']['shareInfo']['pictureId'] ?? null;
+        $this->pictureSrc = 'resource?type=' . (isset($sharedPictureId) ?  "shared&id={$sharedPictureId}" : "img&path={$this->recipe->picturePath}");
         $this->pageName = $this->recipe->name;
     }
 

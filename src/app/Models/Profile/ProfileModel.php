@@ -37,9 +37,9 @@ class ProfileModel
                 $data['recipeData'] = $profileManager->getNewRecipeData();
                 break;
             case $view === 'recipe' && !is_null($id) && count($getRequest) === 2:
-                $recipeData['recipeData']['newRecipe'] = false;
-                $recipeData['recipeData']['readOnly'] = false;
-                $data['recipeData']['recipeContent'] = $profileManager->getCurrentUserProfile()['userRecipes'][$id] ?? null; 
+                $data['recipeData']['newRecipe'] = false;
+                $data['recipeData']['readOnly'] = false;
+                $data['recipeData']['recipeContent'] = $profileManager->getCurrentUserProfile()['userRecipes'][$id] ?? null;
                 break;    
             case $view === 'user' && !is_null($id) && count($getRequest) === 2:
                 $data['profileData'] = $profileManager->getPublicProfileData(intval($id));

@@ -7,7 +7,7 @@
       <img class="imagePreview roundedPicture" src="resource?type=img&path=<?php echo $imagePreviewSrc ?? '' ?>" alt="Recipe Picture">
       <div>
         <div class="fileSelector">
-            <label class="rounded" for="fileUploadInput">Choose file...</label>
+            <label class="rounded buttonLabel" for="fileUploadInput">Choose file...</label>
             <input id="fileUploadInput" name="<?php echo $fileInputName ?? '' ?>" class="invisible" type="file" accept=".jpg, .jpeg, .png, .gif">
             <p>No file selected</p>
         </div>

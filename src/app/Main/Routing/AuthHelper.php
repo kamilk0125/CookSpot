@@ -9,13 +9,14 @@ use App\Models\Login\Handlers\AccountHandler;
 
 class AuthHelper
 {
+    public const PUBLIC_ROUTES = ['login', 'resource', 'confirmation'];
     public static function authorize(Request $request, Container $container){
         $controllerRequest = explode('/',$request->getSuperglobal('SERVER','REQUEST_URI'))[1];
         $controllerName = explode('?',$controllerRequest)[0];
 
         $currentUser = self::updateUserInfo($request, $container);
         
-        if($controllerName === 'login' || $controllerName === 'resource'){
+        if(in_array($controllerName, self::PUBLIC_ROUTES)){
             return true;
         }
 

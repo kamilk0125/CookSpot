@@ -121,3 +121,8 @@ img.imagePreview{
 textarea:disabled{
     background-color: transparent;
 }
+
+#errorMsg, #errorMsg:hover{
+    display: block;
+    text-align: center;
+}

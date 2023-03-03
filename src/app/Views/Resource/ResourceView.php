@@ -21,10 +21,6 @@ class ResourceView extends View implements ViewInterface
     }
     public function display():string
     {
-        foreach($this->headers as $header){
-            header($header);
-        }
-
         ob_start();
 
         include 'Components/ResourceItem.php';

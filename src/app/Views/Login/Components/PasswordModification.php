@@ -9,15 +9,15 @@
         <div id="userInfo">
             <label class = "form error"><?php echo $this->errorMsg;?></label>
             <br><br>
-            <input class = "form <?php echo ($this->requestType === 'reset') ? 'invisible' : ''; ?>" type="password" name = "args[currentPassword]" id = "currentPassword" placeholder="current password" value="<?php echo $this->formData['args']['currentPassword'] ?? '';?>">
+            <input class = "form <?php echo ($this->requestType === 'reset') ? 'invisible' : ''; ?>" type="password" name = "args[currentPassword]" id = "currentPassword" placeholder="current password" spellcheck="false" value="<?php echo $this->formData['args']['currentPassword'] ?? '';?>">
             <br>
             <label class = "form error" for = "currentPassword" id = "currentPasswordLabel"></label>
             <br>
-            <input class = "form validationInput" type="password" name = "args[password]" id = "password" placeholder="password" value="<?php echo $this->formData['args']['password'] ?? '';?>">
+            <input class = "form validationInput" type="password" name = "args[password]" id = "password" placeholder="password" spellcheck="false" value="<?php echo $this->formData['args']['password'] ?? '';?>">
             <br>
             <label class = "form error" for = "password" id = "passwordLabel"></label>
             <br>
-            <input class = "form validationInput" type="password" name = "args[confirmPassword]" id = "confirmPassword" placeholder="confirm password" value="<?php echo $this->formData['args']['confirmPassword'] ?? '';?>">
+            <input class = "form validationInput" type="password" name = "args[confirmPassword]" id = "confirmPassword" placeholder="confirm password" spellcheck="false" value="<?php echo $this->formData['args']['confirmPassword'] ?? '';?>">
             <br>
             <label class = "form error" for = "confirmPassword" id = "confirmPasswordLabel"></label>
             <br>
@@ -26,7 +26,7 @@
         <br>
         <br>
         <div id="controlBtns">
-            <button id="saveBtn" type="submit" name = "" class="squared green editElement">✓ Save</button>
+            <button id="saveBtn" type="submit" name = "" class="squared green editElement disabled" disabled>✓ Save</button>
             <a href="/"><button id="discardBtn" type="button" class="squared red editElement">✗ Cancel</button></a>
         </div>
     </div>

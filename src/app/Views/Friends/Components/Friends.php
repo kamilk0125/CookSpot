@@ -5,6 +5,7 @@
             <div id="friendsList" class="itemContainer">
                 <?php
                     foreach($this->friendsList as $friend){
+                        $checkboxClass = 'invisible';
                         $redirectLink = "profile?view=user&id={$friend['id']}";
                         $imageSrc = 'resource?type=img&path=' . $friend['picturePath'];
                         $headerText = $friend['displayName'];

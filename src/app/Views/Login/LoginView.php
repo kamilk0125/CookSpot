@@ -19,7 +19,7 @@ class LoginView extends View implements ViewInterface
         $this->pageName = 'Login';
         $this->formData = $modelData['formData'] ?? [];
         $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
-        $this->activeForm = (($formData['action'] ?? '') === 'registerAccount') ? 'register' : 'login';
+        $this->activeForm = (($this->formData['action'] ?? '') === 'registerAccount') ? 'register' : 'login';
     }
 
     public function display():string

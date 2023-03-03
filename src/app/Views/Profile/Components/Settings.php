@@ -11,14 +11,14 @@
             <br>
             <div class="LabeledInput">
             <label class="form">Display Name:&emsp;</label>
-            <input class = "form validationInput" type="text" name = "args[displayName]" id = "displayName" placeholder="display name" value="<?php echo $this->formData['args']['displayName'] ?? $this->profileData['profileInfo']['displayName'];?>">
+            <input class = "form validationInput" type="text" name = "args[displayName]" id = "displayName" placeholder="display name" spellcheck="false" value="<?php echo $this->formData['args']['displayName'] ?? $this->profileData['profileInfo']['displayName'];?>">
             </div>
             
             <label class = "form error" for = "displayName" id = "displayNameLabel"></label>
             <br>
             <div class="LabeledInput">
             <label class="form">Email:&emsp;</label>
-            <input class = "form validationInput" type="text" name = "args[email]" id = "email" placeholder="email" value="<?php echo $this->formData['args']['email'] ?? $this->profileData['profileInfo']['email'];?>">
+            <input class = "form validationInput" type="text" name = "args[email]" id = "email" placeholder="email" spellcheck="false" value="<?php echo $this->formData['args']['email'] ?? $this->profileData['profileInfo']['email'];?>">
             </div>
 
             <label class = "form error" for = "email" id = "emailLabel"></label>

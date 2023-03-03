@@ -41,9 +41,9 @@ class LoginModel
                 break;
             case $view === 'passwordReset' && !is_null($id) && !is_null($hash) && count($getRequest) === 3:
                 $data['requestType'] = 'reset';
-                $data['id'] = $id;
+                $data['id'] = intval($id);
                 $data['hash'] = $hash;
-                $data['passwordResetData'] = $loginManager->getPasswordResetData($id, $hash);
+                $data['passwordResetData'] = $loginManager->getPasswordResetData(intval($id), $hash);
                 break;
             case $view === 'changePassword' && !is_null($data['currentUser']) && count($getRequest) === 1:
                 $data['id'] = $data['currentUser']->getUserData('id');

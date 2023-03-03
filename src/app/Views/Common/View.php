@@ -13,6 +13,9 @@ abstract class View
 
     public function __toString()
     {
+        foreach($this->headers as $header){
+            header($header);
+        }
         return $this->display();
     }
 

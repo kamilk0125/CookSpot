@@ -11,26 +11,31 @@ use App\Models\Login\Objects\User;
 use App\Models\Profile\Objects\Recipe;
 use App\Models\Profile\Workers\RecipeWorker;
 use App\Models\Resource\Handlers\ResourceHandler;
+use App\Models\Share\Handlers\ShareHandler;
 
 class RecipesHandler{
 
-    private const RECIPES_STORAGE_PATH = 'profile/myRecipes.json';
-    private const PICTURES_STORAGE_PATH = 'profile/images/';
+    private const RECIPES_FILE_PATH = 'profile/myRecipes.json';
+    private const RECIPES_PICTURES_STORAGE_PATH = 'profile/images/recipes/';
+    public $recipesFileStoragePath;
+    private $picturesStoragePath;
     public array $recipes = [];
     private RecipeWorker $recipeWorker;
 
     public function __construct(private Container $container, private User $user)
     {
         $this->recipeWorker = new RecipeWorker($this->user);
+        $this->recipesFileStoragePath = $this->user->getUserData('storagePath') . self::RECIPES_FILE_PATH;
+        $this->picturesStoragePath = $this->user->getUserData('storagePath') . self::RECIPES_PICTURES_STORAGE_PATH;
         $this->loadRecipes();
     }
 
     #[FormHandler]
     public function addNewRecipe(array $recipeInfo, array $recipePictureInfo){
         $result['errorMsg'] = '';
-        $recipeId = empty($this->recipes)? '1' : (string)(intval(array_key_last($this->recipes))+1);
+        $recipeId = empty($this->recipes)? 1 : (intval(array_key_last($this->recipes))+1);
      
-        $recipe = $this->recipeWorker->createRecipe($recipeId, $recipeInfo, $recipePictureInfo, $this->user->getUserData('storagePath') . self::PICTURES_STORAGE_PATH . 'recipes/');
+        $recipe = $this->recipeWorker->createRecipe($recipeId, $recipeInfo, $recipePictureInfo, $this->picturesStoragePath);
         if(!is_null($recipe)){
             $this->recipes[$recipeId] = $recipe;
             $this->saveRecipes();
@@ -45,12 +50,12 @@ class RecipesHandler{
 
     #[FormHandler]
     public function modifyRecipe(array $recipeInfo, array $recipePictureInfo){
-        $recipeId = $recipeInfo['recipeId'];
+        $recipeId = intval($recipeInfo['recipeId']);
         
-        $recipe = $this->recipeWorker->createRecipe($recipeId, $recipeInfo, $recipePictureInfo, $this->user->getUserData('storagePath') . self::PICTURES_STORAGE_PATH . 'recipes/');
+        $recipe = $this->recipeWorker->createRecipe($recipeId, $recipeInfo, $recipePictureInfo, $this->picturesStoragePath);
 
         if(!is_null($recipe)){
-            $result = $this->removeRecipe($recipeId);
+            $result = $this->removeRecipe($recipeId, false);
             if($result['errorMsg'] === ''){
                 $this->recipes[$recipeId] = $recipe;
                 $this->saveRecipes();
@@ -64,9 +69,12 @@ class RecipesHandler{
     }
 
     #[FormHandler]
-    public function removeRecipe(string $recipeId)
+    public function removeRecipe(int $recipeId, bool $removeShareInfo = true)
     {
         $result['errorMsg'] = $this->recipeWorker->removeRecipe($this->recipes[$recipeId]);
+        $shareHandler = new ShareHandler($this->container, $this->user);
+        $result['errorMsg'] = ($result['errorMsg'] === '' && $removeShareInfo) ? $shareHandler->removeRecipeShareInfo($recipeId) : $result['errorMsg'];
+        
         if($result['errorMsg'] === ''){
             unset($this->recipes[$recipeId]);
             $this->saveRecipes();
@@ -77,12 +85,12 @@ class RecipesHandler{
 
 
     private function saveRecipes(){
-        return (new ResourceHandler($this->user))->saveResource($this->user->getUserData('storagePath') . self::RECIPES_STORAGE_PATH, $this->recipes, 'json');
+        return (new ResourceHandler($this->user))->saveResource($this->recipesFileStoragePath, $this->recipes, 'json');
     }
 
     private function loadRecipes()
     {
-        $fileData = (new ResourceHandler($this->user))->getResource('json', $this->user->getUserData('storagePath') . self::RECIPES_STORAGE_PATH);
+        $fileData = (new ResourceHandler($this->user))->getResource('json', $this->recipesFileStoragePath);
         if(!is_null($fileData)){
             $fileContent = file_get_contents($fileData->path);
             $data = json_decode($fileContent, true);

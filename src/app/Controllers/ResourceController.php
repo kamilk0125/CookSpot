@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 use App\Interfaces\ControllerInterface;
+use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Models\Resource\ResourceModel;
 use App\Views\Resource\ResourceView;
 
 class ResourceController implements ControllerInterface
 {
+    public function __construct(private Container $container)
+    {
+        
+    }
+
     public function processRequest(Request $request)
     {
-        $modelData = (new ResourceModel)->processRequest($request);
+        $modelData = (new ResourceModel($this->container))->processRequest($request);
 
         return $this->evaluateView($modelData);
     }

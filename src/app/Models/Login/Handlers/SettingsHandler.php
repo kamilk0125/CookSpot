@@ -18,6 +18,7 @@ class SettingsHandler{
         'invalidPassword' => 'Current password is invalid',
         'invalidPasswordResetLink' => 'Reset password link is invalid',
         'invalidInput' => 'Entered data does not meet the requirements',
+        'emailTaken' => 'This email is already used for existing account',
         'serverError' => 'Server error'
     ];
 
@@ -36,11 +37,13 @@ class SettingsHandler{
         $settings = ['displayName' => $displayName, 'email' => $email, 'picturePath' => $picturePath];
         if($settings['picturePath'] === '')
             unset($settings['picturePath']);
-        $accountInfo = (new AccountHandler($this->container))->getAccountInfo($userId);
+        $accountHandler = new AccountHandler($this->container);
+        $accountInfo = $accountHandler->getAccountInfo($userId);
+        $result['errorMsg'] = $this->settingsWorker->validateAccountSettings($settings) ? '' : self::ERRORS['invalidInput'];
         try{
-            if($accountInfo !== false){
-                $result['errorMsg'] = $this->settingsWorker->validateAccountSettings($settings) ? '' : self::ERRORS['invalidInput'];
-                if($result['errorMsg'] === ''){
+            if($result['errorMsg'] === '' && $accountInfo !== false){
+                $emailTaken =  $email!==$accountInfo['email'] && $accountHandler->getAccountInfo(id: $email)!==false;
+                if(!$emailTaken){
                     if($email !== $accountInfo['email']){
                         $verificationHash = $this->verificationWorker->addNewEmailVerification($userId, $email);
                         $urlHash = urlencode($verificationHash);
@@ -53,6 +56,8 @@ class SettingsHandler{
                     $this->settingsWorker->changeAccountSettings($accountInfo, $settings);
                     $result['settingsChanged'] = true;   
                 }
+                else
+                    $result['errorMsg'] = self::ERRORS['emailTaken'];
             }
             else
                 throw new Exception;
@@ -74,11 +79,11 @@ class SettingsHandler{
                 switch(true){
                     case $requestType === 'reset':
                         $verified = $this->confirmationWorker->authorizePasswordReset($userId, $verificationHash ?? '');
-                        $result['errorMsg'] = $valid ? '' : self::ERRORS['invalidPasswordResetLink'];
+                        $result['errorMsg'] = $verified ? '' : self::ERRORS['invalidPasswordResetLink'];
                         break;
                     case $requestType === 'modify':
                         $verified = password_verify($currentPassword, $accountInfo['authHash']);
-                        $result['errorMsg'] = $valid ? '' : self::ERRORS['invalidPassword'];
+                        $result['errorMsg'] = $verified ? '' : self::ERRORS['invalidPassword'];
                         break;
                     default:
                         $verified = false;

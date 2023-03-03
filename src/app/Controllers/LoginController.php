@@ -32,7 +32,7 @@ class LoginController implements ControllerInterface
     }
     
     private function evaluateView(?string $requestedView, array $modelData){
-        if(isset($modelData['currentUser']))
+        if(isset($modelData['currentUser']) && $requestedView !== 'changePassword')
             return $this->redirect('');
         if(isset($modelData['invalidRequest']))
             return $this->redirect('login');
@@ -47,11 +47,11 @@ class LoginController implements ControllerInterface
             case isset($modelData['formResult']['passwordResetRequested']):
                 return new PasswordResetRequestView;
                 break;
-            case $requestedView === 'passwordReset':
-                return new PasswordResetView($modelData);
-                break;
             case ($requestedView === 'passwordReset' || $requestedView === 'changePassword') && isset($modelData['requestType']):
                 return new PasswordModificationView($modelData);
+                break;
+            case $requestedView === 'passwordReset':
+                return new PasswordResetView($modelData);
                 break;
             default: 
                 return new LoginView($modelData);

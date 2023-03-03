@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Views\Search;
 
 use App\Interfaces\ViewInterface;
-use App\Models\Search\SearchManager;
 use App\Views\Common\View;
 
 class SearchView extends View implements ViewInterface

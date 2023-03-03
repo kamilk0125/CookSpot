@@ -6,13 +6,14 @@
         <div id="userInfo">
             <label class = "form error"><?php echo $this->errorMsg;?></label>
             <br><br>
-            <input class = "form" type="text" name = "args[email]" id = "email" placeholder="email" value="<?php echo $this->formData['args']['email'] ?? '';?>">
+            <input class = "form validationInput" type="text" name = "args[email]" id = "email" placeholder="email" spellcheck="false" value="<?php echo $this->formData['args']['email'] ?? '';?>">
+            <br>
+            <label class = "form error" for = "email" id = "emailLabel"></label>
         </div>
         <br>
-        <br>
-        <br>
         <div id="controlBtns">
-            <button id="submitBtn" type="submit" name = "" class="squared editElement">Reset password</button>
+            <button id="submitBtn" type="submit" name = "" class="squared editElement disabled" disabled>Reset password</button>
         </div>
     </div>
 </form>
+<script src="js/login.js"></script>

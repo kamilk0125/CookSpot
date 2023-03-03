@@ -8,11 +8,12 @@ use App\Main\Container\Container;
 use ReflectionMethod;
 
 class DataHandler{
-    public static function castToObj($sourceObj, string $targetClass, $args = [])
+    public static function castToObj(array $sourceArray, string $targetClass, $args = [])
     {
         $targetObj = (new Container)->get($targetClass, $args);
-        foreach ($sourceObj as $property => $value){
-            $targetObj->{$property} = $value;
+        foreach ($targetObj as $property => $value){
+            if(key_exists($property,$sourceArray))
+                $targetObj->{$property} = $sourceArray[$property];
         } 
 
         return $targetObj;
@@ -55,4 +56,5 @@ class DataHandler{
 
         return $mappedArgs;
     }
+
 }

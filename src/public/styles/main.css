@@ -130,23 +130,23 @@ button.squared{
     border-color: transparent;
     padding: 10px;
 }
-button.squared.green{
+button.green{
     background-color: #29b841;
 }
 
-button.squared.green:hover:not(.disabled){
+button.squared.green:hover:not(.disabled), button.rounded.green:hover:not(.disabled){
     background-color: #124e1c;
 }
 
-button.squared.red{
+button.red{
     background-color: #d83737;
 }
 
-button.squared.red:hover:not(.disabled){
+button.squared.red:hover:not(.disabled), button.rounded.red:hover:not(.disabled){
     background-color: #6d1717;
 }
 
-button.squared:hover:not(.disabled), button.rounded:hover:not(.disabled), label.rounded:hover:not(.disabled){
+button.squared:hover:not(.disabled), button.rounded:hover:not(.disabled), label.buttonLabel:hover:not(.disabled){
     background-color: #073f68;
 }
 
@@ -224,34 +224,51 @@ a.disabled{
     pointer-events: none;
 }
 
-.topNav {
+div.topNav {
     display: flex;
     flex-direction: row;
     overflow: hidden;
   }
   
+div.topNav > a{
+    color: white;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    font-size: 26px;
+    background-color: #0FD64F;
+    border-bottom-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    border-bottom-width: 6px;
+    text-decoration: none;
+}
 
-  .topNav button {
+div.topNav > a:hover{
+    background-color: #16b448;
+}
+
+div.topNav > a.active{
+    border-color: #0075c9;
+    color: #0075c9;
+}
+
+div.topNav > button {
     color: black;
     text-align: center;
     width: 50%;
     height: 50px;
     font-size: 26px;
     background-color: white;
-    /* border-style: none; */
     border-bottom-style: solid;
     border-right-style: solid;
     border-color: gray;
     border-width: 1px;
     border-bottom-width: 6px;
-  }
+}
 
-  /* .topNav button:hover {
-    background-color: #ddd;
-    color: black;
-  } */
 
-  .topNav button.active {
+  .topNav > button.active {
     color: #04AA6D;
     border-bottom-color: #04AA6D;
   }
@@ -338,7 +355,12 @@ div.Tile, a.Tile{
     color: black;
 }
 
-div.Tile, a.Tile > h2
+a.Tile > div.ownerInfo{
+    color: white;
+    background-color: #0090f6;
+}
+
+a.Tile > h2
 {
     color: black;
     display: block;
@@ -349,7 +371,7 @@ div.Tile, a.Tile > h2
     overflow: hidden;
 }
 
-div.Tile, a.Tile > p
+a.Tile > p
 {
     color: black;
     display: block;
@@ -361,13 +383,21 @@ div.Tile, a.Tile > p
     padding-top: 0;
 }
 
-div.Tile, a.Tile > img{
+a.Tile > img{
     height: 150px;
     width: 150px;
     margin: 20px;
     margin-top: 50px;
     margin-bottom: 10px;
 
+}
+
+a.Tile > input[type="checkbox"]{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    width: 25px;
+    height: 25px;
 }
 
 div.circleDetail{
@@ -429,7 +459,7 @@ div.listTile.listTileDetails > textarea, div.listTile.listTileDetails > textarea
     border: none;
 }
 
-div.listTile.editMode:hover, div.Tile:hover, a.Tile:hover{
+div.listTile.editMode:hover, div.Tile:hover, a.Tile:hover, div.selectionTile:hover{
     box-shadow: 0 0 10px #1b497a;
     border-color: #0090f6;
     border-width: 2px;

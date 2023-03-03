@@ -20,3 +20,8 @@
             <a id="logoutBtn" class="<?php echo isset($_SESSION['currentUser']) ? '' : 'invisible';?>" href="login?view=logout"><button class="squared">Log out</button></a>
       </div>
       <div id="pageContent">
+            <div id="mainNav" class="topNav <?php echo isset($_SESSION['currentUser']) ? '' : 'invisible';?>">
+                  <a href="/profile">Profile</a>
+                  <a href="/friends">Friends</a>
+                  <a href="/share">Share</a>
+            </div>

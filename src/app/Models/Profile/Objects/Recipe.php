@@ -7,7 +7,7 @@ namespace App\Models\Profile\Objects;
 class Recipe
 {
     public function __construct(
-        public string $id = '0',
+        public int $id = 0,
         public string $name='New Recipe', 
         public array $ingredients=[], 
         public array $instructions=[], 

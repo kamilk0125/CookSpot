@@ -26,10 +26,10 @@ class ConfirmationModel
 
         switch(true){
             case $view === 'activate' && !is_null($id) && !is_null($hash) && count($getRequest) === 3:
-                $data['activationData'] = $confirmationManager->getAccountActivationData($id, $hash);
+                $data['activationData'] = $confirmationManager->getAccountActivationData(intval($id), $hash);
                 break;
             case $view === 'verify' && !is_null($id) && !is_null($hash) && count($getRequest) === 3:
-                $data['verificationData'] = $confirmationManager->getEmailVerificationData($id, $hash);
+                $data['verificationData'] = $confirmationManager->getEmailVerificationData(intval($id), $hash);
                 break;
             default: 
                 $data['invalidRequest'] = true;

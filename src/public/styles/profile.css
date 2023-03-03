@@ -19,19 +19,12 @@
     align-items: center;
 }
 
-#myRecipesContainer{
+div.container{
     width: 100%;
     min-height: 430px;
 }
 
-#recipeList{
-    /* display: grid;
-    grid-template-columns: auto;
-    text-align: center; */
-    /* display: flex;
-    justify-content:left;
-    align-items: flex-start;
-    flex-wrap: wrap; */
+div.recipeList{
     margin-left: 80px;
     margin-right: 80px;
 }
@@ -40,8 +33,18 @@
     margin-left: 100px;
     margin-right: auto;
 }
-#recipeList > a.Tile > img{
+
+#deleteFriendBtn{
+    margin-left: 20px;
+    margin-right: auto;
+}
+
+div.recipeList > a.Tile > img{
     outline-color: #24d95e;
+}
+
+div.topNav > button:hover{
+    background-color: whitesmoke;
 }
 
 

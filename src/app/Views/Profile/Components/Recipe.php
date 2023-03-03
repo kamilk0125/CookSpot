@@ -2,23 +2,23 @@
   <input class="invisible" name="handler" type="text" value="recipesHandler">
   <input class="invisible" name="args[recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
 </form>
-<form id="recipeForm" action="<?php echo "profile?view=recipe&id={$this->recipe->id}";?>" method="POST" enctype="multipart/form-data">
+<form id="recipeForm" action="<?php echo "profile?view=" . ($this->newRecipe ? 'newRecipe' : "recipe&id={$this->recipe->id}");?>" method="POST" enctype="multipart/form-data">
   <input class="invisible" name="handler" type="text" value="recipesHandler">
   <input class="invisible" name="args[recipeInfo][recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
   <div id="recipeContent" class="editMode">
     <div id="leftSide" class="itemContainer">
       <div>
         <div id="topInfoBar" class="flexHorizontal">
-          <a href="profile"><button type="button" class="squared">« Profile</button></a>
           <button form="deleteForm" class="squared red invisible <?php echo $this->newRecipe ? '' : 'editElement'; ?>" type="submit" name="action" value="removeRecipe">✘ Delete Recipe</button>
           <div id="preparationTime" class="flexHorizontal">
             <h2>⌛ Preparation time: </h2>
             <textarea class="editElement" name="args[recipeInfo][preparationTime]" cols="10" rows="1" maxlength="10" spellcheck="false" <?php echo $this->newRecipe ? '' : 'disabled'; ?>><?php echo $this->recipe->preparationTime ?></textarea>
           </div>
         </div>
+        <label id="errorMsg" class = "form error"><?php echo $this->errorMsg ?? '';?></label>
         <div id="Info" class="itemContainer">
             <div class="picture editable">
-              <img id="recipePicture" class="uploadPicture roundedPicture greenOutline" src="resource?type=img&path=<?php echo $this->recipe->picturePath ?>" alt="Recipe Picture">
+              <img id="recipePicture" class="uploadPicture roundedPicture greenOutline" src="<?php echo $this->pictureSrc ?>" alt="Recipe Picture">
               <button type="button" class="addPictureBtn squared editElement <?php echo $this->newRecipe ? '' : 'invisible'; ?>">+</button>
             </div>      
             <div>

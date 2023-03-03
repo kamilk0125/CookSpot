@@ -20,9 +20,11 @@
                             case 'invitationReceived':
                                 $formAction = 'answerInvitation';
                                 $leftBtnText = 'Accept Invitation';
+                                $leftBtnDisabled = false;
+                                $leftBtnClass = '';
                                 $leftBtnName = 'args[response]';
                                 $leftBtnValue = 'true';
-                                $formArgs = ['args[invitationId]' => $result['args']['invitationId']];
+                                $formArgs = ['args[invitationId]' => $result['relation']['invitationId']];
                                 break;
                             case 'invitationSent':
                                 $leftBtnText = '✓ Invitation Sent';
@@ -32,6 +34,8 @@
                             default:
                                 $formAction = 'newInvitation';
                                 $leftBtnText = 'Add to friends';
+                                $leftBtnDisabled = false;
+                                $leftBtnClass = '';
                                 $leftBtnName = 'args[friendId]';
                                 $leftBtnValue = $result['id'];
                         }

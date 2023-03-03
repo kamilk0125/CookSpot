@@ -14,7 +14,7 @@ class PasswordModificationView extends View implements ViewInterface
     private string $errorMsg;
     private array $formData;
     private int $userId; 
-    private bool $requestType;
+    private string $requestType;
     private string $verificationHash;
 
     public function __construct(array $modelData)

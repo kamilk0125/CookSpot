@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Search\Managers;
 
 use App\Addons\DataHandling\DataHandler;
+use App\Attributes\FormHandler;
 use App\Main\Container\Container;
 use App\Models\Friends\Handlers\FriendsHandler;
 use App\Models\Login\Objects\User;
