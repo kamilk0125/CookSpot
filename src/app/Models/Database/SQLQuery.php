@@ -27,106 +27,50 @@ class SQLQuery
     }
 
     public function getTableRow(string $table, array $selectors, bool $multipleRows = false){
-        $loopIndex = 0;
-        $selectorsString = '';
-        foreach($selectors as $column => $value)
-        {
-            if($loopIndex > 0){
-                $selectorsString = $selectorsString . ' OR ';
-            }
-            $selectorsString = $selectorsString . $column . ' = :' . $column;   
-            $loopIndex++; 
-        }
-        if(empty($selectors))
-            $selectorsString = '1=1';
+        $queryString = (new QueryBuilder)->generateSelectQuery($table, $selectors);
 
-        $queryString = 'SELECT * from ' . $table . ' WHERE ' . $selectorsString;
         
-        if($multipleRows)
-            $queryResult = $this->executeQuery($queryString, $selectors)->fetchAll();
-        else
-            $queryResult = $this->executeQuery($queryString, $selectors)->fetch();
-        if($queryResult!==false && !$multipleRows){
-            if(!$this->validateRowExpirationDate($table, $queryResult)){
-                return false;
-            }
+        if($multipleRows){
+            $queryResults = $this->executeQuery($queryString, $selectors)->fetchAll();
+            return $this->validateRowsExpirationDate($table, $queryResults);
         }
-        return $queryResult;
+        else{
+            $queryResult = $this->executeQuery($queryString, $selectors)->fetch();
+            if($queryResult!==false){
+                $validRow = !is_null($this->validateRowsExpirationDate($table, [$queryResult]));
+                return $validRow ? $queryResult : false;
+            }
+            return false;
+        }
+
     }
 
     public function insertTableRow(string $table, array $values){
-        $loopIndex = 0;
-        $columnsString = '';
-        $valuesString = '';
-        foreach($values as $column => $value){
-            if($loopIndex > 0){
-                $columnsString = $columnsString . ', ';
-                $valuesString = $valuesString . ', ';
-            }
-            $columnsString = $columnsString . $column;
-            $valuesString = $valuesString . ':' . $column;
-            $loopIndex++;
-        }
-        $queryString = 'INSERT INTO ' . $table . ' (' . $columnsString . ') VALUES (' . $valuesString . ')';
+        $queryString = (new QueryBuilder)->generateInsertQuery($table, $values);
         $this->executeQuery($queryString, $values);
     }
 
     public function updateTableRow(string $table, array $selectors, array $values){
-        
-        $loopIndex = 0;
-        $valuesString = '';
-        foreach($values as $column => $value)
-        {
-            if($loopIndex > 0){
-                $valuesString = $valuesString . ', ';
-            }
-            $valuesString = $valuesString . $column . ' = :' . $column;   
-            $loopIndex++; 
-        }
-
-        $loopIndex = 0;
-        $selectorsString = '';
-        foreach($selectors as $column => $value)
-        {
-            if($loopIndex > 0){
-                $selectorsString = $selectorsString . ' OR ';
-            }
-            $selectorsString = $selectorsString . $column . ' = :' . $column;   
-            $loopIndex++; 
-        }
-        if(empty($selectors))
-            $selectorsString = '1=1';
-
-        $queryString = 'UPDATE ' . $table . ' SET ' . $valuesString . ' WHERE ' . $selectorsString;  
-        
+        $queryString = (new QueryBuilder)->generateUpdateQuery($table, $selectors, $values);
         $this->executeQuery($queryString, array_merge($values, $selectors));
     }
 
     public function deleteTableRow(string $table, array $selectors){
-        $loopIndex = 0;
-        $selectorsString = '';
-        foreach($selectors as $column => $value)
-        {
-            if($loopIndex > 0){
-                $selectorsString = $selectorsString . ' OR ';
-            }
-            $selectorsString = $selectorsString . $column . ' = :' . $column;   
-            $loopIndex++; 
-        }
-        $queryString = 'DELETE from ' . $table . ' WHERE ' . $selectorsString;
+        $queryString = (new QueryBuilder)->generateDeleteQuery($table, $selectors);
         $this->executeQuery($queryString, $selectors);
     }
 
-    public function validateRowExpirationDate(string $table, array $row){
-        if(key_exists('expirationDate', $row)){
-            $expirationDate = new DateTime($row['expirationDate']);
-            if((new DateTime()) > $expirationDate){
-                $this->deleteTableRow($table, $row);
-                return false;
+    public function validateRowsExpirationDate(string $table, array $rows){
+        foreach($rows as $key => $row){
+            if(key_exists('expirationDate', $row)){
+                $expirationDate = new DateTime($row['expirationDate']);
+                if((new DateTime()) > $expirationDate){
+                    $this->deleteTableRow($table, $row);
+                    unset($rows[$key]);
+                }
             }
         }
-
-        return true;
+        return $rows;
     }
     
     public function __call(string $methodName, array $args)

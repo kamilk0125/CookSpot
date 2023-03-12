@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models\Confirmation\Managers;
 
+use App\Interfaces\ManagerInterface;
 use App\Main\Container\Container;
 use App\Models\Confirmation\Handlers\ConfirmationHandler;
+use App\Models\Manager;
 
-class ConfirmationManager
+class ConfirmationManager extends Manager implements ManagerInterface
 {
-    private ConfirmationHandler $confirmationHandler;
+    public ConfirmationHandler $confirmationHandler;
 
     public function __construct(private Container $container)
     {

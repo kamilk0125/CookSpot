@@ -13,7 +13,7 @@ class SettingsWorker{
         'username' => '/^(?=.*[A-Z])[A-Z\d!#$%?&*]{6,}$/i',
         'password' => '/^(?=.*[A-Z])(?=.*\d)[A-Z\d!@#$%?&*]{8,}$/i',
         'email' => "/^(?!\.)((\.)?[A-Z\d!#$%&'*+\-\/=?^_`{|}~]+)+@(?!\.)((\.)?[A-Z\d_]+)+(\.[A-Z\d]{2,3})$/i",
-        'displayName' => "/^(?!\s)[^<>]{6,20}$/i"
+        'displayName' => "/^(?!\s)[^<>]{6,40}$/i"
     ];
 
     public function __construct(private Container $container)

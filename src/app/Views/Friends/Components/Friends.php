@@ -1,11 +1,11 @@
-<div id="layout">
-    <div id="leftSide" class="itemContainer">
-        <div id="friends" class="itemContainer">
-            <div id="friendsHeader" class="ContainerHeader"><h2>Friends</h2></div>
-            <div id="friendsList" class="itemContainer">
+<div id="layout" class="css-flexHorizontal">
+    <div id="leftSide" class="css-itemContainer">
+        <div id="friends" class="css-itemContainer">
+            <div id="friendsHeader" class="css-containerHeader"><h2>Friends</h2></div>
+            <div id="friendsList" class="css-itemContainer">
                 <?php
                     foreach($this->friendsList as $friend){
-                        $checkboxClass = 'invisible';
+                        $checkboxClass = 'css-invisible';
                         $redirectLink = "profile?view=user&id={$friend['id']}";
                         $imageSrc = 'resource?type=img&path=' . $friend['picturePath'];
                         $headerText = $friend['displayName'];
@@ -15,9 +15,9 @@
             </div>
         </div>
     </div>
-    <div id="invitations" class = "itemContainer">
-        <div class="ContainerHeader"><h2>Invitations</h2></div>
-        <div id="invitationsList" class = "listContainer">
+    <div id="invitations" class = "css-itemContainer">
+        <div class="css-containerHeader"><h2>Invitations</h2></div>
+        <div id="invitationsList" class = "">
                 <?php
                 foreach($this->receivedInvitations as $invitation){
                     $redirectLink = "profile?view=user&id={$invitation['senderId']}";

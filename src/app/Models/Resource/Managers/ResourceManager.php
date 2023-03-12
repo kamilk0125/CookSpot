@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Models\Resource\Managers;
 
+use App\Interfaces\ManagerInterface;
 use App\Main\Container\Container;
 use App\Models\Login\Objects\User;
+use App\Models\Manager;
 use App\Models\Resource\Handlers\ResourceHandler;
 use App\Models\Resource\Handlers\SharedResourceHandler;
 
-class ResourceManager 
+class ResourceManager extends Manager implements ManagerInterface 
 {
 
-    private ResourceHandler $resourceHandler;
-    private SharedResourceHandler $sharedResourceHandler; 
+    public ResourceHandler $resourceHandler;
+    public SharedResourceHandler $sharedResourceHandler; 
 
     public function __construct(private Container $container, private ?User $user)
     {

@@ -10,6 +10,10 @@ use Exception;
 
 class FriendsInfoWorker{
 
+    private const ERRORS = [
+        'serverError' => 'Sesrver Error'
+    ];
+
     public function __construct(private Container $container)
     {
 
@@ -51,11 +55,13 @@ class FriendsInfoWorker{
                 if($invitation['senderId'] === $userId){
                     $result['status'] = 'invitationReceived';
                     $result['invitationId'] = $invitation['invitationId'];
+                    return $result;
                 }
             }
             foreach($sentInvitations as $invitation){
                 if($invitation['receiverId'] === $userId){
                     $result['status']= 'invitationSent';
+                    return $result;
                 }
             }
         }
@@ -64,10 +70,16 @@ class FriendsInfoWorker{
 
     public function deleteFriend(int $currentUserId, int $friendId){
         $query = new SQLQuery($this->container);
-        $query->executeQuery(
-            'DELETE FROM friends WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?)',
-            [$currentUserId, $friendId, $friendId, $currentUserId]
-        );
+        try{
+            $query->executeQuery(
+                'DELETE FROM friends WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?)',
+                [$currentUserId, $friendId, $friendId, $currentUserId]
+            );
+        }
+        catch(Exception){
+            $errorMsg = self::ERRORS['serverError'];
+        }
+        return $errorMsg ?? '';
     }
 
 }

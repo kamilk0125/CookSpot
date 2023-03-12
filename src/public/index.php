@@ -14,5 +14,3 @@ session_set_cookie_params(31536000);
 session_start();
 $app = new App();
 $app->run(new Request());
-
-// session_destroy();

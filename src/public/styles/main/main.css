@@ -3,17 +3,12 @@
 html{
     height: 100%;
     min-width: 600px;
-
 }
 
 body{
-    width: 100%;
+    width: auto;
     margin: 0%;
-    background-image: linear-gradient(#D7E1EC,#FFFFFF);
-    /* background-image: linear-gradient(#F8EF42, #0FD64F); */
-    /* background-color: rgb(201, 199, 199); */
     overflow-x: hidden;
-    /* position: relative; */
     font-family: 'Ubuntu', sans-serif;
 }
 
@@ -21,60 +16,58 @@ body{
     font-family: inherit;
 }
 
+textarea{
+    resize: none;
+}
+
+img{
+    object-fit: cover;
+}
+
 #pageContent{
+    background-image: linear-gradient(#D7E1EC,#FFFFFF);
+    min-height: 100vh;
+    min-height: var(--pageContentMinHeight, 100vh);
     position:relative;
-    min-height: calc(100vh - 152px);
 }
 
-div.centered{
-    left: 50%;
-    top: 50%;
-    margin: auto;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-div.header{
-    /* background-image: linear-gradient(180deg, rgba(34,219,0,1) 0%, rgba(21,112,0,1) 97%, rgb(0, 0, 0) 100%); */
+#header{
     background-color:#0FD64F ;
     text-align: center;
     margin-top: 0%;
     margin: 0%;
     width: 100%;
-    height: 100px;
+    min-height: 100px;
     padding: 0px;
-
+    position: relative;
 }
 
-div.header.loggedIn{
-    text-align: left;
+#header.css-loggedIn{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-between;
 }
 
-div.header.loggedIn > #logo{
-    margin-left: 50px;
+#header.css-loggedIn > #logo{
+    margin-left: 2%;
 }
-
 
 #searchBar{
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    text-align: center;
+    text-align: left;
     display: inline-block;
-    max-width: 600px;
-    min-width: 200px;
+    margin-left: 30px;
     white-space: nowrap;
 }
-
 
 #searchBar > input{
     font-size: 26px;
     padding: 10px;
     margin: 0;
     max-width: 400px;
-    width: 100%;
+    min-width: 250px;
+    width: 20vw;
     outline-color:#0667ac;
 }
 
@@ -84,34 +77,24 @@ div.header.loggedIn > #logo{
     transform: translate(-5px,-0.5px);
 }
 
-#logoutBtn{
-    position: absolute;
-    right: 20px;
-    top: 20px;
-}
-
-div.footer{
-    /* background-color: transparent; */
-    /* text-align: center; */
+div.css-footer{
     margin-bottom: 0%;
     margin-top: 0%;
     width: 100%;
     height: 50px;
-
-
-
     background-color: #f3f3f3;
     text-align: center;
-    /* height: fit-content; */
     padding: 0px;
-    /* overflow: auto; */
     border-style: solid;
     border-width: 1px;
     border-color: #abaaaa;
-
 }
 
-button.rounded, label.rounded{
+.css-invisible{
+    display: none !important;
+}
+
+button.css-rounded, label.css-rounded{
     border-radius: 50px;
     background-color: #0090f6;
     font-size: 26px;
@@ -121,7 +104,7 @@ button.rounded, label.rounded{
     padding: 15px;
 }
 
-button.squared{
+button.css-squared{
     border-radius: 10px;
     background-color: #0090f6;
     font-size: 26px;
@@ -130,31 +113,31 @@ button.squared{
     border-color: transparent;
     padding: 10px;
 }
-button.green{
+
+button.css-rounded.css-green, button.css-squared.css-green{
     background-color: #29b841;
 }
 
-button.squared.green:hover:not(.disabled), button.rounded.green:hover:not(.disabled){
+button.css-squared.css-green:hover:not(.css-disabled), button.css-rounded.css-green:hover:not(.css-disabled){
     background-color: #124e1c;
 }
 
-button.red{
+button.css-rounded.css-red, button.css-squared.css-red{
     background-color: #d83737;
 }
 
-button.squared.red:hover:not(.disabled), button.rounded.red:hover:not(.disabled){
+button.css-squared.css-red:hover:not(.css-disabled), button.css-rounded.css-red:hover:not(.css-disabled){
     background-color: #6d1717;
 }
 
-button.squared:hover:not(.disabled), button.rounded:hover:not(.disabled), label.buttonLabel:hover:not(.disabled){
+button.css-squared:hover:not(.css-disabled), button.css-rounded:hover:not(.css-disabled), label.css-buttonLabel:hover:not(.css-disabled){
     background-color: #073f68;
 }
 
-
-div.toggleSwitch{
+div.css-toggleSwitch{
     background-color: #0090f6;
     border-radius: 50px;
-    width: 60%;
+    width: 65%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -162,18 +145,18 @@ div.toggleSwitch{
     margin-top: 3%;
 }
 
-button.formSelector{
+div.css-toggleSwitch > button.css-rounded{
     margin: 1%;
     font-size: 26px;
     width: 50%;
 }
 
-button.selectedOption{
+div.css-toggleSwitch > button.css-rounded.css-selectedOption{
     background-color: white;
     color: black;
 }
 
-input.form, textarea.form{
+input.css-form{
     width: 338px;
     height: 50px;
     border-radius: 10px;
@@ -183,54 +166,44 @@ input.form, textarea.form{
     border-color: #abaaaa;
 }
 
-label.form{
+label.css-form{
     font-size: 22px;
 }
 
-input.form:focus{
+input.css-form:focus{
     outline: none !important;
     border-color: #0667ac;
     box-shadow: 0 0 10px #719ECE;
     border-width: 4px;
 }
 
-input.form.invalid{
+input.css-form.css-invalid{
     border-color: red;
     border-width: 4px;
 }
 
-input.form.valid{
+input.css-form.css-valid{
     border-color: rgb(1, 168, 1);
     border-width: 4px;
 }
 
-label.form.error{
+label.css-form.css-error{
     font-size: 16px;
     display: inline-block;
     margin-bottom: 5px;
     color: red;
 }
 
-.invisible{
-    display: none !important;
-}
-
-button.disabled{
+button.css-disabled{
     background-image: none !important;
     background-color: #a1a1a1 !important;
 }
 
-a.disabled{
+a.css-disabled{
     pointer-events: none;
 }
-
-div.topNav {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-  }
   
-div.topNav > a{
+div.css-topNav > a{
     color: white;
     text-align: center;
     width: 100%;
@@ -244,19 +217,19 @@ div.topNav > a{
     text-decoration: none;
 }
 
-div.topNav > a:hover{
+div.css-topNav > a:hover{
     background-color: #16b448;
 }
 
-div.topNav > a.active{
+div.css-topNav > a.css-active{
     border-color: #0075c9;
     color: #0075c9;
 }
 
-div.topNav > button {
+div.css-topNav > button {
     color: black;
     text-align: center;
-    width: 50%;
+    width: 100%;
     height: 50px;
     font-size: 26px;
     background-color: white;
@@ -268,61 +241,45 @@ div.topNav > button {
 }
 
 
-  .topNav > button.active {
+div.css-topNav > button.css-active {
     color: #04AA6D;
     border-bottom-color: #04AA6D;
-  }
+}
 
-  div.itemContainer
-  {
+div.css-topNav > button:hover{
+    background-color: whitesmoke;
+}
+
+div.css-itemContainer{
     background-color: white;
     height: fit-content;
     padding: 0px;
     border-style: solid;
     border-width: 1px;
     border-color: #abaaaa;
-  }
-
-  img.roundedPicture{
-    outline: 5px solid #0f80d1;
-    outline-offset: 1px;
-    border-radius: 50%;
-    width: 180px;
-    height: 180px;
-    margin: 50px;
 }
 
-div.flexHorizontal
-{
+div.css-flexHorizontal{
     margin: 0;
     padding: 0px;
     display: flex;
     flex-direction: row;
-
 }
 
-div.flexVertical
-{
+div.css-flexVertical{
     margin: 0;
     padding: 0px;
     display: flex;
     flex-direction: column;
-
 }
 
-div.listContainer{
-    overflow:hidden;
-    align-items: center;
-    padding: 10px;
-}
-
-div.ContainerHeader{
+div.css-containerHeader{
     width: 100%;
     background-color: transparent;
     text-align: center;
 }
 
-div.listTile{
+div.css-listTile{
     width: 90%;
     background-color: white;
     height: fit-content;
@@ -336,11 +293,13 @@ div.listTile{
     position: relative;
 }
 
-div.Tile, a.Tile{
+a.css-tile{
+    width: 260px;
+    height: 330px;
     background-color: #8b8b8ba2;
     background-image: linear-gradient(#CFD6E6,#E7EFF9);
-    height: 410px;
-    width: 300px;
+    padding: 20px;
+    padding-top: 40px;
     overflow: hidden;
     border-style: solid;
     border-radius: 20px;
@@ -355,44 +314,48 @@ div.Tile, a.Tile{
     color: black;
 }
 
-a.Tile > div.ownerInfo{
+a.css-tile > div.css-tileInfo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     color: white;
     background-color: #0090f6;
 }
 
-a.Tile > h2
+a.css-tile > h2
 {
     color: black;
     display: block;
-    font-size: 26px;
+    font-size: 24px;
     margin: 0;
     padding: 15px;
+    padding-top: 0;
     max-height: 120px;
     overflow: hidden;
 }
 
-a.Tile > p
+a.css-tile > p
 {
     color: black;
     display: block;
-    height: 100px;
+    height: 45px;
     font-style:italic; 
-    font-size: 20px;
+    font-size: 18px;
     margin: 0;
     padding: 0;
     padding-top: 0;
+    overflow: hidden;
 }
 
-a.Tile > img{
-    height: 150px;
-    width: 150px;
+a.css-tile > img{
+    max-height: 150px;
+    max-width: 150px;
+    object-fit: cover;
     margin: 20px;
-    margin-top: 50px;
-    margin-bottom: 10px;
-
 }
 
-a.Tile > input[type="checkbox"]{
+a.css-tile > input[type="checkbox"]{
     position: absolute;
     left: 5px;
     top: 5px;
@@ -400,7 +363,7 @@ a.Tile > input[type="checkbox"]{
     height: 25px;
 }
 
-div.circleDetail{
+div.css-circleDetail{
     border-radius: 50%;
     padding: 10px;
     color: black;
@@ -411,62 +374,67 @@ div.circleDetail{
     border-color: #abaaaa;
 }
 
-div.Tile > div.circleDetail, a.Tile > div.circleDetail{
+a.css-tile > div.css-circleDetail{
     position: absolute;
-    right: 0;
-    margin-right: 10px;
-    margin-top: 10px;
+    right: 10px;
+    top: 20px;
 }
 
-
-
-div.listTile.expanded{
+div.css-listTile.css-expanded{
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.listTile.expandButton{
+div.css-listTile > div.css-expandBtnDiv{
+    align-items: center;
+}
+
+div.css-listTile > div > button.css-expandButton{
     background-color: transparent;
     color: #0667ac;
     border: none;
     font-size: 40px;
-    margin: 0 10px;
+    margin: 20px 0 10px 10px;
     font-weight: bold;
-    margin-top: 10px;
     height: 30px;
+    line-height: 0;
 }
 
-div.listTile.expanded > div > button{    
+div.css-listTile.css-expanded > div > button.css-expandButton{    
     margin-top: -10px;
 }
 
-div.listTile.listTileDetails{
+div.css-listTile.css-listTileDetails{
     margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-textarea{
-    resize: none;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-
-div.listTile.listTileDetails > textarea, div.listTile.listTileDetails > textarea:disabled, div.listTile.listTileDetails > textarea:focus {
-    font-size: 18px;
-    margin: 20px;
-    width: 95%;
+div.css-listTile > div > button.css-deleteButton, div.css-popupHeader > button{
+    color: white;
+    height: 40px;
+    width: 40px;
+    font-size: 26px;
+    background-color: rgb(255, 0, 0);
+    border-radius: 50%;
     border: none;
+    opacity: 0.7;
+    line-height: 0;
 }
 
-div.listTile.editMode:hover, div.Tile:hover, a.Tile:hover, div.selectionTile:hover{
-    box-shadow: 0 0 10px #1b497a;
-    border-color: #0090f6;
-    border-width: 2px;
+div.css-listTile > div > button.css-deleteButton:hover, div.css-popupHeader > button:hover{
+    opacity: 1;
 }
 
+div.css-listTile > div.css-deleteBtnDiv{
+    right: 10px;
+    height: 100%;
+    align-items: center;
+    position: absolute;
+    text-align: center;
+}
 
-div.listTile > textarea, div.listTile > textarea:disabled, div.listTile > textarea:focus{
+div.css-listTile > textarea, div.css-listTile > textarea:disabled, div.css-listTile > textarea:focus{
     width: 95%;
     border: none;
     outline: none;
@@ -478,64 +446,71 @@ div.listTile > textarea, div.listTile > textarea:disabled, div.listTile > textar
     background-color: transparent;
 }
 
-div.listTile > div.deleteButton > button, div.popupHeader > button{
-    font-family: 'Ubuntu', sans-serif;
-    color: white;
-    height: 40px;
-    width: 40px;
-    font-size: 26px;
-    background-color: rgb(255, 0, 0);
+div.css-listTile.css-listTileDetails > textarea, div.css-listTile.css-listTileDetails > textarea:disabled, div.css-listTile.css-listTileDetails > textarea:focus {
+    font-size: 18px;
+    margin: 20px;
+}
+
+div.css-listTile.css-editMode:hover, a.css-tile:hover, div.css-selectionTile:hover{
+    box-shadow: 0 0 10px #1b497a;
+    border-color: #0090f6;
+    border-width: 2px;
+}
+
+img.css-roundedPicture{
+    outline: 5px solid #0f80d1;
+    outline-offset: 1px;
     border-radius: 50%;
-    border: none;
-    opacity: 0.7;
-
-}
-div.listTile > div.deleteButton > button:hover, div.popupHeader > button:hover{
-    opacity: 1;
+    width: 180px;
+    height: 180px;
+    margin: 50px;
 }
 
-div.deleteButton{
-    right: 10px;
-    height: 100%;
-    align-items: center;
-    position: absolute;
-    text-align: center;
-}
-
-div.picture.editable{
+div.css-picture.css-editable{
     position: relative;
-    width: 280px;
+    /* width: 280px; */
     display: inline-block;
+    margin: 50px;
+}
+
+div.css-picture.css-editable > img{
+    margin: 0;
 }
 
 
-div.picture.editable > button.addPictureBtn, div.picture.editable > a > button.addPictureBtn{
+div.css-picture.css-editable > button.css-addPictureBtn, div.css-picture.css-editable > a > button.css-addPictureBtn{
     position: absolute;
+    margin: 0;
+    height: 70px;
     width: 70px;
-    bottom:10%;
-    right: 15%;
+    bottom: 0;
+    right: 0;
     border-radius:50%;
     border-style: solid;
     border-color: white;
     font-size: 40px;
+    line-height: 0;
 }
 
-div.uploadPopup{
-    box-sizing: border-box;
-    position: fixed;
-    width: 600px;
-    min-width: 500px;
-    top: 50%;
+div.css-centered{
     left: 50%;
-    transform: translate(-50%,-50%);
+    top: 50%;
+    margin: auto;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+div.css-uploadPopup{
+    position: fixed;
+    width: 550px;
     z-index: 10;
     background-color: white;
-    border: solid #7c7c7c 2px;
     border-radius: 30px;
     overflow: hidden;
 }
 
-div.uploadPopup > div.popupHeader{
+div.css-uploadPopup > div.css-popupHeader{
     font-size: 30px;
     padding: 20px;
     background-color: #0FD64F;
@@ -546,30 +521,29 @@ div.uploadPopup > div.popupHeader{
     height: fit-content;
 }
 
-div.uploadPopup > div.popupBody{
+div.css-uploadPopup > div.css-popupBody{
     text-align: center;
     padding: 20px;
 }
 
-div.uploadPopup > div.popupBody > img.imagePreview{
+div.css-uploadPopup > div.css-popupBody > img.css-imagePreview{
     width: 250px;
     height: 250px;
 }
 
 
-div.fileSelector{
+div.css-fileSelector{
     display: inline-block;
     background-color: rgb(255, 255, 255);
     border: solid #7c7c7c 1px;
     font-size: 20px;
-    /* padding: 0 20px 0 0; */
     border-radius: 50px;
     margin-top: 30px;
     margin-bottom: 40px;
     max-width: 100%;
 }
 
-div.fileSelector > p{
+div.css-fileSelector > p{
     display: inline-block;
     margin: 0;
     max-width: 80%;
@@ -578,18 +552,18 @@ div.fileSelector > p{
     padding-right: 20px;
 }
 
-div.fileSelector > button{
+div.css-fileSelector > button{
     margin: 0 10px 0 0;
     font-size: 20px;
 }
 
-div.fileSelector > label{
+div.css-fileSelector > label{
     margin: 0 10px 0 0;
     font-size: 20px;
     display: inline-block;
 }
 
-div.backgroundOverlay{
+div.css-backgroundOverlay{
     position: fixed;
     left:0;
     right:0;
@@ -599,6 +573,6 @@ div.backgroundOverlay{
     opacity: 0.5;
 }
 
-img.greenOutline{
+img.css-greenOutline{
     outline-color: #24d95e;
 }

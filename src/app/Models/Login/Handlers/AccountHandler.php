@@ -74,7 +74,7 @@ class AccountHandler{
                     
                     if(!$emailSent){
                         $this->verificationWorker->removePasswordResetRequest($userData['id']);
-                        $result['errorMsg'] = self::ERRORS['serverError'];
+                        throw new Exception;
                     }
                     else
                         $result['passwordResetRequested'] = true;
@@ -86,7 +86,7 @@ class AccountHandler{
                 $result['errorMsg'] = self::ERRORS['accountNotFound'];
             }
         }
-        catch(Exception $e){
+        catch(Exception){
             $result['errorMsg'] = self::ERRORS['serverError'];
         }       
         return $result;

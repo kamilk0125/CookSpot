@@ -13,7 +13,7 @@ use App\Views\Profile\ProfileView;
 use App\Views\Profile\RecipeView;
 use App\Views\Profile\SettingsView;
 
-class ProfileController implements ControllerInterface
+class ProfileController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -25,11 +25,6 @@ class ProfileController implements ControllerInterface
         $requestedView = $request->getSuperglobal('GET', 'view');
 
         $modelData = (new ProfileModel($this->container))->processRequest($request);
-
-        // echo '<pre>';
-        // var_dump($modelData);
-        // echo '</pre>';
-        // die();
 
         return $this->evaluateView($requestedView, $modelData);
     }
@@ -57,10 +52,6 @@ class ProfileController implements ControllerInterface
             default :
                 return (new ProfileView($modelData));
         }       
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

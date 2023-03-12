@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models\Profile;
 
+use App\Interfaces\ModelInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
-use App\Models\AccountManagement\User;
 use App\Models\Profile\Managers\ProfileManager;
 
-class ProfileModel
+class ProfileModel implements ModelInterface
 {
 
     public function __construct(private Container $container)

@@ -1,15 +1,18 @@
+const allowedExtensionsPattern = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 const maxFileSizeMB = 10;
-const fileInput = document.querySelector('div.uploadPopup > div.popupBody > div > div.fileSelector > input[type="file"]');
-const fileLabel = document.querySelector('div.fileSelector > p');
-const actualImage = document.querySelector('img.uploadPicture');
-const imagePreview = document.querySelector('div.uploadPopup > div.popupBody > img.imagePreview');
-const uploadDiscardBtn = document.querySelector('div.uploadPopup > div.popupHeader > button');
-const uploadBtn = document.querySelector('div.popupBody > div > button');
-fileInput.addEventListener('change', imageUpload);
+const addPictureBtn = document.querySelector('button.js-addPictureBtn');
+const backgroundOverlay = document.querySelector('div.js-backgroundOverlay');
+const imageUploadPopup = document.querySelector('div.js-imageUploadPopup'); 
+const actualImage = document.querySelector('img.js-uploadPicture');
+let uploadedImage;
+
+addPictureBtn.addEventListener('click', openImageUploadPopup);
 
 function imageUpload(e) {
     let filePath = e.target.value;
-    let allowedExtensionsPattern = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    let fileLabel = imageUploadPopup.querySelector('div.js-fileSelector > p');
+    let imagePreview = imageUploadPopup.querySelector('div.js-popupBody > img.js-imagePreview');
+    let uploadBtn = imageUploadPopup.querySelector('div.js-popupBody > div > button');
     
     if (e.target.files && e.target.files[0]) {
         let filesizeMB = e.target.files[0].size/1024/1024;
@@ -18,14 +21,14 @@ function imageUpload(e) {
             fileLabel.style.color = 'red';
             e.target.value = '';
             uploadBtn.disabled = true;
-            uploadBtn.classList.add('disabled');
+            uploadBtn.classList.add('css-disabled');
         }
         else if(filesizeMB>maxFileSizeMB){
             fileLabel.innerText = 'File size is larger than '+maxFileSizeMB+' MB';
             fileLabel.style.color = 'red';
             e.target.value = '';
             uploadBtn.disabled = true;
-            uploadBtn.classList.add('disabled');
+            uploadBtn.classList.add('css-disabled');
         }
         else{
             let reader = new FileReader();
@@ -36,8 +39,40 @@ function imageUpload(e) {
             fileLabel.innerText = e.target.files[0].name;
             fileLabel.style.color = 'black';
             uploadBtn.disabled = false;
-            uploadBtn.classList.remove('disabled');
+            uploadBtn.classList.remove('css-disabled');
         }
     }
 
+}
+
+function openImageUploadPopup() {
+    let uploadBtn = imageUploadPopup.querySelector('div.js-popupBody > div > button');
+
+    imageUploadPopup.classList.remove('css-invisible');
+    backgroundOverlay.classList.remove('css-invisible');
+
+    let fileInput = imageUploadPopup.querySelector('div.js-popupBody > div > div.js-fileSelector > input[type="file"]');
+    let closeBtn = imageUploadPopup.querySelector('div.js-popupHeader > button');
+
+    fileInput.addEventListener('change', imageUpload);
+    closeBtn.addEventListener('click', e => {
+        imageUploadPopup.classList.add('css-invisible');
+        backgroundOverlay.classList.add('css-invisible');
+        fileInput.value = '';
+        if(uploadedImage){
+            let dataTransfer = new DataTransfer();
+            dataTransfer.items.add(uploadedImage);
+            fileInput.files = dataTransfer.files;
+        }
+    });
+    uploadBtn.addEventListener('click', updateActualImage);
+}
+
+function updateActualImage(){
+    let imagePreview = imageUploadPopup.querySelector('div.js-popupBody > img.js-imagePreview');
+    let fileInput = imageUploadPopup.querySelector('div.js-popupBody > div > div.js-fileSelector > input[type="file"]');
+    actualImage.setAttribute('src', imagePreview.getAttribute('src'));
+    imageUploadPopup.classList.add('css-invisible');
+    backgroundOverlay.classList.add('css-invisible');
+    uploadedImage = fileInput.files[0];
 }

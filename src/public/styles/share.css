@@ -1,135 +1,136 @@
 #layout{
-    display: grid;
-    grid-template-columns: 5fr 2fr;
-    min-height: 784px;
-}
-
-#leftSide{
-    height: inherit;
-}
-
-#friends{
-    height: inherit;
-}
-
-#friendsList{
-    overflow: hidden;
-}
-
-#friendsList > div.listTile{
-    align-items: center;
-    max-width: 400px;
-    min-width: 300px;
-}
-
-#friendsList > div.listTile > *{
-    pointer-events: none;
-}
-
-#friendsList > div.listTile > div{
-    align-items: center;
-}
-
-#friendsList > div.listTile > div > img{
-    width: 50px;
-    height: 50px;
-    margin: 16px;
-}
-
-#friendsList > div.listTile > div > a{
-    margin-left: 20px;
-    color: inherit;
-    text-decoration: none;
-}
-#friendsList > div.listTile > div > a:hover{
-    color: inherit;
-    text-decoration: underline;
-}
-
-#friendsList > div.listTile > input[type="checkbox"]{
-    width: 35px;
-    height: 35px;
-    margin: 20px;
-}
-
-#ownedRecipes{
-    border-bottom: none;
-    border-left: none;
-    border-right: none;
-    position: relative;
-    
-}
-
-#ownedRecipesList{
-    border: none;
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-#ownedRecipesList > a.Tile{
-    height: 300px;
-    width: 225px;
-    margin: 10px;
-    
-}
-#ownedRecipesList > a.Tile > *{
-    pointer-events: none;
-}
-
-#ownedRecipesList > a.Tile > h2
-{
-    font-size: 21px;
-    padding: 12px;
-    max-height: 90px;
-}
-
-#ownedRecipesList > a.Tile > p
-{
-    height: 50px;
-    font-size: 15px;
-}
-
-#ownedRecipesList >  a.Tile > img{
-    height: 130px;
-    width: 130px;
-    margin: 10px;
-    margin-top: 50px;
-    margin-bottom: 8px;
-    outline-color: #24d95e;
-}
-
-#ownedRecipesList >  a.Tile > div.circleDetail{
-    padding: 8px;
-    font-size: 15px;
-    margin-right: 8px;
-    margin-top: 8px;
-}
-
-#options{
-    text-align: center;
-    font-size: 26px;
-}
-
-#options > input[type="checkbox"]{
-    width: 25px;
-    height: 25px;
-}
-
-#options > label{
-    display: inline-block;
-    transform: translateY(-3px);
+    min-height: var(--innerPageContentMinHeight, 100vh);
+    width: 100%;
 }
 
 #controlBtns{
-    position: absolute;
-    right: 20px;
-    text-align: center;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #Info{
     text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 
-#Info > label:not(.error){
+#Info > label{
+    font-size: 22px;
+}
+
+#Info > label:not(.css-error){
     color: green;
 }
+
+#mainContent{
+    flex: 1;
+}
+
+#leftSide{
+    height: inherit;
+    flex: 1;
+}
+
+#ownedRecipes{
+    border: none;
+}
+
+#ownedRecipesList{
+    border: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#ownedRecipesList > a.css-tile{
+    height: 220px;
+    width: 180px;
+    
+}
+#ownedRecipesList > a.css-tile > *{
+    pointer-events: none;
+}
+
+#ownedRecipesList > a.css-tile > h2{
+    font-size: 18px;
+    padding: 0;
+    padding-bottom: 5px;
+}
+
+#ownedRecipesList > a.css-tile > p{
+    font-size: 14px;
+    height: 50px;
+}
+
+#ownedRecipesList > a.css-tile > img{
+    outline-color: #24d95e;
+    width: 110px;
+    height: 110px;
+    margin: 5px;
+    margin-bottom: 10px;
+}
+
+#ownedRecipesList > a.css-tile > div.css-circleDetail{
+    font-size: 14px;
+    top: 5px;
+    right: 5px;
+}
+
+#friends{
+    height: inherit;
+    width: 30%;
+    min-width: 320px;
+}
+
+#friendsList > div.css-listTile{
+    align-items: center;
+    max-width: 450px;
+    min-width: 300px;
+}
+
+#friendsList > div.css-listTile > *{
+    pointer-events: none;
+}
+
+#friendsList > div.css-listTile > div{
+    align-items: center;
+}
+
+#friendsList > div.css-listTile > div > img{
+    width: 50px;
+    height: 50px;
+    margin: 16px 5px;
+}
+
+#friendsList > div.css-listTile > div > a{
+    text-align: left;
+    margin-left: 20px;
+    color: inherit;
+    text-decoration: none;
+    margin-right: 5px;
+}
+#friendsList > div.css-listTile > div > a:hover{
+    color: inherit;
+    text-decoration: underline;
+}
+
+#friendsList > div.css-listTile > input[type="checkbox"]{
+    min-width: 30px;
+    min-height: 30px;
+    margin: 15px;
+}
+
+div.options{
+    text-align: center;
+    font-size: 26px;
+}
+
+div.options > input[type="checkbox"]{
+    width: 25px;
+    height: 25px;
+}
+
+div.options > label{
+    display: inline-block;
+    transform: translateY(-3px);
+}
+

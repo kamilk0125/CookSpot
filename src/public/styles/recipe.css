@@ -1,5 +1,37 @@
-img.imagePreview{
-    outline-color: #24d95e;
+#recipeContent{
+    min-height: var(--innerPageContentMinHeight, 100vh);
+    background-color: white;
+}
+
+#recipeContent.css-desktopVersion{
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+}
+
+#leftSide{
+    height: 100%;
+}
+
+#recipeContent.css-desktopVersion > #leftSide{
+    grid-column: 1;
+}
+
+#recipeContent:not(.css-desktopVersion) > #leftSide, #mobileIngredients > #ingredients{
+    border: none;
+}
+
+#recipeContent.css-desktopVersion > #ingredients{
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+}
+
+#ingredients{
+    text-align: center;
+} 
+
+#ingredientsList > div.css-listTile > textarea{
+    text-align: left;
 }
 
 #Info{
@@ -7,9 +39,89 @@ img.imagePreview{
     border-left: none;
     border-right: none;
     border-top: none;
-    display: grid;
-    grid-template-columns: 2fr 6fr 2fr;
+    justify-content: flex-start;
 }
+
+
+#recipeContent:not(.css-desktopVersion) #Info > div.css-picture > img{
+    width: 160px;
+    height: 160px;
+}
+
+
+#topInfoBar{
+    align-items: center;
+}
+
+#controlBtns{
+    width: fit-content;
+}
+
+#preparationTime{
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    background-color: transparent;
+    height: fit-content;
+    margin-right: 0;
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+#preparationTime > textarea{
+    height: fit-content;
+    font: inherit;
+    font-size: 26px;
+    font-weight: bold;
+    transform: translateY(2px);
+    background-color: transparent;
+    max-width: 100px;
+    width: auto;
+}
+
+#preparationTime > h2{
+    font-size: 26px;
+    margin: 0;
+    margin-right: 20px;
+}
+
+#Info > div > textarea, #preparationTime > textarea{
+    display: block;
+    color: black;
+    border: none;
+    outline: none;
+}
+#Info > div > textarea:hover:not(:disabled), #preparationTime > textarea:hover:not(:disabled){
+    box-shadow: 0 0 10px #1b497a;
+    border-color: #0090f6;
+    border-width: 3px;
+}
+
+#recipeName{
+    font-size: 42px;
+    margin: 0;
+    font-weight: bold;
+    max-height: 150px;
+    width: 98%;
+}
+
+#recipeContent:not(.css-desktopVersion) #recipeName{
+    font-size: 36px;
+}
+
+#recipeDescription{
+    font-style:italic; 
+    font-size: 26px;
+    margin-top: 10px;
+    max-height: 95px;
+    width: 98%;
+}
+
+#recipeContent:not(.css-desktopVersion) #recipeDescription{
+    font-size: 24px;
+}
+
 #instructions{
     text-align: center;
     border: none;
@@ -22,100 +134,9 @@ img.imagePreview{
     border: none;
 }
 
-#leftSide{
-    grid-column: 1;
-    height: 100%;
-}
-
-/* #mainInfoDiv{
-    border: bo;
-} */
-
-#ingredients{
-    height: 100%;
-    min-width: 392px;
-    grid-column:  2;
-    grid-row:1;
-    text-align: center;
-}
-
-#recipeContent{
-    min-height: calc(100vh - 152px);
-    background-color: white;
-    display: grid;
-    grid-template-columns: 0.7fr 0.3fr;
-    justify-items: stretch;
-    /* overflow-x: auto; */
-    overflow-y: visible;
-}
-#instructions > div.listTile{
+#instructions > div.css-listTile{
     width: 99%;
     text-align: left;
-}
-
-#ingredientsList > div.listTile > textarea{
-    text-align: center;
-}
-
-#Info > div > textarea, #preparationTime > textarea{
-    display: block;
-    color: black;
-    border: none;
-    outline: none;
-}
-
-#preparationTime > textarea{
-    height: fit-content;
-    font: inherit;
-    font-size: 26px;
-    font-weight: bold;
-    transform: translateY(2px);
-    background-color: transparent;
-    width: 125px;
-}
-
-#preparationTime > h2{
-    font-size: 26px;
-    margin: 0;
-    margin-right: 20px;
-}
-
-#preparationTime{
-    font-size: 16px;
-    text-align: center; 
-    align-items: center;
-    background-color: transparent;
-    border-radius: 20px; 
-    padding: 10px;
-    height: fit-content;
-    margin-right: 0;
-    margin-left: auto;
-}
-
-#topInfoBar{
-    align-items: center;
-}
-
-#Info > div > textarea:hover:not(:disabled), #preparationTime > textarea:hover:not(:disabled){
-    box-shadow: 0 0 10px #1b497a;
-    border-color: #0090f6;
-    border-width: 3px;
-}
-
-#recipeName
-{
-    font-size: 42px;
-    margin: 0;
-    font-weight: bold;
-    max-height: 150px;
-}
-
-#recipeDescription
-{
-    font-style:italic; 
-    font-size: 26px;
-    margin-top: 10px;
-    max-height: 95px;
 }
 
 textarea:disabled{
@@ -125,4 +146,8 @@ textarea:disabled{
 #errorMsg, #errorMsg:hover{
     display: block;
     text-align: center;
+}
+
+img.css-imagePreview{
+    outline-color: #24d95e;
 }

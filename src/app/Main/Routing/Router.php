@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Main\Routing;
 use App\Exceptions\Router\RouteNotFoundException;
 use App\Main\Container\Container;
-use App\Views\Common\NotFoundView;
+use App\Views\Common\RouteNotFoundView;
 
 class Router
 {
@@ -24,9 +24,8 @@ class Router
         } 
         catch (RouteNotFoundException) 
         {
-            return new NotFoundView;
+            return new RouteNotFoundView;
         }
-
     }
 
     private function resolveController(string $route, Request $request)
@@ -42,8 +41,8 @@ class Router
             [$class, $method] = $action;
             if(method_exists($class, $method))
             {
-                $class = $this->container->get($class, [$class => ['container' => $this->container]]);
-                return call_user_func_array([$class, $method], [$request]);
+                $controller = $this->container->get($class, [$class => ['container' => $this->container]]);
+                return call_user_func_array([$controller, $method], [$request]);
             }
             else
             {

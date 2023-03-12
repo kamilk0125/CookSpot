@@ -45,17 +45,12 @@ class FriendsHandler{
     public function newInvitation(int $friendId){
         $currentUserId = $this->user->getUserData('id');
         $friendsList = $this->getFriendsList();
-        $result['errorMsg'] = '';
 
-        try{
-            if(!key_exists($friendId, $friendsList))
-                (new InvitationsWorker($this->container))->newInvitation($currentUserId, $friendId); 
-            else
-                $result['errorMsg'] = self::ERRORS['friendExists'];
-        }
-        catch(Exception){
-            $result['errorMsg'] = self::ERRORS['serverError'];
-        }
+        if(!key_exists($friendId, $friendsList))
+            $result['errorMsg'] = (new InvitationsWorker($this->container))->newInvitation($currentUserId, $friendId); 
+        else
+            $result['errorMsg'] = self::ERRORS['friendExists'];
+
         return $result;
     }
 
@@ -63,16 +58,12 @@ class FriendsHandler{
     public function answerInvitation(int $invitationId, bool $response){
         $currentUserId = $this->user->getUserData('id');
         $receivedInvitations = $this->getReceivedInvitations();
-        $result['errorMsg'] = '';
-        try{
-            if(key_exists($invitationId, $receivedInvitations))
-                (new InvitationsWorker($this->container))->answerInvitation($currentUserId, $invitationId, $receivedInvitations[$invitationId], $response);                      
-            else
-                $result['errorMsg'] = self::ERRORS['invitationNotFound'];
-        }
-        catch(Exception){
-            $result['errorMsg'] = self::ERRORS['serverError'];
-        }
+
+        if(key_exists($invitationId, $receivedInvitations))
+            $result['errorMsg'] = (new InvitationsWorker($this->container))->answerInvitation($currentUserId, $invitationId, $receivedInvitations[$invitationId], $response);                      
+        else
+            $result['errorMsg'] = self::ERRORS['invitationNotFound'];
+
         return $result;
     }
 
@@ -81,17 +72,12 @@ class FriendsHandler{
         $result['errorMsg'] = '';
         $currentUserId = $this->user->getUserData('id');
         $friendsList = $this->getFriendsList($currentUserId);
-        if(key_exists($friendId, $friendsList)){
-            try{
-                (new FriendsInfoWorker($this->container))->deleteFriend($currentUserId, $friendId);
-            }
-            catch(Exception){
-                $result['errorMsg'] = self::ERRORS['serverError'];
-            }
-        }
-        else{
+        
+        if(key_exists($friendId, $friendsList))
+            $result['errorMsg'] = (new FriendsInfoWorker($this->container))->deleteFriend($currentUserId, $friendId);
+        else
             $result['errorMsg'] = self::ERRORS['friendNotFound'];
-        }
+        
         return $result;
     }
 

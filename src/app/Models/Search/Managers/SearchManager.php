@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models\Search\Managers;
 
-use App\Addons\DataHandling\DataHandler;
-use App\Attributes\FormHandler;
+use App\Interfaces\ManagerInterface;
 use App\Main\Container\Container;
 use App\Models\Friends\Handlers\FriendsHandler;
 use App\Models\Login\Objects\User;
+use App\Models\Manager;
 use App\Models\Search\Handlers\SearchHandler;
 
-class SearchManager{
+class SearchManager extends Manager implements ManagerInterface
+{
     public SearchHandler $searchHandler;
     public FriendsHandler $friendsHandler;
 
@@ -19,21 +20,6 @@ class SearchManager{
     {
         $this->searchHandler = new SearchHandler($this->container);
         $this->friendsHandler = new FriendsHandler($this->container, $user);
-    }
-
-    public function processForm(array $form, ?array $files){
-        $handler = $form['handler'];
-        $action = $form['action'];
-        $data = array_merge($form['args'], $files ?? []);
-        if(method_exists($this->{$handler}, $action)){
-            $isFormHandler = DataHandler::hasAttribute($this->{$handler}, $action, FormHandler::class);
-            if($isFormHandler){
-                $args = DataHandler::mapMethodArgs($this->{$handler}, $action, $data);
-                if(!is_null($args))
-                    return $this->{$handler}->{$action}(...$args);
-            }
-        }
-        return null;
     }
     
     public function generateResultsList(string $keyword){

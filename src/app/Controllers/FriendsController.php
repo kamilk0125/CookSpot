@@ -10,7 +10,7 @@ use App\Main\Routing\Request;
 use App\Models\Friends\FriendsModel;
 use App\Views\Friends\FriendsView;
 
-class FriendsController implements ControllerInterface
+class FriendsController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -31,10 +31,6 @@ class FriendsController implements ControllerInterface
             return $this->redirect('friends');
         
         return new FriendsView($modelData);
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

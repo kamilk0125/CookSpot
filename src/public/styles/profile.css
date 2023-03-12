@@ -1,51 +1,39 @@
+#profileInfo{
+    background-color: white;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#profileInfo > div > h1{
+    overflow-wrap: break-word;
+    max-width: 270px;
+}
+
 #profileDisplayName
 {
     padding:20px;
     font-size: 42px;
     color: black;
-    border-radius: 50px;
     margin: 0;
 }
 
-#profileDescription
-{
-    margin: 0 0 0 20px; 
-    font-style:italic; 
-    font-size: 26px;
+div.css-container{
+    min-height: 440px;
 }
 
-#profileInfo{
-    background-color: white;
-    align-items: center;
-}
-
-div.container{
-    width: 100%;
-    min-height: 430px;
-}
-
-div.recipeList{
+div.css-recipeList{
     margin-left: 80px;
     margin-right: 80px;
 }
 
 #friendsBtn{
-    margin-left: 100px;
-    margin-right: auto;
+    margin-left: 50px;
 }
 
-#deleteFriendBtn{
-    margin-left: 20px;
-    margin-right: auto;
-}
-
-div.recipeList > a.Tile > img{
+div.css-recipeList > a.css-tile > img{
     outline-color: #24d95e;
 }
 
-div.topNav > button:hover{
-    background-color: whitesmoke;
-}
 
 
 

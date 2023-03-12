@@ -38,7 +38,6 @@ class ConfirmationWorker{
                 $query->rollback();
             }
         }
-
         return false;
     }
 
@@ -56,7 +55,6 @@ class ConfirmationWorker{
                     (new User(id: $userId))->createStorageDir();
                     $query->deleteTableRow('inactiveAccounts', ['email' => $userInfo['email']]);
                     $query->commit();
-
                     return true;
                 }
             }
@@ -79,9 +77,7 @@ class ConfirmationWorker{
                 }
             }
         }
-        catch(Exception){
-
-        }
+        catch(Exception){}
         
         return false;
     }

@@ -9,6 +9,10 @@ use App\Models\Database\SQLQuery;
 use Exception;
 
 class InvitationsWorker{
+
+    private const ERRORS = [
+        'serverError' => 'Sesrver Error'
+    ];
     
     public function __construct(private Container $container)
     {
@@ -16,7 +20,13 @@ class InvitationsWorker{
     }
 
     public function newInvitation(int $userId, int $friendId){
-        (new SQLQuery($this->container))->insertTableRow('friendsInvitations', ['senderId' => $userId, 'receiverId' => $friendId]);
+        try{
+            (new SQLQuery($this->container))->insertTableRow('friendsInvitations', ['senderId' => $userId, 'receiverId' => $friendId]);
+        }
+        catch(Exception){
+            $errorMsg = self::ERRORS['serverError'];
+        }
+        return $errorMsg ?? '';
     }
 
     public function getReceivedInvitations(int $userId){
@@ -68,12 +78,20 @@ class InvitationsWorker{
 
     public function answerInvitation(int $receiverId, int $invitationId, array $invitationInfo, bool $response){
         $query = new SQLQuery($this->container);
-
-        $query->beginTransaction();
-        $query->deleteTableRow('friendsInvitations', ['invitationId' => $invitationId]);
-        if($response){
-            $query->insertTableRow('friends', ['userId1'=>$invitationInfo['senderId'], 'userId2'=>$receiverId]);
+        try{
+            $query->beginTransaction();
+            $query->deleteTableRow('friendsInvitations', ['invitationId' => $invitationId]);
+            if($response){
+                $query->insertTableRow('friends', ['userId1'=>$invitationInfo['senderId'], 'userId2'=>$receiverId]);
+            }
+            $query->commit();
         }
-        $query->commit();
+        catch(Exception){
+            $errorMsg = self::ERRORS['serverError'];
+            if($query->inTransaction())
+                $query->rollback();
+        }
+        return $errorMsg ?? '';
+
     }
 }

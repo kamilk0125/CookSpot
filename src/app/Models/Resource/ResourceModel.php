@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models\Resource;
 
+use App\Interfaces\ModelInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Models\Resource\Managers\ResourceManager;
 
-class ResourceModel{
+class ResourceModel implements ModelInterface
+{
     public function __construct(private Container $container)
     {
         

@@ -15,7 +15,7 @@ use App\Views\Login\PasswordModificationView;
 use App\Views\Login\PasswordResetRequestView;
 use App\Views\Login\PasswordResetView;
 
-class LoginController implements ControllerInterface
+class LoginController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -56,10 +56,6 @@ class LoginController implements ControllerInterface
             default: 
                 return new LoginView($modelData);
         }
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

@@ -31,20 +31,16 @@ class LoginHandler{
         $result['errorMsg'] = '';
         
         try{
-            $valid = false;
             $userInfo = $this->accountWorker->getAccountInfo(id: $id);
             if($userInfo !== false){
                 if(password_verify($password, $userInfo['authHash'])){
                     $currentUser = new User();
                     $currentUser->updateUserSettings($userInfo);
                     $result['currentUser'] = $currentUser;
-                    $valid = true;
-                }
+                    return $result;
+                }        
             }
-            
-            if(!$valid){ 
-                $result['errorMsg'] = self::ERRORS['authFailed'];
-            }
+            $result['errorMsg'] = self::ERRORS['authFailed'];
         }
         catch(Exception){
             $result['errorMsg'] = self::ERRORS['serverError'];

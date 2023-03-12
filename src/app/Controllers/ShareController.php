@@ -11,7 +11,7 @@ use App\Models\Share\ShareModel;
 use App\Views\Profile\RecipeView;
 use App\Views\Share\ShareView;
 
-class ShareController implements ControllerInterface
+class ShareController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -24,10 +24,6 @@ class ShareController implements ControllerInterface
 
         $modelData = (new ShareModel($this->container))->processRequest($request);
 
-        // echo '<pre>';
-        // var_dump($modelData);
-        // echo '</pre>';
-        // die();
         return $this->evaluateView($requestedView, $modelData);
     }
     
@@ -42,10 +38,6 @@ class ShareController implements ControllerInterface
                 default:
                     return new ShareView($modelData);
             }
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

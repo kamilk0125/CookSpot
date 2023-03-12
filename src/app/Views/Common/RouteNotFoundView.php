@@ -7,7 +7,7 @@ namespace App\Views\Common;
 use App\Interfaces\ViewInterface;
 use App\Views\Common\View;
 
-class NotFoundView extends View implements ViewInterface
+class RouteNotFoundView extends View implements ViewInterface
 {
     public function __construct()
     {

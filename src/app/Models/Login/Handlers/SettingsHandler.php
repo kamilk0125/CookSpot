@@ -37,9 +37,11 @@ class SettingsHandler{
         $settings = ['displayName' => $displayName, 'email' => $email, 'picturePath' => $picturePath];
         if($settings['picturePath'] === '')
             unset($settings['picturePath']);
+        $result['errorMsg'] = $this->settingsWorker->validateAccountSettings($settings) ? '' : self::ERRORS['invalidInput'];
+
         $accountHandler = new AccountHandler($this->container);
         $accountInfo = $accountHandler->getAccountInfo($userId);
-        $result['errorMsg'] = $this->settingsWorker->validateAccountSettings($settings) ? '' : self::ERRORS['invalidInput'];
+        
         try{
             if($result['errorMsg'] === '' && $accountInfo !== false){
                 $emailTaken =  $email!==$accountInfo['email'] && $accountHandler->getAccountInfo(id: $email)!==false;

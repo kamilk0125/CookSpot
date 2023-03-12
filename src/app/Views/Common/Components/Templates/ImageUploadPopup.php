@@ -1,20 +1,20 @@
-<div class="uploadPopup invisible">
-    <div class="popupHeader">
+<div class="css-uploadPopup css-centered js-imageUploadPopup css-invisible">
+    <div class="css-popupHeader js-popupHeader">
       <div>Upload file</div>
       <button type="button">✗</button>
     </div>
-    <div class="popupBody">
-      <img class="imagePreview roundedPicture" src="resource?type=img&path=<?php echo $imagePreviewSrc ?? '' ?>" alt="Recipe Picture">
+    <div class="css-popupBody js-popupBody">
+      <img class="css-imagePreview css-roundedPicture js-imagePreview" src="resource?type=img&path=<?php echo $imagePreviewSrc ?? '' ?>" alt="Recipe Picture">
       <div>
-        <div class="fileSelector">
-            <label class="rounded buttonLabel" for="fileUploadInput">Choose file...</label>
-            <input id="fileUploadInput" name="<?php echo $fileInputName ?? '' ?>" class="invisible" type="file" accept=".jpg, .jpeg, .png, .gif">
+        <div class="css-fileSelector js-fileSelector">
+            <label class="css-rounded css-buttonLabel" for="fileUploadInput">Choose file...</label>
+            <input id="fileUploadInput" name="<?php echo $fileInputName ?? '' ?>" class="css-invisible" type="file" accept=".jpg, .jpeg, .png, .gif">
             <p>No file selected</p>
         </div>
       </div>
       <div>
-        <button class="rounded disabled" type="button" disabled>Upload</button>
+        <button class="css-rounded css-disabled" type="button" disabled>Upload</button>
       </div>
     </div>
 </div>
-<div class="backgroundOverlay invisible"></div>
+<div class="css-backgroundOverlay js-backgroundOverlay css-invisible"></div>

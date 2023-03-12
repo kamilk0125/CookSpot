@@ -10,7 +10,7 @@ use App\Main\Routing\Request;
 use App\Models\Search\SearchModel;
 use App\Views\Search\SearchView;
 
-class SearchController implements ControllerInterface
+class SearchController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -29,10 +29,6 @@ class SearchController implements ControllerInterface
             return $this->redirect('search');
             
         return new SearchView($modelData);
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

@@ -1,5 +1,5 @@
-const recipesTiles = document.querySelectorAll('#ownedRecipesList > a.Tile');
-const friendsTiles = document.querySelectorAll('#friendsList > div.listTile');
+const recipesTiles = document.querySelectorAll('#ownedRecipesList > a.js-tile');
+const friendsTiles = document.querySelectorAll('#friendsList > div.js-selectionTile');
 const allRecipesCheckbox = document.querySelector('#allRecipesBtn');
 const allFriendsCheckbox = document.querySelector('#allFriendsBtn');
 const shareBtn = document.querySelector('#shareBtn');
@@ -12,29 +12,29 @@ allFriendsCheckbox.addEventListener('click', e => {friendsTiles.forEach(tile => 
 validateForm();
 
 function checkTile(tile, allTilesCheckbox, state){
-    checkboxSelector = 'input[type="checkbox"]';
-    checkbox = tile.querySelector(checkboxSelector);
+    let checkboxSelector = 'input[type="checkbox"]';
+    let checkbox = tile.querySelector(checkboxSelector);
     checkbox.checked = state ?? !checkbox.checked;
     if(checkbox.checked){
-        tile.classList.add('checked');
+        tile.classList.add('js-checked');
     }
     else{
-        tile.classList.remove('checked');
+        tile.classList.remove('js-checked');
         allTilesCheckbox.checked = false;
     }
     validateForm();
 }
 
 function validateForm(){
-    checkedRecipesTiles = document.querySelectorAll('#ownedRecipesList > a.Tile.checked');
-    checkedFriendsTiles = document.querySelectorAll('#friendsList > div.listTile.checked');
+    let checkedRecipesTiles = document.querySelectorAll('#ownedRecipesList > a.js-tile.js-checked');
+    let checkedFriendsTiles = document.querySelectorAll('#friendsList > div.js-selectionTile.js-checked');
     
     if(checkedRecipesTiles.length>0 && checkedFriendsTiles.length>0){
-        shareBtn.classList.remove('disabled');
+        shareBtn.classList.remove('css-disabled');
         shareBtn.disabled = false;
     }
     else{
-        shareBtn.classList.add('disabled');
+        shareBtn.classList.add('css-disabled');
         shareBtn.disabled = true;
     }
 }

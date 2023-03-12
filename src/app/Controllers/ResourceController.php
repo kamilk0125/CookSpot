@@ -9,7 +9,7 @@ use App\Main\Routing\Request;
 use App\Models\Resource\ResourceModel;
 use App\Views\Resource\ResourceView;
 
-class ResourceController implements ControllerInterface
+class ResourceController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {

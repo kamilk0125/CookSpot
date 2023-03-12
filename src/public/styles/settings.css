@@ -5,15 +5,19 @@
 
 #userInfo{
     display: inline-block;
-    text-align:right;
-    width: 700px;
+    transform: translateX(-30px);
 }
 
-#userInfo > label.form.error{
+#userInfo > label.css-form.css-error{
     text-align: center;
     display: block;
 }
 
-#userInfo > div.LabeledInput{
-    margin-right: 180px;
+#userInfo > div.css-labeledInput{
+    justify-content: space-between;
+    align-items:baseline;
+}
+
+#userInfo > div.css-labeledInput > div{
+    max-width: 338px;
 }

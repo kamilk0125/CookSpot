@@ -27,7 +27,8 @@ class ProfileView extends View implements ViewInterface
             switch($this->relationStatus){
                 case 'friend':
                     $this->friendsForm['btnText'] = '✓ Friends';
-                    $this->friendsForm['btnClass'] = 'disabled';
+                    $this->friendsForm['btnClass'] = 'css-disabled';
+                    $this->friendsForm['btnDisabled'] = true;
                     break;
                 case 'invitationReceived':
                     $this->friendsForm['action'] = 'answerInvitation';
@@ -35,22 +36,22 @@ class ProfileView extends View implements ViewInterface
                     $this->friendsForm['btnName'] = 'args[response]';
                     $this->friendsForm['btnValue'] = '1';
                     $this->friendsForm['args'] = ['args[invitationId]' => $relation['invitationId']];
+                    $this->friendsForm['btnDisabled'] = false;
                     break;
                 case 'invitationSent':
                     $this->friendsForm['btnText'] = '✓ Invitation Sent';
-                    $this->friendsForm['btnClass']  = 'disabled';
+                    $this->friendsForm['btnClass']  = 'css-disabled';
+                    $this->friendsForm['btnDisabled'] = true;
                     break;
                 default:
                     $this->friendsForm['action'] = 'newInvitation';
                     $this->friendsForm['btnText'] = 'Add to friends';
                     $this->friendsForm['btnName'] = 'args[friendId]';
                     $this->friendsForm['btnValue'] = $this->profileData['profileInfo']['id'];
+                    $this->friendsForm['btnDisabled'] = false;
             }
         }
-        else{
-            $this->relationStatus = '';
-            $this->friendsForm['btnClass'] = 'invisible';
-        }
+        
     }
 
     public function display():string

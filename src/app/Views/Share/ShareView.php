@@ -27,7 +27,7 @@ class ShareView extends View implements ViewInterface
         else
             $this->infoText = $modelData['formResult']['errorMsg'] ?? '';
         
-            $this->recipesShared = $modelData['formResult']['recipesShared'] ?? false;
+        $this->recipesShared = $modelData['formResult']['recipesShared'] ?? false;
         $this->pageName = 'Share';
     }
 

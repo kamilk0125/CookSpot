@@ -50,17 +50,19 @@ class RecipesHandler{
 
     #[FormHandler]
     public function modifyRecipe(array $recipeInfo, array $recipePictureInfo){
+        $result['errorMsg'] = '';
         $recipeId = intval($recipeInfo['recipeId']);
-        
         $recipe = $this->recipeWorker->createRecipe($recipeId, $recipeInfo, $recipePictureInfo, $this->picturesStoragePath);
 
+        if(strlen($recipePictureInfo['name']) > 0)
+            $this->recipeWorker->removeRecipePicture($this->recipes[$recipeId]);
+        else
+            $recipe->picturePath = $this->recipes[$recipeId]->picturePath;
+
         if(!is_null($recipe)){
-            $result = $this->removeRecipe($recipeId, false);
-            if($result['errorMsg'] === ''){
-                $this->recipes[$recipeId] = $recipe;
-                $this->saveRecipes();
-                $result['recipeModified'] = true;      
-            }
+            $this->recipes[$recipeId] = $recipe;
+            $this->saveRecipes();
+            $result['recipeModified'] = true;      
         }
         else{
             $result['errorMsg'] = 'Recipe is invalid';
@@ -71,9 +73,10 @@ class RecipesHandler{
     #[FormHandler]
     public function removeRecipe(int $recipeId, bool $removeShareInfo = true)
     {
-        $result['errorMsg'] = $this->recipeWorker->removeRecipe($this->recipes[$recipeId]);
+        $result['errorMsg'] = $this->recipeWorker->removeRecipePicture($this->recipes[$recipeId]);
         $shareHandler = new ShareHandler($this->container, $this->user);
-        $result['errorMsg'] = ($result['errorMsg'] === '' && $removeShareInfo) ? $shareHandler->removeRecipeShareInfo($recipeId) : $result['errorMsg'];
+        if($result['errorMsg'] === '' && $removeShareInfo)
+            $result['errorMsg'] = $shareHandler->removeRecipeShareInfo($recipeId);
         
         if($result['errorMsg'] === ''){
             unset($this->recipes[$recipeId]);

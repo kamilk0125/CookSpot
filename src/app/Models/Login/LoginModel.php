@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models\Login;
 
+use App\Interfaces\ModelInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Models\Login\Managers\LoginManager;
 
-class LoginModel
+class LoginModel implements ModelInterface
 {
 
     public function __construct(private Container $container)

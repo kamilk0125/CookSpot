@@ -12,7 +12,7 @@ use App\Views\Confirmation\AccountActivatedView;
 use App\Views\Confirmation\EmailVerificationView;
 
 
-class ConfirmationController implements ControllerInterface
+class ConfirmationController extends Controller implements ControllerInterface
 {
     public function __construct(private Container $container)
     {
@@ -40,10 +40,6 @@ class ConfirmationController implements ControllerInterface
             default: 
                 return $this->redirect('');
         }
-    }
-
-    private function redirect(string $location){
-        return "<script>location.href='/{$location}';</script>";
     }
 
 

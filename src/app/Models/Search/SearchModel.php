@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models\Search;
 
+use App\Interfaces\ModelInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Models\Search\Managers\SearchManager;
 
-class SearchModel
+class SearchModel implements ModelInterface
 {
 
     public function __construct(private Container $container)

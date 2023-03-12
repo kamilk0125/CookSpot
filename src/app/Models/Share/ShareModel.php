@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Models\Share;
 
+use App\Interfaces\ModelInterface;
 use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Models\Share\Managers\ShareManager;
 
-class ShareModel{
+class ShareModel implements ModelInterface
+{
 
     public function __construct(private Container $container)
     {

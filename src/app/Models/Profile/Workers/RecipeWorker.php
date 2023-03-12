@@ -44,7 +44,7 @@ class RecipeWorker
     }
 
 
-    public function removeRecipe(Recipe $recipe){
+    public function removeRecipePicture(Recipe $recipe){
         if(!str_starts_with($recipe->picturePath, ResourceHandler::COMMON_STORAGE_DIR)){
             return (new ResourceHandler($this->user))->removeResource($recipe->picturePath);
         }
