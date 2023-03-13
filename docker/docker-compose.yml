@@ -24,8 +24,9 @@ services:
     container_name: cookspot-db
     volumes:
       - ./storage/mysql:/var/lib/mysql
+      - ./dump:/docker-entrypoint-initdb.d
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: Mdb3pzTbS
+      MYSQL_ROOT_PASSWORD: EXAMPLE_PASSWORD
     ports:
       - 3306:3306
