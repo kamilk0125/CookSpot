@@ -53,7 +53,7 @@ class AccountWorker{
     }
 
     public function removeInactiveAccount(int $userId){
-        (new SQLQuery($this->container))->deleteTableRow('inactiveAccounts', ['userId' => $userId]);
+        (new SQLQuery($this->container))->deleteTableRow('inactiveAccounts', ['id' => $userId]);
     }
 
     public function getAccountInfo(int $userId = 0, string $id = ''){

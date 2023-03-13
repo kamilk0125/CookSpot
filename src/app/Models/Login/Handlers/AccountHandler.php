@@ -42,14 +42,13 @@ class AccountHandler{
 
                 $emailSent = (new MailBuilder)->sendTemplateEmail('AccountActivationEmail.php', 'Account Activation', [$email], ['activationHash' => $urlHash, 'id' => $accountData['id']]);
 
-                if(!$emailSent){
-                    $this->accountWorker->removeInactiveAccount($accountData['id']);
+                if(!$emailSent)
                     throw new Exception;
-                }
                 else
                     $result['accountCreated'] = true;
             }
-            catch(Exception $e){
+            catch(Exception){
+                $this->accountWorker->removeInactiveAccount($accountData['id']);
                 $result['errorMsg'] = self::ERRORS['serverError'];
             }
         }
@@ -72,10 +71,8 @@ class AccountHandler{
         
                     $emailSent = (new MailBuilder)->sendTemplateEmail('PasswordResetEmail.php', 'Password Reset', [$email], ['verificationHash' => $urlHash, 'id' => $userData['id']]);
                     
-                    if(!$emailSent){
-                        $this->verificationWorker->removePasswordResetRequest($userData['id']);
+                    if(!$emailSent)
                         throw new Exception;
-                    }
                     else
                         $result['passwordResetRequested'] = true;
                 }
@@ -87,6 +84,7 @@ class AccountHandler{
             }
         }
         catch(Exception){
+            $this->verificationWorker->removePasswordResetRequest($userData['id']);
             $result['errorMsg'] = self::ERRORS['serverError'];
         }       
         return $result;
