@@ -14,6 +14,14 @@
             width: 100%;
             padding: 15px;
         }
+        button.css-rounded{
+            border-radius: 50px;
+            background-color: #0090f6;
+            color: white;
+            margin: 5px;
+            border-color: transparent;
+            padding: 0px 10px;
+        }
     </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
