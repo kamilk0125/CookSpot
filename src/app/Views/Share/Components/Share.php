@@ -21,7 +21,7 @@
                             foreach(array_reverse($this->ownedRecipes) as $recipe){
                                 $checkboxName = "args[recipesId][]";
                                 $checkboxValue = $recipe->id;
-                                $redirectLink = 'javascript:void(0)';
+                                $redirectLink = null;
                                 $detailText = '⌛ ' . $recipe->preparationTime;
                                 $imageSrc = '/resource?type=img&path=' . $recipe->picturePath;
                                 $headerText = $recipe->name;

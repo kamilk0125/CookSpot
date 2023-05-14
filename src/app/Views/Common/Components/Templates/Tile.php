@@ -1,4 +1,4 @@
-<a class="css-tile js-tile" href="/<?php echo $redirectLink ?? '' ?>">
+<a class="css-tile js-tile" <?php echo isset($redirectLink) ? 'href="' . $redirectLink . '"' : '';?>>
     <div class="css-tileInfo"><?php echo $tileInfo ?? '' ?></div>
     <input type="checkbox" name="<?php echo $checkboxName ?? ''; ?>" value="<?php echo $checkboxValue ?? ''; ?>" class="<?php echo $checkboxClass ?? ''; ?>">
     <div class="css-circleDetail"><?php echo $detailText ?? ''; ?></div>
