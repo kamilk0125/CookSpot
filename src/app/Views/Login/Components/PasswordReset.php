@@ -1,4 +1,4 @@
-<form class="js-loginInfoForm" id="passwordResetForm" action="login?view=passwordReset" method="POST">
+<form class="js-loginInfoForm" id="passwordResetForm" action="/login?view=passwordReset" method="POST">
     <input type="text" name="handler" value="accountHandler" class="css-invisible">
     <input type="text" name="action" value="resetPassword" class="css-invisible">
     <div class="css-centered" id="passwordResetFormDiv"> 

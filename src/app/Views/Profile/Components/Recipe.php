@@ -1,9 +1,9 @@
-<form id="deleteForm" action="profile" method="POST">
+<form id="deleteForm" action="/profile" method="POST">
   <input class="css-invisible" name="handler" type="text" value="recipesHandler">
   <input class="css-invisible" name="action" type="text" value="removeRecipe">
   <input class="css-invisible" name="args[recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
 </form>
-<form id="recipeForm" action="<?php echo "profile?view=" . ($this->newRecipe ? 'newRecipe' : "recipe&id={$this->recipe->id}");?>" method="POST" enctype="multipart/form-data">
+<form id="recipeForm" action="<?php echo "/profile?view=" . ($this->newRecipe ? 'newRecipe' : "recipe&id={$this->recipe->id}");?>" method="POST" enctype="multipart/form-data">
   <input class="css-invisible" name="handler" type="text" value="recipesHandler">
   <input class="css-invisible" name ="action" type="text" value="<?php echo $this->newRecipe ? 'addNewRecipe' : 'modifyRecipe'; ?>">
   <input class="css-invisible" name="args[recipeInfo][recipeId]" type="text" value="<?php echo  $this->recipe->id ?>">
@@ -16,7 +16,7 @@
     <?php include (__DIR__ . '/SubComponents/RecipeIngredients.php'); ?>
   </div>
   <?php 
-      $imagePreviewSrc = 'resource?type=img&path=' . $this->recipe->picturePath;
+      $imagePreviewSrc = '/resource?type=img&path=' . $this->recipe->picturePath;
       $fileInputName = 'recipePictureInfo';
       include(__DIR__ . '/../../Common/Components/Templates/ImageUploadPopup.php');
   ?>

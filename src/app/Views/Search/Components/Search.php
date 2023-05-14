@@ -6,8 +6,8 @@
         <h2 class="<?php echo (empty($this->searchResults) && (strlen($this->searchKeyword) > 0)) ? '' : 'css-invisible';?>">No Results</h2>
             <?php
                 foreach($this->searchResults as $result){
-                    $redirectLink = "profile?view=user&id={$result['id']}";
-                    $imageSrc = 'resource?type=img&path=' . $result['picturePath'];
+                    $redirectLink = "/profile?view=user&id={$result['id']}";
+                    $imageSrc = '/resource?type=img&path=' . $result['picturePath'];
                     $headerText = $result['displayName'];
                     $formHandler = 'friendsHandler';
                     switch($result['relation']['status']){

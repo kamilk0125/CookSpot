@@ -4,7 +4,7 @@
                   <button class="css-rounded js-formSelector <?php echo ($this->activeForm==='register') ? 'css-selectedOption js-selectedOption' : ''; ?>" type="button" id="registerFormBtn">Register</button>
             </div>
             <br>
-            <form class = "<?php echo ($this->activeForm==='login') ? '' : 'css-invisible'; ?>" action="login" id = "loginForm" method="POST">
+            <form class = "<?php echo ($this->activeForm==='login') ? '' : 'css-invisible'; ?>" action="/login" id = "loginForm" method="POST">
                   <input type="text" name="handler" value="loginHandler" class="css-invisible">
                   <input type="text" name="action" value="logIn" class="css-invisible">
                   <label class = "css-form css-error"><?php echo ($this->activeForm==='login') ? $this->errorMsg : '';?></label>
@@ -19,9 +19,9 @@
                   <br>
                   <button type = "submit" name = "" class = "css-rounded">Log In</button>
                   <br><br>
-                  <a href="login?view=passwordReset">Forgot your password?</a>
+                  <a href="/login?view=passwordReset">Forgot your password?</a>
             </form>
-            <form class = "js-loginInfoForm <?php echo ($this->activeForm==='register') ? '' : 'css-invisible js-notUsed'; ?>" action="login" id = "registerForm" method="POST">
+            <form class = "js-loginInfoForm <?php echo ($this->activeForm==='register') ? '' : 'css-invisible js-notUsed'; ?>" action="/login" id = "registerForm" method="POST">
                   <input type="text" name="handler" value="accountHandler" class="css-invisible">
                   <input type="text" name="action" value="registerAccount" class="css-invisible">
                   <label class = "css-form css-error"><?php echo ($this->activeForm==='register') ? $this->errorMsg : '';?></label>

@@ -1,4 +1,4 @@
-<form action="share" method="POST">
+<form action="/share" method="POST">
     <div id="layout" class="css-flexVertical">
         <div id="controlBtns" class="css-flexHorizontal css-itemContainer"> 
             <div id="Info"><label class = "css-form <?php echo $this->recipesShared ? '' : 'css-error';?>"><?php echo $this->infoText;?></label></div>
@@ -23,7 +23,7 @@
                                 $checkboxValue = $recipe->id;
                                 $redirectLink = 'javascript:void(0)';
                                 $detailText = '⌛ ' . $recipe->preparationTime;
-                                $imageSrc = 'resource?type=img&path=' . $recipe->picturePath;
+                                $imageSrc = '/resource?type=img&path=' . $recipe->picturePath;
                                 $headerText = $recipe->name;
                                 $descriptionText = $recipe->description;
                                 include(__DIR__ . '/../../Common/Components/Templates/Tile.php');
@@ -44,7 +44,7 @@
                             $checkboxName = "args[usersId][]";
                             $checkboxValue = $friend['id'];
                             $redirectLink = "javascript:void(0)";
-                            $imageSrc = 'resource?type=img&path=' . $friend['picturePath'];
+                            $imageSrc = '/resource?type=img&path=' . $friend['picturePath'];
                             $headerText = $friend['displayName'];
                             include(__DIR__ . '/../../Common/Components/Templates/SelectionListTile.php');
                         }

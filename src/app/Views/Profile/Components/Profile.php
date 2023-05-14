@@ -1,7 +1,7 @@
 <div id="profileInfo" class = "css-flexHorizontal">
     <div class="css-picture css-editable">
       <img id="profilePicture" class="css-roundedPicture" src="resource?type=img&path=<?php echo $this->profileData['profileInfo']['picturePath'] ?>" alt="Profile Picture">
-      <a href="profile?view=settings" class="<?php echo $this->profileData['publicProfile'] ? 'css-invisible' : '';?>">
+      <a href="/profile?view=settings" class="<?php echo $this->profileData['publicProfile'] ? 'css-invisible' : '';?>">
         <button class="css-addPictureBtn css-squared css-editElement js-addPictureBtn">⚙</button> 
       </a>
     </div>

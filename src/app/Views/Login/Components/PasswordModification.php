@@ -1,4 +1,4 @@
-<form class="js-loginInfoForm <?php echo $this->valid ? '' : 'css-invisible js-notUsed'; ?>" id="passwordForm" action="login?view=<?php echo ($this->requestType === 'reset') ? 'passwordReset&id=' . $this->userId . '&hash=' . $this->verificationHash : 'changePassword'; ?>" method="POST">
+<form class="js-loginInfoForm <?php echo $this->valid ? '' : 'css-invisible js-notUsed'; ?>" id="passwordForm" action="/login?view=<?php echo ($this->requestType === 'reset') ? 'passwordReset&id=' . $this->userId . '&hash=' . $this->verificationHash : 'changePassword'; ?>" method="POST">
     <input type="text" name="handler" value="settingsHandler" class="css-invisible">
     <input type="text" name="action" value="modifyPassword" class="css-invisible">
     <input type="text" name="args[requestType]" value="<?php echo $this->requestType; ?>" class="css-invisible">
