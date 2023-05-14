@@ -54,4 +54,4 @@
         </div>
     </div>
 </form>
-<script src="js/share.js"></script>
+<script src="js/shareRecipes.js"></script>
