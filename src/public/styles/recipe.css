@@ -32,6 +32,7 @@
 
 #ingredientsList > div.css-listTile > textarea{
     text-align: left;
+    margin: 10px 20px;
 }
 
 #Info{
