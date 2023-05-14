@@ -1,4 +1,5 @@
 src/vendor/
 docker/storage/
 docker/.env
+src/.env
 src/storage/users/
