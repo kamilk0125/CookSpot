@@ -14,9 +14,9 @@ function validateRecipe(){
     let recipeNameValue = recipeName.value;
     let recipeDescriptionValue = recipeDescription.value;
     let instructions = document.querySelectorAll('#instructionsList > div.js-listTileExp');
-    let ingredients = document.querySelectorAll('#ingredientsList > div.js-listTile')
+    let ingredients = document.querySelectorAll('#ingredientsList > div.js-listTile');
     let instructionsCount = instructions.length;
-    let ingredientsCount = instructions.length;
+    let ingredientsCount = ingredients.length;
 
     let validInstructions = true;
     instructions.forEach(instruction => {
@@ -28,7 +28,7 @@ function validateRecipe(){
     ingredients.forEach(ingredient => {
         let headerText = ingredient.querySelector('div.js-listTile > textarea').value;
         if(headerText.length === 0)
-        validIngredients = false;
+            validIngredients = false;
     });
 
     if(
