@@ -10,7 +10,6 @@
             <label class = "css-form css-error"><?php echo $this->errorMsg ?? '';?></label>
             <br>
             <div class="css-labeledInput css-flexHorizontal">
-                <label class="css-form">Display Name:&emsp;</label>
                 <div>
                     <input class = "css-form js-validationInput" type="text" name="args[displayName]" id="displayName" placeholder="display name" spellcheck="false" value="<?php echo $this->formData['args']['displayName'] ?? $this->profileData['profileInfo']['displayName'];?>">
                     <label class = "css-form css-error" for="displayName" id ="displayNameLabel"></label>
@@ -18,7 +17,6 @@
             </div>            
             <br>
             <div class="css-labeledInput css-flexHorizontal">
-                <label class="css-form">Email:&emsp;</label>
                 <div>
                     <input class = "css-form js-validationInput" type="text" name="args[email]" id="email" placeholder="email" spellcheck="false" value="<?php echo $this->formData['args']['email'] ?? $this->profileData['profileInfo']['email'];?>">
                     <label class = "css-form css-error" for="email" id="emailLabel"></label>
