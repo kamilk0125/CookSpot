@@ -3,3 +3,5 @@ docker/storage/
 docker/.env
 src/.env
 src/storage/users/
+src/pipe/
+src/public/gitpull.php
