@@ -43,7 +43,7 @@
                         foreach($this->friendsList as $friend){
                             $checkboxName = "args[usersId][]";
                             $checkboxValue = $friend['id'];
-                            $redirectLink = "javascript:void(0)";
+                            $redirectLink = null;
                             $imageSrc = '/resource?type=img&path=' . $friend['picturePath'];
                             $headerText = $friend['displayName'];
                             include(__DIR__ . '/../../Common/Components/Templates/SelectionListTile.php');

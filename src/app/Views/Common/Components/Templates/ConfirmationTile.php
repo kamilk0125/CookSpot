@@ -9,7 +9,7 @@
     <div class="css-listTile css-flexHorizontal">
         <div class="css-flexHorizontal">    
             <img class="css-roundedPicture" src="<?php echo $imageSrc ?? ''; ?>" alt="">
-            <a href="<?php echo $redirectLink ?? ''; ?>"><h2><?php echo $headerText ?? ''; ?></h2></a>
+            <a <?php echo isset($redirectLink) ? 'href="' . $redirectLink . '"' : '';?>><h2><?php echo $headerText ?? ''; ?></h2></a>
         </div>
         <div>
             <button 
