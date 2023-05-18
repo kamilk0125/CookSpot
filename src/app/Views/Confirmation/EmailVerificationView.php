@@ -9,11 +9,8 @@ use App\Views\Common\View;
 
 class EmailVerificationView extends View implements ViewInterface
 {
-    private bool $verified;
-
-    public function __construct(array $modelData)
+    public function __construct(private bool $verified)
     {
-        $this->verified = $modelData['verificationData']['verified'] ?? false;
         $this->pageName = 'Email verification';
     }
     public function display():string

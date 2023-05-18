@@ -8,9 +8,11 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 use App\Main\App;
+use App\Main\Container\Container;
 use App\Main\Routing\Request;
 
 session_set_cookie_params(31536000);
 session_start();
 $app = new App();
-$app->run(new Request());
+$reqest = Container::getInstance()->get(Request::class);
+$app->run($reqest);

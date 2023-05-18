@@ -10,7 +10,7 @@
                     $imageSrc = '/resource?type=img&path=' . $result['picturePath'];
                     $headerText = $result['displayName'];
                     $formHandler = 'friendsHandler';
-                    switch($result['relation']['status']){
+                    switch($result['relation']->status){
                         case 'friend':
                             $leftBtnText = '✓ Friends';
                             $leftBtnDisabled = true;
@@ -23,7 +23,7 @@
                             $leftBtnClass = '';
                             $leftBtnName = 'args[response]';
                             $leftBtnValue = 'true';
-                            $formArgs = ['args[invitationId]' => $result['relation']['invitationId']];
+                            $formArgs = ['args[invitationId]' => $result['relation']->invitationId];
                             break;
                         case 'invitationSent':
                             $leftBtnText = '✓ Invitation Sent';

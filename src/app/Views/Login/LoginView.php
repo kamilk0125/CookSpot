@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Views\Login;
 
 use App\Interfaces\ViewInterface;
+use App\Model\Form;
 use App\Views\Common\View;
 
 class LoginView extends View implements ViewInterface
@@ -14,11 +15,11 @@ class LoginView extends View implements ViewInterface
     private array $formData;
     private string $errorMsg;
 
-    public function __construct(array $modelData)
+    public function __construct(?Form $form)
     {
         $this->pageName = 'Login';
-        $this->formData = $modelData['formData'] ?? [];
-        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
+        $this->formData = $form ? $form->inputData : [];
+        $this->errorMsg = $form ? $form->errorMsg : '';
         $this->activeForm = (($this->formData['action'] ?? '') === 'registerAccount') ? 'register' : 'login';
     }
 

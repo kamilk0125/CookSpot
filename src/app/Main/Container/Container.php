@@ -6,14 +6,33 @@ namespace App\Main\Container;
 use Psr\Container\ContainerInterface;
 use App\Exceptions\Container\NotFoundException;
 use App\Exceptions\Container\ContainerException;
+use App\Main\Container\ContainerConfig;
 
 class Container implements ContainerInterface
 {
     private array $classConfigs = [];
     private array $instances = [];
+    private static self $instance; 
+
+    private function __construct()
+    {
+        $this->classConfigs = (new ContainerConfig)->getConfig();
+    }
+
+    public static function getInstance(){
+        if(!isset(self::$instance)){
+            self::$instance = new self;
+        }
+        
+        return self::$instance;
+    }
 
     public function get(string $id, array $args=[])
     {
+        if($this->has($id)){
+            return $this->instances[$id];
+        }
+
         $className = $id;
         if($this->hasClassConfig($id)){
             $className = $this->classConfigs[$id]['implementation'];
@@ -45,13 +64,11 @@ class Container implements ContainerInterface
         $dependencies = $this->getDependencies($parameters, $id, $className, $args);
         $instance = $reflectionClass->newInstanceArgs($dependencies);
 
-        if($this->has($id)){
-            if($this->classConfigs[$id]['singleInstance'] && !array_key_exists($id, $this->instances)){
-                $this->instances[$id] = $instance;
-            }
+        if($this->hasClassConfig($id) && $this->classConfigs[$id]['singleInstance'] && !array_key_exists($id, $this->instances)){
+            $this->instances[$id] = $instance;
         }
-        return $instance;
 
+        return $instance;
     }
 
     public function has(string $id): bool
@@ -74,10 +91,8 @@ class Container implements ContainerInterface
         }
     }
 
-    public function addInstance(string $id, $instance){
-        $this->addClassConfig($id, $id, true);
+    public function addInstance(string $id, ?object $instance){
         $this->instances[$id] = $instance;
-        
     }
     
     private function getDependencies(array $parameters, string $id, string $className, array $args):array

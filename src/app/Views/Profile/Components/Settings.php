@@ -2,23 +2,23 @@
     <input type="text" name="handler" value="profileInfoHandler" class="css-invisible">
     <div id="Settings">
         <div class="css-picture css-editable">
-            <img id="profilePicture" class="css-roundedPicture css-uploadPicture js-uploadPicture" src="/resource?type=img&path=<?php echo $this->profileData['profileInfo']['picturePath'] ?>" alt="Profile Picture">
+            <img id="profilePicture" class="css-roundedPicture css-uploadPicture js-uploadPicture" src="/resource?type=img&path=<?php echo $this->profile->user->getUserData('picturePath') ?>" alt="Profile Picture">
             <button type="button" class="css-addPictureBtn js-addPictureBtn css-squared">＋</button>
         </div>
         <br>      
         <div id="userInfo">
-            <label class = "css-form css-error"><?php echo $this->errorMsg ?? '';?></label>
+            <label class = "css-form css-error"><?php echo $this->errorMsg;?></label>
             <br>
             <div class="css-labeledInput css-flexHorizontal">
                 <div>
-                    <input class = "css-form js-validationInput" type="text" name="args[displayName]" id="displayName" placeholder="display name" spellcheck="false" value="<?php echo $this->formData['args']['displayName'] ?? $this->profileData['profileInfo']['displayName'];?>">
+                    <input class = "css-form js-validationInput" type="text" name="args[displayName]" id="displayName" placeholder="display name" spellcheck="false" value="<?php echo $this->formData['args']['displayName'] ?? $this->profile->user->getUserData('displayName');?>">
                     <label class = "css-form css-error" for="displayName" id ="displayNameLabel"></label>
                 </div>
             </div>            
             <br>
             <div class="css-labeledInput css-flexHorizontal">
                 <div>
-                    <input class = "css-form js-validationInput" type="text" name="args[email]" id="email" placeholder="email" spellcheck="false" value="<?php echo $this->formData['args']['email'] ?? $this->profileData['profileInfo']['email'];?>">
+                    <input class = "css-form js-validationInput" type="text" name="args[email]" id="email" placeholder="email" spellcheck="false" value="<?php echo $this->formData['args']['email'] ?? $this->profile->user->getUserData('email');?>">
                     <label class = "css-form css-error" for="email" id="emailLabel"></label>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </div>
     </div>
     <?php 
-        $imagePreviewSrc = '/resource?type=img&path=' . $this->profileData['profileInfo']['picturePath'];
+        $imagePreviewSrc = '/resource?type=img&path=' . $this->profile->user->getUserData('picturePath');
         $fileInputName = 'profilePictureInfo';
         include(__DIR__ . '/../../Common/Components/Templates/ImageUploadPopup.php');
     ?>

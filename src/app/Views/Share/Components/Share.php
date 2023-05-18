@@ -42,10 +42,10 @@
                         <?php
                         foreach($this->friendsList as $friend){
                             $checkboxName = "args[usersId][]";
-                            $checkboxValue = $friend['id'];
+                            $checkboxValue = $friend->getUserData('id');
                             $redirectLink = null;
-                            $imageSrc = '/resource?type=img&path=' . $friend['picturePath'];
-                            $headerText = $friend['displayName'];
+                            $imageSrc = '/resource?type=img&path=' . $friend->getUserData('picturePath');
+                            $headerText = $friend->getUserData('displayName');
                             include(__DIR__ . '/../../Common/Components/Templates/SelectionListTile.php');
                         }
                         ?>

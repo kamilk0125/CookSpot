@@ -4,24 +4,16 @@ declare(strict_types=1);
 
 namespace App\Main;
 
-use App\Main\Container\Container;
 use App\Main\Routing\Request;
 use App\Main\Routing\RouteAuthenticator;
 use App\Main\Routing\Router;
 
 class App
 {
-    private Container $container;
-
-    public function __construct()
-    {
-        $this->container = new Container();
-    }
-
     public function run(Request $request)
     {
-        if((new RouteAuthenticator($this->container))->authorize($request, $this->container)){
-            echo (new Router($this->container))->resolve($request);
+        if((new RouteAuthenticator())->authorize($request)){
+            echo (new Router())->resolve($request);
         }
         else{
             echo "<script>location.href='/login';</script>";

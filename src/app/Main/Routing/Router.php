@@ -9,7 +9,7 @@ use App\Views\Common\RouteNotFoundView;
 
 class Router
 {
-    public function __construct(private Container $container)
+    public function __construct()
     {
         
     }
@@ -34,14 +34,14 @@ class Router
         $controllerRequest = explode('/',$route)[2] ?? '';
         $request->setAttribute('controllerRequest', $controllerRequest);
 
-        $action = [('App\\Controllers\\' . ucfirst($controllerName) . 'Controller'), 'processRequest'];
+        $action = [('App\\Controller\\' . ucfirst($controllerName) . 'Controller'), 'processRequest'];
 
         if(is_array($action))
         {
             [$class, $method] = $action;
             if(method_exists($class, $method))
             {
-                $controller = $this->container->get($class, [$class => ['container' => $this->container]]);
+                $controller = Container::getInstance()->get($class);
                 return call_user_func_array([$controller, $method], [$request]);
             }
             else

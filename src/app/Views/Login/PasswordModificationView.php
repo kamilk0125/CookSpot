@@ -5,26 +5,21 @@ declare(strict_types=1);
 namespace App\Views\Login;
 
 use App\Interfaces\ViewInterface;
+use App\Model\Form;
+use App\Model\User;
+use App\Model\UserVerification;
 use App\Views\Common\View;
 
 class PasswordModificationView extends View implements ViewInterface
 {
     private string $cssFile = 'passwordModification.css';
-    private bool $valid;
     private string $errorMsg;
     private array $formData;
-    private int $userId; 
-    private string $requestType;
-    private string $verificationHash;
 
-    public function __construct(array $modelData)
+    public function __construct(private int $userId, private bool $valid, ?Form $form)
     {
-        $this->valid = $modelData['passwordResetData']['valid'] ?? true; 
-        $this->formData = $modelData['formData'] ?? [];
-        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
-        $this->userId = $modelData['id']; 
-        $this->requestType = $modelData['requestType'];
-        $this->verificationHash = $modelData['hash'] ?? '';
+        $this->formData = $form ? $form->inputData : [];
+        $this->errorMsg = $form ? $form->errorMsg : '';
         $this->pageName = 'Password modification';
 
     }

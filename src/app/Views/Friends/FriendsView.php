@@ -5,19 +5,14 @@ declare(strict_types=1);
 namespace App\Views\Friends;
 
 use App\Interfaces\ViewInterface;
-use App\Models\Friends\FriendsManager;
 use App\Views\Common\View;
 
 class FriendsView extends View implements ViewInterface
 {
     private string $cssFile = 'friends.css';
-    private array $friendsList;
-    private array $receivedInvitations;
 
-    public function __construct(array $modelData)
+    public function __construct(private array $friendsList, private array $receivedInvitations)
     {
-        $this->friendsList = $modelData['friendsData']['friendsList'];
-        $this->receivedInvitations = $modelData['friendsData']['receivedInvitations'];
         $this->pageName = 'Friends';
     }
 

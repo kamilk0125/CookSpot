@@ -9,11 +9,8 @@ use App\Views\Common\View;
 
 class AccountActivatedView extends View implements ViewInterface
 {
-    private bool $activated;
-
-    public function __construct(array $modelData)
+    public function __construct(private bool $activated)
     {
-        $this->activated = $modelData['activationData']['activated'] ?? false;
         $this->pageName = 'Account Activation';
     }
     public function display():string

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Views\Profile;
 
 use App\Interfaces\ViewInterface;
-use App\Models\Profile\Objects\Recipe;
+use App\Model\Form;
+use App\Model\Recipe;
+use App\Model\SharedItem;
 use App\Views\Common\View;
 
 class RecipeView extends View implements ViewInterface
@@ -18,15 +20,14 @@ class RecipeView extends View implements ViewInterface
     private string $errorMsg;
     private string $pictureSrc;
 
-    public function __construct(array $modelData)
+    public function __construct(Recipe|SharedItem $recipe, ?Form $form)
     {
-        $this->recipe = $modelData['recipeData']['recipeContent'];
-        $this->newRecipe = $modelData['recipeData']['newRecipe'] ?? false;
-        $this->formData = $modelData['formData'] ?? [];
-        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
-        $this->readOnly = $modelData['recipeData']['readOnly'] ?? false;
-        $sharedPictureId = $modelData['recipeData']['shareInfo']['pictureId'] ?? null;
-        $this->pictureSrc = 'resource?type=' . (isset($sharedPictureId) ?  "shared&id={$sharedPictureId}" : "img&path={$this->recipe->picturePath}");
+        $this->recipe = ($recipe instanceof SharedItem) ? $recipe->content['recipe'] : $recipe;
+        $this->newRecipe = $this->recipe->id == 0;
+        $this->formData = $form ? $form->inputData : [];
+        $this->errorMsg = $form ? $form->errorMsg : '';
+        $this->readOnly = $recipe instanceof SharedItem;
+        $this->pictureSrc = 'resource?type=' . (($recipe instanceof SharedItem) ?  "shared&id={$recipe->content['pictureId']}" : "img&path={$this->recipe->picturePath}");
         $this->pageName = $this->recipe->name;
     }
 

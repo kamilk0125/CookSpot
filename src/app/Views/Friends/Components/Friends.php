@@ -6,9 +6,9 @@
                 <?php
                     foreach($this->friendsList as $friend){
                         $checkboxClass = 'css-invisible';
-                        $redirectLink = "/profile?view=user&id={$friend['id']}";
-                        $imageSrc = '/resource?type=img&path=' . $friend['picturePath'];
-                        $headerText = $friend['displayName'];
+                        $redirectLink = "/profile?view=user&id={$friend->getUserData('id')}";
+                        $imageSrc = '/resource?type=img&path=' . $friend->getUserData('picturePath');
+                        $headerText = $friend->getUserData('displayName');
                         include(__DIR__ . '/../../Common/Components/Templates/Tile.php');
                     }
                 ?>
@@ -20,13 +20,13 @@
         <div id="invitationsList" class = "">
                 <?php
                 foreach($this->receivedInvitations as $invitation){
-                    $redirectLink = "/profile?view=user&id={$invitation['senderId']}";
+                    $redirectLink = "/profile?view=user&id={$invitation->senderId}";
                     $formTarget = '/friends';
                     $formHandler = 'friendsHandler';
                     $formAction = 'answerInvitation';
-                    $formArgs = ['args[invitationId]' => $invitation['invitationId']];
-                    $imageSrc = '/resource?type=img&path=' . $invitation['picturePath'];
-                    $headerText = $invitation['displayName'];
+                    $formArgs = ['args[invitationId]' => $invitation->id];
+                    $imageSrc = '/resource?type=img&path=' . $invitation->picturePath;
+                    $headerText = $invitation->displayName;
                     $leftBtnText = 'Accept';
                     $leftBtnName = 'args[response]';
                     $leftBtnValue = '1';

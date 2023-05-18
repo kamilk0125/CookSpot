@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Views\Profile;
 
 use App\Interfaces\ViewInterface;
+use App\Model\Form;
+use App\Model\Profile;
 use App\Views\Common\View;
 
 class SettingsView extends View implements ViewInterface
 {
     private string $cssFile = 'settings.css';
-    private array $profileData;
     private array $formData;
     private string $errorMsg;
 
-    public function __construct(array $modelData)
+    public function __construct(private Profile $profile, ?Form $form)
     {
-        $this->profileData = $modelData['profileData'];
-        $this->formData = $modelData['formData'] ?? [];
-        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
+        $this->formData = $form ? $form->inputData : [];
+        $this->errorMsg = $form ? $form->errorMsg : '';
         $this->pageName = 'Settings';
     }
 

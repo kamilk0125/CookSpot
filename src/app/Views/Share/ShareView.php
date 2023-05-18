@@ -5,29 +5,24 @@ declare(strict_types=1);
 namespace App\Views\Share;
 
 use App\Interfaces\ViewInterface;
+use App\Model\Form;
 use App\Views\Common\View;
 
 class ShareView extends View implements ViewInterface
 {
     private string $cssFile = 'share.css';
-    private array $ownedRecipes;
-    private array $friendsList;
-    private string $selectedRecipeId;
     private string $infoText;
     private bool $recipesShared;
 
-    public function __construct(array $modelData)
+    public function __construct(private array $ownedRecipes, private array $friendsList, ?Form $form)
     {
-        $this->ownedRecipes = $modelData['ownedRecipes'];
-        $this->friendsList = $modelData['friendsList'];
-        $this->selectedRecipeId = $modelData['selectedRecipeId'] ?? '';
         
-        if(isset($modelData['formResult']['recipesShared']))
+        if(isset($form->resultData['recipesShared']))
             $this->infoText = 'Recipes Shared';
         else
-            $this->infoText = $modelData['formResult']['errorMsg'] ?? '';
+            $this->infoText = $form->resultData['errorMsg'] ?? '';
         
-        $this->recipesShared = $modelData['formResult']['recipesShared'] ?? false;
+        $this->recipesShared = $form->resultData['recipesShared'] ?? false;
         $this->pageName = 'Share';
     }
 

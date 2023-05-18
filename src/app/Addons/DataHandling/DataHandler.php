@@ -7,10 +7,11 @@ namespace App\Addons\DataHandling;
 use App\Main\Container\Container;
 use ReflectionMethod;
 
-class DataHandler{
+class DataHandler
+{
     public static function castToObj(array $sourceArray, string $targetClass, $args = [])
     {
-        $targetObj = (new Container)->get($targetClass, $args);
+        $targetObj = Container::getInstance()->get($targetClass, $args);
         foreach ($targetObj as $property => $value){
             if(key_exists($property,$sourceArray))
                 $targetObj->{$property} = $sourceArray[$property];

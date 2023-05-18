@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Views\Login;
 
 use App\Interfaces\ViewInterface;
+use App\Model\Form;
 use App\Views\Common\View;
 
 class PasswordResetView extends View implements ViewInterface
@@ -13,10 +14,10 @@ class PasswordResetView extends View implements ViewInterface
     private array $formData;
     private string $errorMsg;
 
-    public function __construct(array $modelData)
+    public function __construct(?Form $form)
     {
-        $this->formData = $modelData['formData'] ?? [];
-        $this->errorMsg = $modelData['formResult']['errorMsg'] ?? '';
+        $this->formData = $form ? $form->inputData : [];
+        $this->errorMsg = $form ? $form->errorMsg : '';
         $this->pageName = 'Password reset';
     }
     public function display():string

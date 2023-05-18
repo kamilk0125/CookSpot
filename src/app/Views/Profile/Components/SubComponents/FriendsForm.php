@@ -2,23 +2,23 @@
     <button 
     id="friendsBtn"
     form="friendsForm" 
-    name="<?php echo $this->friendsForm['btnName'] ?? '';?>" 
+    name="<?php echo $this->friendsForm['friendsBtnName'] ?? '';?>" 
     type="submit" 
-    value="<?php echo $this->friendsForm['btnValue'] ?? '';?>" 
-    class="css-rounded <?php echo $this->friendsForm['btnClass'] ?? '';?>" 
-    <?php echo $this->friendsForm['btnDisabled'] ? 'disabled' : '';?>
-    ><?php echo $this->friendsForm['btnText'];?>
+    value="<?php echo $this->friendsForm['friendsBtnValue'] ?? '';?>" 
+    class="css-rounded <?php echo $this->friendsForm['friendsBtnClass'] ?? '';?>" 
+    <?php echo $this->friendsForm['friendsBtnDisabled'] ? 'disabled' : '';?>
+    ><?php echo $this->friendsForm['friendsBtnText'] ?? '';?>
     </button>
     <button id="deleteFriendBtn" 
     form="deleteFriendForm" 
     name="args[friendId]" 
     type="submit" 
-    value="<?php echo $this->profileData['profileInfo']['id'] ?>" 
-    class="css-rounded css-red <?php echo ($this->relationStatus === 'friend') ? '' : 'css-invisible';?>" 
+    value="<?php echo $this->friendsForm['deleteBtnValue'] ?? '';?>" 
+    class="css-rounded css-red <?php echo $this->friendsForm['deleteBtnVisible'] ? '' : 'css-invisible';?>" 
     >Delete from friends list
     </button>    
 </div>
-<form id="friendsForm" action="friends" method="POST">
+<form id="friendsForm" action="" method="POST">
     <input class="css-invisible" type="text" name="handler" value="friendsHandler">
     <input class="css-invisible" type="text" name="action" value="<?php echo $this->friendsForm['action'] ?? '';?>">
     <?php 

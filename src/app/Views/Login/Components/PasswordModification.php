@@ -1,23 +1,23 @@
-<form class="js-loginInfoForm <?php echo $this->valid ? '' : 'css-invisible js-notUsed'; ?>" id="passwordForm" action="/login?view=<?php echo ($this->requestType === 'reset') ? 'passwordReset&id=' . $this->userId . '&hash=' . $this->verificationHash : 'changePassword'; ?>" method="POST">
+<form class="js-loginInfoForm <?php echo $this->valid ? '' : 'css-invisible js-notUsed'; ?>" id="passwordForm" action="/login?view=<?php echo ($this->formData['requestType'] === 'reset') ? 'passwordReset&id=' . $this->userId . '&hash=' . $this->formData['verificationHash'] : 'changePassword'; ?>" method="POST">
     <input type="text" name="handler" value="settingsHandler" class="css-invisible">
     <input type="text" name="action" value="modifyPassword" class="css-invisible">
-    <input type="text" name="args[requestType]" value="<?php echo $this->requestType; ?>" class="css-invisible">
+    <input type="text" name="args[requestType]" value="<?php echo $this->formData['requestType']; ?>" class="css-invisible">
     <input type="text" name = "args[userId]" value="<?php echo $this->userId;?>" class = "css-invisible" >
-    <input type="text" name = "args[verificationHash]" value="<?php echo $this->verificationHash;?>" class = "css-invisible" >
+    <input type="text" name = "args[verificationHash]" value="<?php echo $this->formData['verificationHash'] ?? '';?>" class = "css-invisible" >
     <div class="css-centered" id="passwordFormDiv"> 
         <h2>Change Password</h2>
         <div id="userInfo">
             <label class = "css-form css-error"><?php echo $this->errorMsg;?></label>
             <br><br>
-            <input class = "css-form <?php echo ($this->requestType === 'reset') ? 'css-invisible' : ''; ?>" type="password" name = "args[currentPassword]" id = "currentPassword" placeholder="current password" spellcheck="false" value="<?php echo $this->formData['args']['currentPassword'] ?? '';?>">
+            <input class = "css-form <?php echo ($this->formData['requestType'] === 'reset') ? 'css-invisible' : ''; ?>" type="password" name = "args[currentPassword]" id = "currentPassword" placeholder="current password" spellcheck="false">
             <br>
             <label class = "css-form css-error" for = "currentPassword" id = "currentPasswordLabel"></label>
             <br>
-            <input class = "css-form js-validationInput" type="password" name = "args[password]" id = "password" placeholder="password" spellcheck="false" value="<?php echo $this->formData['args']['password'] ?? '';?>">
+            <input class = "css-form js-validationInput" type="password" name = "args[password]" id = "password" placeholder="password" spellcheck="false">
             <br>
             <label class = "css-form css-error" for = "password" id = "passwordLabel"></label>
             <br>
-            <input class = "css-form js-validationInput" type="password" name = "args[confirmPassword]" id = "confirmPassword" placeholder="confirm password" spellcheck="false" value="<?php echo $this->formData['args']['confirmPassword'] ?? '';?>">
+            <input class = "css-form js-validationInput" type="password" name = "args[confirmPassword]" id = "confirmPassword" placeholder="confirm password" spellcheck="false">
             <br>
             <label class = "css-form css-error" for = "confirmPassword" id = "confirmPasswordLabel"></label>
             <br>
