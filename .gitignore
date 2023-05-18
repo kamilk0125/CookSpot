@@ -1,5 +1,6 @@
 src/vendor/
 docker/storage/
+docker/.env.local
 src/.env
 src/storage/users/
 src/storage/public/profile/images/*
