@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    container_name: cookspot-app
     restart: always
     volumes:
       - ../src:/var/www
