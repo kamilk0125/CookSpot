@@ -4,5 +4,6 @@ docker/.env.local
 src/.env
 src/storage/users/
 src/storage/public/profile/images/*
+!src/storage/public/profile/images/.gitignore
 src/pipe/
 src/public/gitpull.php
